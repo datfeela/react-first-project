@@ -1,0 +1,13 @@
+@import 'variables.scss';
+
+.wrap{
+    border-radius: 5px;
+    height: calc(100vh - #{$headerHeight} - 40px);
+}
+
+.contentWrap{
+    height: 100%;
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-rows: 50px 1fr 64px;
+}

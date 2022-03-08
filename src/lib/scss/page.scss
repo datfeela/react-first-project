@@ -1,0 +1,40 @@
+@import 'variables.scss';
+
+body {
+    background-color: $lightGreyColor;
+}
+
+.App {
+    font-size: 15px;
+    line-height: 140%;
+    color: $mainFontColor;
+}
+
+.App__wrap {
+    max-width: 1200px;
+    padding: 0px 20px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 170px 1fr;
+    grid-template-areas: "sidebar main";
+}
+
+.sidebar {
+    grid-area: sidebar;
+}
+
+.main {
+    grid-area: main;
+    margin: 20px 0px 0px 10px;
+}
+
+.wrap {
+    background-color: #fff;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.wrapNoPadding {
+    background-color: #fff;
+    border-radius: 5px;
+}

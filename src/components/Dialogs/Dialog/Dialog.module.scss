@@ -1,0 +1,46 @@
+@import "variables.scss";
+
+.wrap {
+    padding: 10px 20px;
+    font-size: 14px;
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    grid-gap: 15px;
+    border-bottom: 1px solid rgba($color: $greyColor, $alpha: 0.1);
+
+    &:hover{
+        background-color: rgba($color: $lightGreyColor, $alpha: 0.4);  
+    }
+
+    &:first-child:hover{
+        padding-top: 9px;
+        border-top: 1px solid rgba($color: $greyColor, $alpha: 0.1);
+    }
+}
+
+.avatar {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+}
+
+.content {
+}
+
+.name {
+    color: $mainFontColor;
+    font-size: 15px;
+    display: block;
+    font-weight: 600;
+    padding: 2px 0px 5px 0px;
+}
+
+.who {
+    display: none;
+    color: $greyColor;
+    font-weight: 600;
+}
+
+.message {
+    color: $greyColor;
+}

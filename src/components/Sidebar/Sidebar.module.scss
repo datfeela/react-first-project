@@ -1,0 +1,25 @@
+@import "variables.scss";
+
+.sidebar {
+    margin-top: 30px;
+}
+
+.list {
+}
+
+.item {
+    padding-bottom: 15px;
+}
+
+.link {
+    line-height: 150%;
+
+    &_active {
+        color: $darkBlueColor;
+        cursor: default;
+    }
+
+    &_inactive {
+        color: $mainFontColor;
+    }
+}

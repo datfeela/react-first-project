@@ -1,0 +1,18 @@
+@import "variables.scss";
+
+.banner {
+    width: 100%;
+    margin-bottom: 25px;
+}
+
+.columns_wrap{
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    grid-column-gap: $blocksMargin;
+}
+
+.column_side {
+}
+
+.column_main {
+}

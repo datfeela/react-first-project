@@ -1,0 +1,25 @@
+@import "variables.scss";
+
+.wrap {
+    // position: fixed;
+    // width: 100%;
+    background-color: #fff;
+    border-bottom: 1px solid rgb(226, 226, 226);
+}
+
+.content {
+    height: $headerHeight;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0px 20px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+}
+
+.logo {
+    font-size: 40px;
+    font-weight: 600;
+    line-height: 150%;
+    color: #000;
+}

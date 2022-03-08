@@ -1,0 +1,28 @@
+@import "variables.scss";
+
+.wrap{
+    margin-top: $blocksMargin;
+    background-color: unset;
+}
+
+.input{
+    resize: none;
+    width: 100%;
+    border: 1px solid rgba($color: $greyColor, $alpha: 0.1);
+    border-radius: 5px;
+    padding: 10px 15px;
+}
+
+.button {
+    display: block;
+    margin: 10px 0px 0px auto;
+    font-size: 15px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: $lightBlueColor;
+    color: #fff;
+
+    &:hover{
+        background-color: rgba($color: $lightBlueColor, $alpha: 0.8);
+    }
+}
