@@ -1,17 +1,12 @@
 const FOLLOW = 'FOLLOW',
     UNFOLLOW = 'UNFOLLOW',
-    SET_USERS = 'SET_USERS'
+    SET_USERS = 'SET_USERS',
+    UPDATE_USERS_LOAD_PAGE = 'UPDATE_USERS_LOAD_PAGE';
 
 let initialState = {
-    users: [
-        // { id: 1, isSubscribed: true, subscribedOn: true, name: 'Ivan Ivan', location: 'Lorem City', education: 'Lorem Univ.' },
-        // { id: 2, isSubscribed: true, subscribedOn: false, name: 'Ivan Ivan2', location: 'Lorem City', education: 'Lorem Univ.' },
-        // { id: 3, isSubscribed: true, subscribedOn: true, name: 'Ivan Ivan3', location: 'Lorem City', education: 'Lorem Univ.' },
-        // { id: 4, isSubscribed: true, subscribedOn: false, name: 'Ivan Ivan4', location: 'Lorem City', education: 'Lorem Univ.' },
-        // { id: 5, isSubscribed: true, subscribedOn: true, name: 'Ivan Ivan5', location: 'Lorem City', education: 'Lorem Univ.' },
-        // { id: 6, isSubscribed: true, subscribedOn: false, name: 'Ivan Ivan6', location: 'Lorem City', education: 'Lorem Univ.' },
-        // { id: 7, isSubscribed: true, subscribedOn: true, name: 'Ivan Ivan7', location: 'Lorem City', education: 'Lorem Univ.' }
-    ]
+    users: [],
+    usersPerLoad: 10,
+    currentPage: 1,
 };
 
 const usersReducer = (state = initialState, action) => {
@@ -38,6 +33,8 @@ const usersReducer = (state = initialState, action) => {
             }
         case SET_USERS:
             return { ...state, users: [...state.users, ...action.users] }
+        case UPDATE_USERS_LOAD_PAGE: //!somnitelny code
+            return {...state, currentPage: state.currentPage + 1} 
         default:
             return state;
     }
@@ -58,5 +55,9 @@ export const unfollowAC = (userId) => ({
 export const setUsersAC = (users) => ({
     type: SET_USERS,
     users
+})
+
+export const updateUsersLoadPageAC = () => ({
+    type: UPDATE_USERS_LOAD_PAGE
 })
 

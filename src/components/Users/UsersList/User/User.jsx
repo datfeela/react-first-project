@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 
 const User = (props) => {
     let subscribeText = props.user.followed ? "Unsubscribe" : "Subscribe";
+    let imgSrc = props.user.photos.small != null ? props.user.photos.small : "https://via.placeholder.com/160x160?text=Pic";
 
     const subscribe = () => {
         props.subscribe(props.user.followed, props.user.id);
@@ -10,11 +11,11 @@ const User = (props) => {
 
     return (
         <div className={styles.wrap}>
-            <img src="https://via.placeholder.com/160x160?text=Pic" alt="avatar" className={styles.avatar} />
+            <img src={imgSrc} alt="avatar" className={styles.avatar} />
             <div className={styles.info}>
                 <span className={styles.name}>{props.user.name}</span>
-                <span className={styles.location}>props.user.location</span>
-                <span className={styles.education}>props.user.education</span>
+                {/* <span className={styles.location}>props.user.location</span> */}
+                <span className={styles.status}>{props.user.status}</span>
                 <div className={styles.actions}>
                     <NavLink to="/dialog" className={styles.actions_item}>
                         Message
