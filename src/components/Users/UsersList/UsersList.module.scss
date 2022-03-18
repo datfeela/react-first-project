@@ -3,4 +3,23 @@
 .wrap{
     width: $centerAreaWidth;
     padding: 0;
+    min-height: 100vh;
+}
+
+.buttonLoadMore{
+    padding: 5px;
+
+    &_hovered{
+        display: none;
+    }
+}
+
+.preloader{
+    height: 64px;
+    width: 64px;
+    margin: 0 auto;
+
+    &_disabled{
+        display: none;
+    }
 }
