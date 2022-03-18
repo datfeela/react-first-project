@@ -1,8 +1,8 @@
 import styles from "./Chat.module.scss";
 
 import Header from "./Header/Header";
-import Messages from "./Messages/Messages";
-import Input from "./Input/Input";
+import MessagesContainer from "./Messages/MessagesContainer";
+import InputContainer from "./Input/InputContainer";
 import Sidebar from "./Sidebar/Sidebar"
 
 const Chat = (props) => {
@@ -10,8 +10,8 @@ const Chat = (props) => {
         <div className={styles.wrap}>
             <div className={styles.contentWrap + " wrapNoPadding"}>
                 <Header />
-                <Messages />
-                <Input />
+                <MessagesContainer />
+                <InputContainer />
             </div>
             {/* <Sidebar /> */}
         </div>

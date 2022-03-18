@@ -2,18 +2,19 @@ import React from "react";
 import styles from "./Input.module.scss";
 
 const Input = (props) => {
-    const messageInput = React.createRef();
-
     const sendMessage = () => {
-        let text = messageInput.current.value;
+        props.sendMessage();
+    };
 
-        console.log(text);
+    const inputChangeHandler = (e) => {
+        let text = e.target.value;
+        props.inputChangeHandler(text);
     };
 
     return (
         <div className={styles.wrap + " wrap"}>
-            <textarea ref={messageInput} className={styles.input} placeholder="Type a message..."></textarea>
-            <button className={styles.button} onClick={sendMessage}>
+            <textarea onChange={inputChangeHandler} className={styles.input} placeholder="Type a message..." value={props.inputText} />
+            <button onClick={sendMessage} className={styles.button}>
                 Send
             </button>
         </div>

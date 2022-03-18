@@ -37,6 +37,11 @@ const Sidebar = (props) => {
                         Settings
                     </NavLink>
                 </li>
+                <li className={styles.item}>
+                    <NavLink to="users" className={linkClassName}>
+                        Users
+                    </NavLink>
+                </li>
             </ul>
         </nav>
     );

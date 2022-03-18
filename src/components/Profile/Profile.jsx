@@ -1,11 +1,9 @@
 import styles from "./Profile.module.scss";
 import Avatar from "./Avatar/Avatar";
-import ProfileInfo from "./ProfileInfo/ProfileInfo";
-import Posts from "./Posts/Posts";
+import PostsContainer from "./Posts/PostsContainer";
+import ProfileInfoContainer from "./ProfileInfo/ProfileInfoContainer";
 
 const Profile = (props) => {
-    let profileInfo = props.state.users[0];
-
     return (
         <div className={styles.wrap}>
             <img className={styles.banner} src="https://via.placeholder.com/1000x150?text=Banner" alt="theme" />
@@ -14,13 +12,8 @@ const Profile = (props) => {
                     <Avatar></Avatar>
                 </div>
                 <div className={styles.column_main}>
-                    <ProfileInfo
-                        name={profileInfo.name}
-                        birth={profileInfo.birth}
-                        edu={profileInfo.education}
-                        persInfo={profileInfo.persInfo}
-                    ></ProfileInfo>
-                    <Posts posts={props.state.posts} addPost={props.addPost}></Posts>
+                    <ProfileInfoContainer/>
+                    <PostsContainer/>
                 </div>
             </div>
         </div>

@@ -1,0 +1,67 @@
+@import "variables.scss";
+
+$avatarSize: 100px;
+$avatarMargin: 15px;
+$actionsWidth: 200px;
+
+.wrap {
+    display: grid;
+    grid-template-columns: calc(#{$avatarSize} + #{$avatarMargin}) 1fr;
+    padding: 10px 20px;
+    border-bottom: 1px solid rgba($color: $greyColor, $alpha: 0.1);
+
+    &:last-child {
+        border-bottom: none;
+    }
+}
+
+.avatar {
+    height: $avatarSize;
+    width: $avatarSize;
+    border-radius: 50%;
+    margin-right: $avatarMargin;
+}
+
+.info {
+    // width: calc(100% - #{$avatarSize} - #{$avatarMargin} - #{$actionsWidth});
+    padding: 5px 10px 0 0;
+}
+
+.name {
+    display: block;
+    font-size: 15px;
+    font-weight: 600;
+    color: $darkBlueColor;
+    margin-bottom: 5px;
+}
+
+.location {
+    display: block;
+    font-size: 14px;
+    color: $greyColor;
+}
+
+.education {
+    display: block;
+    font-size: 14px;
+    color: $greyColor;
+}
+
+.actions {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.actions_item {
+    color: rgba($color: $darkBlueColor, $alpha: 1.0);
+}
+
+.divider {
+    height: 3px;
+    width: 3px;
+    margin: 2px 6px 0px 6px;
+    background-color: rgba($color: $greyColor, $alpha: 0.5);
+    border-radius: 50%;
+}

@@ -5,19 +5,20 @@ import Post from "./Post/Post";
 const Posts = (props) => {
     let posts = props.posts.map((el) => <Post authorId={el.authorId} author={el.author} date={el.date} text={el.text} />);
 
-    const newPostInput = React.createRef();
-
     const addPost = () => {
-        let text = newPostInput.current.value;
-        props.addPost(text);
-        newPostInput.current.value = '';
+        props.addPost()
+    };
+
+    const inputChangeHandler = (e) => {
+        let text = e.target.value;
+        props.inputChangeHandler(text);
     };
 
     return (
         <div className={styles.wrap}>
             <div className="wrap">
-                <textarea ref={newPostInput} className={styles.input} placeholder="What's new?"></textarea>
-                <button className={styles.button} onClick={addPost}>
+                <textarea onChange={inputChangeHandler} className={styles.input} placeholder="What's new?" value={props.inputText}></textarea>
+                <button onClick={addPost} className={styles.button}>
                     Publish
                 </button>
             </div>
