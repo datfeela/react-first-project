@@ -1,7 +1,7 @@
 import React from "react";
 import axios from "axios";
 import { connect } from "react-redux";
-import { followAC, setUsersAC, unfollowAC, updateUsersLoadPageAC, updateIsFetchingAC } from "../../../redux/usersPageReducer";
+import { follow, setUsers, unfollow, updateUsersLoadPage, updateIsFetching } from "../../../redux/usersPageReducer";
 import UsersList from "./UsersList";
 
 class UsersListContainer extends React.Component {
@@ -44,21 +44,29 @@ let mapStateToProps = (state) => {
     };
 };
 
-let mapDispatchToProps = (dispatch) => {
-    return {
-        subscribe: (followed, id) => {
-            followed ? dispatch(unfollowAC(id)) : dispatch(followAC(id));
-        },
-        setUsers: (users) => {
-            dispatch(setUsersAC(users));
-        },
-        updateUsersLoadPage: () => {
-            dispatch(updateUsersLoadPageAC());
-        },
-        updateIsFetching: (isFetching) => {
-            dispatch(updateIsFetchingAC(isFetching));
-        },
-    };
-};
+// let mapDispatchToProps = (dispatch) => {
+//     return {
+//         subscribe: (followed, id) => {
+//             followed ? dispatch(unfollowAC(id)) : dispatch(followAC(id));
+//         },
+//         setUsers: (users) => {
+//             dispatch(setUsersAC(users));
+//         },
+//         updateUsersLoadPage: () => {
+//             dispatch(updateUsersLoadPageAC());
+//         },
+//         updateIsFetching: (isFetching) => {
+//             dispatch(updateIsFetchingAC(isFetching));
+//         },
+//     };
+// };
 
-export default connect(mapStateToProps, mapDispatchToProps)(UsersListContainer);
+let dispatchObj = {
+    follow,
+    unfollow,
+    setUsers,
+    updateUsersLoadPage,
+    updateIsFetching
+}
+
+export default connect(mapStateToProps, dispatchObj)(UsersListContainer);

@@ -46,26 +46,26 @@ const usersReducer = (state = initialState, action) => {
 
 export default usersReducer;
 
-export const followAC = (userId) => ({
+export const follow = (userId) => ({
     type: FOLLOW,
     userId
 })
 
-export const unfollowAC = (userId) => ({
+export const unfollow = (userId) => ({
     type: UNFOLLOW,
     userId
 })
 
-export const setUsersAC = (users) => ({
+export const setUsers = (users) => ({
     type: SET_USERS,
     users
 })
 
-export const updateUsersLoadPageAC = () => ({
+export const updateUsersLoadPage = () => ({
     type: UPDATE_USERS_LOAD_PAGE
 })
 
-export const updateIsFetchingAC = (isFetching) => ({
+export const updateIsFetching = (isFetching) => ({
     type: UPDATE_IS_FETCHING,
         isFetching
 })

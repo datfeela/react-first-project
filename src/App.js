@@ -11,6 +11,7 @@ import Audio from './components/Audio/Audio';
 import Settings from './components/Settings/Settings';
 import Friends from './components/Friends/Friends';
 import Users from './components/Users/Users';
+import ProfileContainer from './components/Profile/ProfileContainer';
 
 
 
@@ -21,8 +22,8 @@ const App = (props) => {
       <div className="App__wrap">
         <main className="main">
           <Routes>
-            <Route path='/' element={<Profile />} />
-            <Route path='/profile' element={<Profile />} />
+            <Route path='/' element={<ProfileContainer />} />
+            <Route path='/profile/*' element={<ProfileContainer />} />
             <Route path='/messages' element={<DialogsContainer/>} />
             <Route path='/dialog' element={<Chat />} />
             <Route path='/friends' element={<Friends state={props.state.friendsPage} />} />

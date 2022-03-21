@@ -6,7 +6,7 @@ const User = (props) => {
     let imgSrc = props.user.photos.small != null ? props.user.photos.small : "https://via.placeholder.com/160x160?text=Pic";
 
     const subscribe = () => {
-        props.subscribe(props.user.followed, props.user.id);
+        props.user.followed ? props.unfollow(props.user.id) : props.follow(props.user.id)
     };
 
     return (

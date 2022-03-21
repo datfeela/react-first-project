@@ -1,7 +1,9 @@
 const ADD_POST = 'ADD-POST',
-    INPUT_CHANGE = 'INPUT-CHANGE';
+    INPUT_CHANGE = 'INPUT-CHANGE',
+    SET_PROFILE_INFO = 'GET_PROFILE_INFO';
 
 let initialState = {
+    profileInfo: null,
     inputText: '',
     users: [
         {
@@ -63,6 +65,11 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 inputText: action.inputText
             }
+        case SET_PROFILE_INFO:
+            return {
+                ...state,
+                profileInfo: action.profileInfo
+            }
         default:
             return state;
     }
@@ -70,11 +77,16 @@ const profileReducer = (state = initialState, action) => {
 
 export default profileReducer;
 
-export const addPostActionCreator = () => ({
+export const setProfileInfo = (profileInfo) => ({
+    type: SET_PROFILE_INFO,
+    profileInfo
+})
+
+export const addPost = () => ({
     type: ADD_POST
 })
 
-export const newPostInputChangeActionCreator = (text) => ({
+export const newPostInputChange = (text) => ({
     type: INPUT_CHANGE,
     inputText: text
 })

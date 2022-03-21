@@ -11,7 +11,7 @@ const Posts = (props) => {
 
     const inputChangeHandler = (e) => {
         let text = e.target.value;
-        props.inputChangeHandler(text);
+        props.newPostInputChange(text);
     };
 
     return (
