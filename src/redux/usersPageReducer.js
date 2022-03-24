@@ -1,4 +1,5 @@
-const FOLLOW = 'FOLLOW',
+const SUBSCRIBE = 'SUBSCRIBE',
+    FOLLOW = 'FOLLOW',
     UNFOLLOW = 'UNFOLLOW',
     SET_USERS = 'SET_USERS',
     UPDATE_USERS_LOAD_PAGE = 'UPDATE_USERS_LOAD_PAGE',
@@ -14,6 +15,7 @@ let initialState = {
 const usersReducer = (state = initialState, action) => {
     switch (action.type) {
         case FOLLOW:
+            // debugger;
             return {
                 ...state,
                 users: state.users.map(user => {
@@ -67,5 +69,5 @@ export const updateUsersLoadPage = () => ({
 
 export const updateIsFetching = (isFetching) => ({
     type: UPDATE_IS_FETCHING,
-        isFetching
+    isFetching
 })

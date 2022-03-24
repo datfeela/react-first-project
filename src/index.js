@@ -9,13 +9,12 @@ import { Provider } from 'react-redux';
 
 const renderEntireTree = (state) => {
     ReactDOM.render(
-        <React.StrictMode>
-            <BrowserRouter>
-                <Provider store={store}>
-                    <App store={store} state={state} dispatch={store.dispatch.bind(store)} />
-                </Provider>
-            </BrowserRouter>
-        </React.StrictMode>,
+
+        <BrowserRouter>
+            <Provider store={store}>
+                <App store={store} state={state} dispatch={store.dispatch.bind(store)} />
+            </Provider>
+        </BrowserRouter>,
         document.getElementById('root')
     );
 }

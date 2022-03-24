@@ -1,18 +1,30 @@
 import React from "react";
-import axios from "axios";
 import { connect } from "react-redux";
 import { follow, setUsers, unfollow, updateUsersLoadPage, updateIsFetching } from "../../../redux/usersPageReducer";
 import UsersList from "./UsersList";
+import { usersAPI } from "../../../api/api";
 
 class UsersListContainer extends React.Component {
+    subscribe = (userId) => {
+        usersAPI.getIsFollowed(userId).then((response) => {
+            if (response === true) {
+                usersAPI.unfollow(userId).then((response) => {
+                    response.resultCode === 0 ? this.props.unfollow(userId) : console.log(response);
+                });
+            } else {
+                usersAPI.follow(userId).then((response) => {
+                    response.resultCode === 0 ? this.props.follow(userId) : console.log(response);
+                });
+            }
+        });
+    };
+
     getUsers = () => {
         this.props.updateIsFetching(true);
-        axios
-            .get(`https://social-network.samuraijs.com/api/1.0/users?count=${this.props.usersPerLoad}&page=${this.props.currentPage}`)
-            .then((response) => {
-                this.props.setUsers(response.data.items);
-                this.props.updateIsFetching(false);
-            });
+        usersAPI.getUsers(this.props.usersPerLoad, this.props.currentPage).then((response) => {
+            this.props.setUsers(response.items);
+            this.props.updateIsFetching(false);
+        });
         this.props.updateUsersLoadPage();
     };
 
@@ -28,7 +40,9 @@ class UsersListContainer extends React.Component {
                 users={this.props.users}
                 isFetching={this.props.isFetching}
                 updateIsFetching={this.props.updateIsFetching}
-                subscribe={this.props.subscribe}
+                subscribe={this.subscribe}
+                follow={this.props.follow}
+                unfollow={this.props.unfollow}
                 getUsers={this.getUsers}
             />
         );
@@ -66,7 +80,7 @@ let dispatchObj = {
     unfollow,
     setUsers,
     updateUsersLoadPage,
-    updateIsFetching
-}
+    updateIsFetching,
+};
 
 export default connect(mapStateToProps, dispatchObj)(UsersListContainer);

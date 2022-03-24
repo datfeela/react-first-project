@@ -4,7 +4,33 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import Posts from "./Posts/Posts";
 import Preloader from "../_common/Preloader/Preloader";
 
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+
+import { profileAPI } from "../../api/api";
+
 const Profile = (props) => {
+    //      !react router hooks testing
+    const params = useParams();
+
+    const setProfileInfo = () => {
+        profileAPI.setProfileInfo(params.userId).then((response) => {
+            props.setProfileInfo(response);
+        });
+    };
+
+    useEffect(() => {
+        if (!props.profile.profileInfo) {
+            setProfileInfo();
+        }
+    });
+
+    useEffect(() => {
+        setProfileInfo();
+    }, []);
+
+    //      !-------------------------//
+
     if (!props.profile.profileInfo) {
         return (
             <div className={styles.preloaderWrap}>

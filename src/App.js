@@ -13,17 +13,19 @@ import Friends from './components/Friends/Friends';
 import Users from './components/Users/Users';
 import ProfileContainer from './components/Profile/ProfileContainer';
 
+import HeaderContainer from './components/Header/HeaderContainer';
+
 
 
 const App = (props) => {
   return (
     <div className="App">
-      <Header />
+      <HeaderContainer />
       <div className="App__wrap">
         <main className="main">
           <Routes>
-            <Route path='/' element={<ProfileContainer />} />
-            <Route path='/profile/*' element={<ProfileContainer />} />
+            <Route path='/profile' element={<ProfileContainer />} />
+            <Route path='/profile/:userId' element={<ProfileContainer />} />
             <Route path='/messages' element={<DialogsContainer/>} />
             <Route path='/dialog' element={<Chat />} />
             <Route path='/friends' element={<Friends state={props.state.friendsPage} />} />

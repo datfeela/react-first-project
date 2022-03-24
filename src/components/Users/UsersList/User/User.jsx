@@ -1,19 +1,23 @@
 import styles from "./User.module.scss";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 
 const User = (props) => {
     let subscribeText = props.user.followed ? "Unsubscribe" : "Subscribe";
     let imgSrc = props.user.photos.small != null ? props.user.photos.small : "https://via.placeholder.com/160x160?text=Pic";
-
+    
     const subscribe = () => {
-        props.user.followed ? props.unfollow(props.user.id) : props.follow(props.user.id)
+        props.subscribe(props.user.id);
     };
 
     return (
         <div className={styles.wrap}>
-            <img src={imgSrc} alt="avatar" className={styles.avatar} />
+            <NavLink to={`/profile/${props.user.id}`}>
+                <img src={imgSrc} alt="avatar" className={styles.avatar} />
+            </NavLink>
             <div className={styles.info}>
-                <span className={styles.name}>{props.user.name}</span>
+                <NavLink to={`/profile/${props.user.id}`}>
+                    <span className={styles.name}>{props.user.name}</span>
+                </NavLink>
                 {/* <span className={styles.location}>props.user.location</span> */}
                 <span className={styles.status}>{props.user.status}</span>
                 <div className={styles.actions}>
