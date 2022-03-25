@@ -1,12 +1,14 @@
 import styles from "./User.module.scss";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const User = (props) => {
     let subscribeText = props.user.followed ? "Unsubscribe" : "Subscribe";
     let imgSrc = props.user.photos.small != null ? props.user.photos.small : "https://via.placeholder.com/160x160?text=Pic";
-    
-    const subscribe = () => {
-        props.subscribe(props.user.id);
+
+    const subscribeButtonClickHandler = () => {
+        if (props.user.subscribeBtnIsActive) {
+            props.subscribe(props.user.id);
+        }
     };
 
     return (
@@ -25,7 +27,10 @@ const User = (props) => {
                         Message
                     </NavLink>
                     <span className={styles.divider}></span>
-                    <button onClick={subscribe} className={styles.actions_item}>
+                    <button
+                        onClick={subscribeButtonClickHandler}
+                        className={props.user.subscribeBtnIsActive ? styles.actions_item : styles.actions_item + " " + styles.button_disabled}
+                    >
                         {subscribeText}
                     </button>
                 </div>

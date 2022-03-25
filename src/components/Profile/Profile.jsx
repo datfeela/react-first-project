@@ -7,26 +7,22 @@ import Preloader from "../_common/Preloader/Preloader";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { profileAPI } from "../../api/api";
-
 const Profile = (props) => {
     //      !react router hooks testing
     const params = useParams();
 
-    const setProfileInfo = () => {
-        profileAPI.setProfileInfo(params.userId).then((response) => {
-            props.setProfileInfo(response);
-        });
-    };
+    const getProfileInfo = () => {
+        props.getProfileInfo(params.userId);
+    }
 
     useEffect(() => {
         if (!props.profile.profileInfo) {
-            setProfileInfo();
+            getProfileInfo();
         }
     });
 
     useEffect(() => {
-        setProfileInfo();
+        getProfileInfo();
     }, []);
 
     //      !-------------------------//

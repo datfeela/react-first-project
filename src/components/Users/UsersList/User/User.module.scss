@@ -58,6 +58,11 @@ $actionsWidth: 200px;
     color: rgba($color: $darkBlueColor, $alpha: 1.0);
 }
 
+.button_disabled {
+    color: $greyColor;
+    cursor: default;
+}
+
 .divider {
     height: 3px;
     width: 3px;

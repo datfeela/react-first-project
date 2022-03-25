@@ -29,7 +29,7 @@ export const usersAPI = {
 
 //!fix userId
 export const profileAPI = {
-    setProfileInfo(userId) {
+    getProfileInfo(userId) {
         return instance.get(`profile/${userId ? userId : "22988"}`).then(response => response.data);
     }
 }

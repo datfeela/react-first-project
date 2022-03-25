@@ -1,9 +1,12 @@
+import { usersAPI } from "../api/api";
+
 const SUBSCRIBE = 'SUBSCRIBE',
     FOLLOW = 'FOLLOW',
     UNFOLLOW = 'UNFOLLOW',
     SET_USERS = 'SET_USERS',
     UPDATE_USERS_LOAD_PAGE = 'UPDATE_USERS_LOAD_PAGE',
-    UPDATE_IS_FETCHING = 'UPDATE_IS_FETCHING'
+    UPDATE_IS_FETCHING = 'UPDATE_IS_FETCHING',
+    TOGGLE_SUBSCRIBE_BUTTON = 'TOGGLE_SUBSCRIBE_BUTTON'
 
 let initialState = {
     users: [],
@@ -36,17 +39,30 @@ const usersReducer = (state = initialState, action) => {
                 })
             }
         case SET_USERS:
-            return { ...state, users: [...state.users, ...action.users] }
+            let users = action.users.map(user => ({ ...user, subscribeBtnIsActive: true }));
+            return { ...state, users: [...state.users, ...users] }
         case UPDATE_USERS_LOAD_PAGE: //!somnitelny code
             return { ...state, currentPage: state.currentPage + 1 }
         case UPDATE_IS_FETCHING:
             return { ...state, isFetching: action.isFetching }
+        case TOGGLE_SUBSCRIBE_BUTTON:
+            return {
+                ...state,
+                users: state.users.map(user => {
+                    if (user.id === action.userId) {
+                        return { ...user, subscribeBtnIsActive: !user.subscribeBtnIsActive }
+                    }
+                    else return user;
+                })
+            }
         default:
             return state;
     }
 }
 
 export default usersReducer;
+
+//action creators
 
 export const follow = (userId) => ({
     type: FOLLOW,
@@ -71,3 +87,39 @@ export const updateIsFetching = (isFetching) => ({
     type: UPDATE_IS_FETCHING,
     isFetching
 })
+
+export const toggleSubscribeButton = (userId) => ({
+    type: TOGGLE_SUBSCRIBE_BUTTON,
+    userId
+})
+
+//thunk creators
+
+export const getUsers = (usersPerLoad, currentPage) => {
+    return (dispatch) => {
+        dispatch(updateIsFetching(true))
+        usersAPI.getUsers(usersPerLoad, currentPage).then((response) => {
+            dispatch(setUsers(response.items))
+            dispatch(updateIsFetching(false))
+        });
+        dispatch(updateUsersLoadPage())
+    }
+}
+
+export const subscribe = (userId) => (dispatch) => {
+    dispatch(toggleSubscribeButton(userId))
+    usersAPI.getIsFollowed(userId).then((response) => {
+        if (response === true) {
+            usersAPI.unfollow(userId).then((response) => {
+                response.resultCode === 0 ? dispatch(unfollow(userId)) : console.log(response);
+                dispatch(toggleSubscribeButton(userId));
+            });
+        } else {
+            usersAPI.follow(userId).then((response) => {
+                response.resultCode === 0 ? dispatch(follow(userId)) : console.log(response);
+                dispatch(toggleSubscribeButton(userId));
+            });
+        }
+    });
+
+}

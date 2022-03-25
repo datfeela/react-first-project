@@ -1,11 +1,11 @@
 import styles from "./Friends.module.scss";
-import FriendsList from "./FriendsList/FriendsList";
+import FriendsListContainer from "./FriendsList/FriendsListContainer";
 
 const Friends = (props) => {
     return (
         <div className={styles.wrap + " wrap"}>
             {/* <Header/> */}
-            <FriendsList friends={props.state.friends} />
+            <FriendsListContainer/>
         </div>
     );
 };

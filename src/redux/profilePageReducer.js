@@ -1,3 +1,5 @@
+import { profileAPI } from "../api/api";
+
 const ADD_POST = 'ADD-POST',
     INPUT_CHANGE = 'INPUT-CHANGE',
     SET_PROFILE_INFO = 'GET_PROFILE_INFO';
@@ -5,15 +7,6 @@ const ADD_POST = 'ADD-POST',
 let initialState = {
     profileInfo: null,
     inputText: '',
-    users: [
-        {
-            id: 0,
-            name: 'Ivan Ivan',
-            birth: 'Jul 1, 2001',
-            education: 'Lorem Univ. \'17',
-            persInfo: 'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Omnis iste quod, excepturi, voluptates reiciendis nesciunt ipsam iure fuga quasi possimus itaque deleniti mollitia cum nostrum, voluptatibus odio voluptate reiciendis aspernatur placeat. Tempora, omnis odit.'
-        }
-    ],
     posts: [
         {
             authorId: 0,
@@ -77,6 +70,8 @@ const profileReducer = (state = initialState, action) => {
 
 export default profileReducer;
 
+//AC
+
 export const setProfileInfo = (profileInfo) => ({
     type: SET_PROFILE_INFO,
     profileInfo
@@ -91,3 +86,18 @@ export const newPostInputChange = (text) => ({
     inputText: text
 })
 
+//TC
+
+export const getProfileInfo = (userId) => (dispatch) => {
+    profileAPI.getProfileInfo(userId).then((response) => {
+        dispatch(setProfileInfo(response))
+    });
+}
+
+// export const getProfileInfo = (userId) => {
+//     return (dispatch) => {
+//         profileAPI.getProfileInfo(userId).then((response) => {
+//             dispatch(setProfileInfo(response))
+//         });
+//     }
+// }

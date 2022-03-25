@@ -18,16 +18,16 @@ const Sidebar = (props) => {
                     </NavLink>
                 </li>
                 <li className={styles.item}>
-                    <NavLink to="/feed" className={linkClassName}>
-                        Feed
-                    </NavLink>
-                </li>
-                <li className={styles.item}>
                     <NavLink to="/friends" className={linkClassName}>
                         Friends
                     </NavLink>
                 </li>
                 <li className={styles.item}>
+                    <NavLink to="users" className={linkClassName}>
+                        Users
+                    </NavLink>
+                </li>
+                {/* <li className={styles.item}>
                     <NavLink to="/audio" className={linkClassName}>
                         Music
                     </NavLink>
@@ -36,23 +36,15 @@ const Sidebar = (props) => {
                     <NavLink to="/settings" className={linkClassName}>
                         Settings
                     </NavLink>
-                </li>
-                <li className={styles.item}>
-                    <NavLink to="users" className={linkClassName}>
-                        Users
+                </li> */}
+                {/* <li className={styles.item}>
+                    <NavLink to="/feed" className={linkClassName}>
+                        Feed
                     </NavLink>
-                </li>
+                </li> */}
             </ul>
         </nav>
     );
 };
-
-// document.addEventListener("DOMContentLoaded", () => {
-//     Array.from(document.querySelector("ul").children).forEach((el) => {
-//         console.log(el);
-//     });
-// });
-
-// Array.from(document.querySelector("ul")).forEach((el) => console.log(el));
 
 export default Sidebar;

@@ -28,11 +28,11 @@ const App = (props) => {
             <Route path='/profile/:userId' element={<ProfileContainer />} />
             <Route path='/messages' element={<DialogsContainer/>} />
             <Route path='/dialog' element={<Chat />} />
-            <Route path='/friends' element={<Friends state={props.state.friendsPage} />} />
+            <Route path='/friends' element={<Friends/>} />
             <Route path='/users' element={<Users/>} />
-            <Route path='/feed' element={<Feed />} />
-            <Route path='/audio' element={<Audio />} />
-            <Route path='/settings' element={<Settings />} />
+            {/* <Route path='/feed' element={<Feed />} /> */}
+            {/* <Route path='/audio' element={<Audio />} /> */}
+            {/* <Route path='/settings' element={<Settings />} /> */}
           </Routes>
         </main>
         <Sidebar />
