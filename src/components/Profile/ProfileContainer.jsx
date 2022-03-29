@@ -1,17 +1,24 @@
 import { connect } from "react-redux";
-import { getProfileInfo, addPost, newPostInputChange } from "../../redux/profilePageReducer";
+import { compose } from "redux";
+import { withAuthRedirect } from "../../hoc/withAuthRedirect";
+import { getProfileInfo, getStatus, updateStatus, addPost, newPostInputChange } from "../../redux/profilePageReducer";
 import Profile from "./Profile";
 
 let mapStateToProps = (state) => {
     return {
-        profile: state.profilePage,
+        profile: state.profilePage
     };
 };
 
 let dispatchObj = {
     getProfileInfo,
+    getStatus,
+    updateStatus,
     addPost,
     newPostInputChange,
 };
 
-export default connect(mapStateToProps, dispatchObj)(Profile);
+export default compose(
+    connect(mapStateToProps, dispatchObj),
+    // withAuthRedirect
+) (Profile)

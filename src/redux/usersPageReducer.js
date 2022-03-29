@@ -1,7 +1,6 @@
 import { usersAPI } from "../api/api";
 
-const SUBSCRIBE = 'SUBSCRIBE',
-    FOLLOW = 'FOLLOW',
+const FOLLOW = 'FOLLOW',
     UNFOLLOW = 'UNFOLLOW',
     SET_USERS = 'SET_USERS',
     UPDATE_USERS_LOAD_PAGE = 'UPDATE_USERS_LOAD_PAGE',
@@ -95,15 +94,14 @@ export const toggleSubscribeButton = (userId) => ({
 
 //thunk creators
 
-export const getUsers = (usersPerLoad, currentPage) => {
-    return (dispatch) => {
-        dispatch(updateIsFetching(true))
-        usersAPI.getUsers(usersPerLoad, currentPage).then((response) => {
-            dispatch(setUsers(response.items))
-            dispatch(updateIsFetching(false))
-        });
-        dispatch(updateUsersLoadPage())
-    }
+export const getUsers = (usersPerLoad, currentPage) => (dispatch) => {
+    dispatch(updateIsFetching(true))
+    usersAPI.getUsers(usersPerLoad, currentPage).then((response) => {
+        dispatch(setUsers(response.items))
+        dispatch(updateIsFetching(false))
+    });
+    dispatch(updateUsersLoadPage())
+
 }
 
 export const subscribe = (userId) => (dispatch) => {

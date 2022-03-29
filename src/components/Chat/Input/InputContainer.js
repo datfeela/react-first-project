@@ -1,24 +1,7 @@
 
 import { connect } from "react-redux";
-import { chatInputChangeActionCreator, sendMessageActionCreator } from "../../../redux/chatPageReducer";
+import { chatInputChange, sendMessage } from "../../../redux/chatPageReducer";
 import Input from "./Input";
-
-
-// const InputContainer = (props) => {
-//     const state = props.store.getState();
-
-//     const sendMessage = () => {
-//         props.store.dispatch(sendMessageActionCreator());
-//     };
-
-//     const inputChangeHandler = (text) => {
-//         props.store.dispatch(chatInputChangeActionCreator(text));
-//     };
-
-//     return (
-//         <Input sendMessage={sendMessage} inputChangeHandler={inputChangeHandler} inputText={state.chatPage.inputText}/>
-//     );
-// };
 
 let mapStateToProps = (state) => {
     return {
@@ -26,17 +9,11 @@ let mapStateToProps = (state) => {
     };
 };
 
-let mapDispatchToProps = (dispatch) => {
-    return {
-        sendMessage: () => {
-            dispatch(sendMessageActionCreator());
-        },
-        inputChangeHandler: (text) => {
-            dispatch(chatInputChangeActionCreator(text));
-        },
-    };
-};
+let dispatchObj = {
+    sendMessage,
+    chatInputChange
+}
 
-const InputContainer = connect(mapStateToProps, mapDispatchToProps)(Input);
+const InputContainer = connect(mapStateToProps, dispatchObj)(Input);
 
 export default InputContainer;

@@ -1,23 +1,27 @@
 @import "variables.scss";
 
-.wrap{
+.wrap {
     padding: 15px 25px;
 }
 
-.name{
+.top {
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba($color: $mainFontColor, $alpha: 0.1);
+}
+
+.name {
     font-size: 22px;
     font-weight: 600;
     line-height: 125%;
-    padding-bottom: 5px;
 }
 
-.header{
+.header {
     font-weight: 600;
     padding: 10px 0px;
     position: relative;
 
-    &::after{
-        content: ' ';
+    &::after {
+        content: " ";
         display: block;
         height: 1px;
         width: calc(100% - 100px);
@@ -28,16 +32,15 @@
     }
 }
 
-.row{
+.row {
     padding-top: 5px;
 }
 
-.label{
+.label {
     width: 165px;
     display: inline-block;
 }
 
-.personal_info{
+.personal_info {
     // padding-top: 5px;
 }
-

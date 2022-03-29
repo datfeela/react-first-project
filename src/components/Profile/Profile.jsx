@@ -13,16 +13,16 @@ const Profile = (props) => {
 
     const getProfileInfo = () => {
         props.getProfileInfo(params.userId);
-    }
+    };
+
+    // useEffect(() => {
+    //     if (!props.profile.profileInfo) {
+    //         getProfileInfo();
+    //     }
+    // });
 
     useEffect(() => {
-        if (!props.profile.profileInfo) {
-            getProfileInfo();
-        }
-    });
-
-    useEffect(() => {
-        getProfileInfo();
+        if (!props.profile.profileInfo || props.profile.profileInfo.userId !== params.userId) getProfileInfo();
     }, []);
 
     //      !-------------------------//
@@ -42,7 +42,13 @@ const Profile = (props) => {
                     <Avatar photo={props.profile.profileInfo.photos.large} />
                 </div>
                 <div className={styles.column_main}>
-                    <ProfileInfo profileInfo={props.profile.profileInfo} />
+                    <ProfileInfo
+                        userId={params.userId}
+                        profileInfo={props.profile.profileInfo}
+                        status={props.profile.profileStatus}
+                        getStatus={props.getStatus}
+                        updateStatus={props.updateStatus}
+                    />
                     <Posts
                         posts={props.profile.posts}
                         inputText={props.profile.inputText}

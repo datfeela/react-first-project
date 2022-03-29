@@ -43,11 +43,13 @@ const chatReducer = (state = initialState, action) => {
 
 export default chatReducer;
 
-export const sendMessageActionCreator = () => ({
+//AC
+
+export const sendMessage = () => ({
     type: SEND_MESSAGE
 })
 
-export const chatInputChangeActionCreator = (text) => ({
+export const chatInputChange = (text) => ({
     type: INPUT_CHANGE,
     messageText: text
 })

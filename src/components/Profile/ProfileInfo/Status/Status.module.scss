@@ -1,0 +1,47 @@
+@import "variables.scss";
+
+.wrap{
+    position: relative;
+    display: flex;
+    align-items: center;
+    
+    & > img{
+        max-height: 25px;
+        margin-left: 10px;
+    }
+}
+
+.text{
+}
+
+.edit_mode_block{
+    // display: none;
+    padding: 15px;
+    background-color: #fff;
+    border: 1px solid rgba($color: $mainFontColor, $alpha: 0.05);
+    box-shadow: 0px 3px 10px 0px rgba($color: $mainFontColor, $alpha: 0.1);
+    width: 100%;
+    position: absolute;
+    top: -5px;
+    z-index: 10;
+}
+
+.input{
+    display: block;
+    width: 100%;
+    padding: 3px 8px;
+    border-radius: 3px;
+    border: 1px solid rgba($color: $mainFontColor, $alpha: 0.1);
+    font-size: 15px;
+}
+
+.save_button{
+    display: block;
+    margin: 8px 0px 0px auto;
+    font-size: 14px;
+    padding: 5px 15px;
+    border-radius: 4px;
+    background-color: $lightBlueColor;
+    color: #fff;
+}
+

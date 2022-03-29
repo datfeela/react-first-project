@@ -1,5 +1,7 @@
 import styles from "./Friends.module.scss";
 import FriendsListContainer from "./FriendsList/FriendsListContainer";
+import { withAuthRedirect } from "../../hoc/withAuthRedirect";
+
 
 const Friends = (props) => {
     return (
@@ -10,4 +12,5 @@ const Friends = (props) => {
     );
 };
 
-export default Friends;
+let AuthRedirectComponent = withAuthRedirect(Friends);
+export default AuthRedirectComponent;

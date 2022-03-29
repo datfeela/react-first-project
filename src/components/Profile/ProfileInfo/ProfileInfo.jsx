@@ -1,9 +1,13 @@
 import styles from "./ProfileInfo.module.scss";
+import Status from "./Status/Status";
 
 const ProfileInfo = (props) => {
     return (
         <div className={styles.wrap + " wrap"}>
-            <h1 className={styles.name}>{props.profileInfo.fullName}</h1>
+            <div className={styles.top}>
+                <h1 className={styles.name}>{props.profileInfo.fullName}</h1>
+                <Status userId={props.userId} status={props.status} getStatus={props.getStatus} updateStatus={props.updateStatus} requestInProgress={false} />
+            </div>
             <div className={styles.row}>
                 <h3 className={styles.label}>Looking for a Job:</h3>
                 <span className={styles.birthdate_labeled}>{props.profileInfo.lookingForAJob ? "yes" : "no"}</span> {/*!!CLASSNAME*/}

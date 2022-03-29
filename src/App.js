@@ -1,8 +1,8 @@
 import './App.scss';
 import { Route, Routes } from 'react-router-dom';
 
+import Login from './components/Login/Login'
 import Header from './components/Header/Header';
-import Sidebar from './components/Sidebar/Sidebar';
 import Profile from './components/Profile/Profile';
 import DialogsContainer from './components/Dialogs/DialogsContainer';
 import Chat from './components/Chat/Chat';
@@ -14,6 +14,7 @@ import Users from './components/Users/Users';
 import ProfileContainer from './components/Profile/ProfileContainer';
 
 import HeaderContainer from './components/Header/HeaderContainer';
+import SidebarContainer from './components/Sidebar/SidebarContainer';
 
 
 
@@ -29,13 +30,14 @@ const App = (props) => {
             <Route path='/messages' element={<DialogsContainer/>} />
             <Route path='/dialog' element={<Chat />} />
             <Route path='/friends' element={<Friends/>} />
-            <Route path='/users' element={<Users/>} />
+            <Route path='/users' element={<Users />} />
+            <Route path='/login' element={<Login/>} />
             {/* <Route path='/feed' element={<Feed />} /> */}
             {/* <Route path='/audio' element={<Audio />} /> */}
             {/* <Route path='/settings' element={<Settings />} /> */}
           </Routes>
         </main>
-        <Sidebar />
+        <SidebarContainer />
       </div>
     </div>
   );

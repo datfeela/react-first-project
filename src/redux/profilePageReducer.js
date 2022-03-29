@@ -2,10 +2,12 @@ import { profileAPI } from "../api/api";
 
 const ADD_POST = 'ADD-POST',
     INPUT_CHANGE = 'INPUT-CHANGE',
-    SET_PROFILE_INFO = 'GET_PROFILE_INFO';
+    SET_PROFILE_INFO = 'GET_PROFILE_INFO',
+    SET_STATUS = 'SET_STATUS'
 
 let initialState = {
     profileInfo: null,
+    profileStatus: null,
     inputText: '',
     posts: [
         {
@@ -63,6 +65,11 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 profileInfo: action.profileInfo
             }
+        case SET_STATUS:
+            return {
+                ...state,
+                profileStatus: action.status
+            }
         default:
             return state;
     }
@@ -77,6 +84,11 @@ export const setProfileInfo = (profileInfo) => ({
     profileInfo
 })
 
+export const setStatus = (status) => ({
+    type: SET_STATUS,
+    status
+})
+
 export const addPost = () => ({
     type: ADD_POST
 })
@@ -86,11 +98,27 @@ export const newPostInputChange = (text) => ({
     inputText: text
 })
 
+
+
 //TC
 
 export const getProfileInfo = (userId) => (dispatch) => {
     profileAPI.getProfileInfo(userId).then((response) => {
         dispatch(setProfileInfo(response))
+    });
+}
+
+export const getStatus = (userId) => (dispatch) => {
+    profileAPI.getStatus(userId).then((response) => {
+        dispatch(setStatus(response))
+    });
+}
+
+export const updateStatus = (status) => (dispatch) => {
+    //updating
+    profileAPI.updateStatus(status).then((response) => {
+        response.resultCode === 0 ? dispatch(setStatus(status)) : console.log(response);
+        //update finished
     });
 }
 

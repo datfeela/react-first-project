@@ -4,6 +4,7 @@ import Header from "./Header/Header";
 import MessagesContainer from "./Messages/MessagesContainer";
 import InputContainer from "./Input/InputContainer";
 import Sidebar from "./Sidebar/Sidebar"
+import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 
 const Chat = (props) => {
     return (
@@ -18,4 +19,6 @@ const Chat = (props) => {
     );
 }
 
-export default Chat;
+
+let AuthRedirectComponent = withAuthRedirect(Chat)
+export default AuthRedirectComponent;

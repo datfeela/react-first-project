@@ -8,7 +8,7 @@ const Input = (props) => {
 
     const inputChangeHandler = (e) => {
         let text = e.target.value;
-        props.inputChangeHandler(text);
+        props.chatInputChange(text);
     };
 
     return (
