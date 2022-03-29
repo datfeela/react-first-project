@@ -1,25 +1,29 @@
+import { connect } from "react-redux";
+import { logIn } from "../../redux/authReducer";
 import styles from "./Login.module.scss";
-// import { connect } from "react-redux";
-// import { useNavigate } from "react-router-dom";
+import LoginForm from "./LoginForm/LoginForm";
 
 const Login = (props) => {
-    // if (props.isAuth) {
-    //     const navigate = useNavigate();
-    //     navigate(-1);
-    // }
+    const handleSubmit = (formData) => {
+        props.logIn(formData);
+    };
+
     return (
         <div className={styles.wrap}>
             <h1>login</h1>
+            <LoginForm onSubmit={handleSubmit} />
         </div>
     );
 };
 
-// let mapStateToProps = (state) => {
-//     return {
-//         isAuth: state.auth.isAuth,
-//     };
-// };
+let mapStateToProps = (state) => {
+    return {
+        isAuth: state.auth.isAuth,
+    };
+};
 
-// let LoginContainer = connect(mapStateToProps)(Login);
+let dispatchObj = {
+    logIn,
+};
 
-export default Login;
+export default connect(mapStateToProps, dispatchObj)(Login);

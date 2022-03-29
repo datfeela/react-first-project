@@ -7,12 +7,6 @@ import { getUserData } from '../redux/authReducer';
 export const withAuthRedirect = (Component) => {
 
     let RedirectComponent = (props) => {
-
-        // useEffect(() => {
-        //     debugger;
-        //     if (!props.isAuth) props.getUserData()
-        // })
-
         if (props.isAuth) return (
             <Component {...props} />
         )
@@ -27,7 +21,11 @@ export const withAuthRedirect = (Component) => {
         };
     };
 
-    let containerAuthRedirect = connect(mapStateToProps, {getUserData})(RedirectComponent);
+    let dispatchObj = {
+        getUserData
+    }
+
+    let containerAuthRedirect = connect(mapStateToProps, dispatchObj)(RedirectComponent);
     return containerAuthRedirect;
 }
 

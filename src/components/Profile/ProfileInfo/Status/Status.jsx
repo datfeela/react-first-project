@@ -12,14 +12,10 @@ class Status extends React.Component {
     input = React.createRef();
 
     componentDidMount = () => {
-        // console.log(this.props);
         this.props.getStatus(this.props.userId);
     };
 
     componentDidUpdate = (prevProps, prevState) => {
-        let a = this.state;
-        let b = this.props;
-        // debugger;
         if (prevProps.status !== this.props.status) {
             this.setState({
                 status: this.props.status
