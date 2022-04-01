@@ -1,4 +1,58 @@
-// .checkbox{
-//     width: 15px;
-//     height: 15px;
-// }
+@import "variables.scss";
+
+.inputWrap{
+    position: relative;
+}
+
+.warningWrap{
+    position: absolute;
+    top: calc(50% - (#{$loginWarningiconSize} / 2));
+    right: 10px;
+}
+
+.input {
+    display: block;
+    width: 100%;
+    font-size: 16px;
+    padding: 10px 45px 10px 20px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid rgba($color: $greyColor, $alpha: 0.15);
+
+    &_error {
+        border: 1px solid rgba($color: $redColor, $alpha: 0.7);
+    }
+}
+
+
+
+.checkboxWrap {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.checkbox {
+    height: 18px;
+    width: 18px;
+    margin-right: 10px;
+    border: 1px solid rgba($color: $greyColor, $alpha: 0.15);
+
+    &__text{
+        color: rgba($color: $greyColor, $alpha: 0.9);
+    }
+}
+
+.button {
+    font-size: 15px;
+    padding: 10px 15px;
+    border-radius: 5px;
+    background-color: $lightBlueColor;
+    color: #fff;
+
+    width: 100%;
+
+    &:hover {
+        background-color: rgba($color: $lightBlueColor, $alpha: 0.8);
+    }
+}

@@ -1,14 +1,12 @@
 import { profileAPI } from "../api/api";
 
 const ADD_POST = 'ADD-POST',
-    INPUT_CHANGE = 'INPUT-CHANGE',
     SET_PROFILE_INFO = 'GET_PROFILE_INFO',
     SET_STATUS = 'SET_STATUS'
 
 let initialState = {
     profileInfo: null,
     profileStatus: null,
-    inputText: '',
     posts: [
         {
             authorId: 0,
@@ -48,17 +46,12 @@ const profileReducer = (state = initialState, action) => {
                 authorId: 4,
                 author: 'Ivan Ivan 4',
                 date: `${new Date().getMonth()} ${new Date().getDate()}, ${new Date().getFullYear()}`,
-                text: state.inputText
+                text: action.text
             }
             return {
                 ...state,
                 posts: [newPost, ...state.posts],
                 inputText: ''
-            }
-        case INPUT_CHANGE:
-            return {
-                ...state,
-                inputText: action.inputText
             }
         case SET_PROFILE_INFO:
             return {
@@ -89,16 +82,10 @@ export const setStatus = (status) => ({
     status
 })
 
-export const addPost = () => ({
-    type: ADD_POST
+export const addPost = (text) => ({
+    type: ADD_POST,
+    text
 })
-
-export const newPostInputChange = (text) => ({
-    type: INPUT_CHANGE,
-    inputText: text
-})
-
-
 
 //TC
 
@@ -121,11 +108,3 @@ export const updateStatus = (status) => (dispatch) => {
         //update finished
     });
 }
-
-// export const getProfileInfo = (userId) => {
-//     return (dispatch) => {
-//         profileAPI.getProfileInfo(userId).then((response) => {
-//             dispatch(setProfileInfo(response))
-//         });
-//     }
-// }

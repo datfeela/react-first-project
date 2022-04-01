@@ -52,7 +52,6 @@ const Profile = (props) => {
                     <Posts
                         posts={props.profile.posts}
                         inputText={props.profile.inputText}
-                        newPostInputChange={props.newPostInputChange}
                         addPost={props.addPost}
                     />
                 </div>

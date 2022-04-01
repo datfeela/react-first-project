@@ -10,8 +10,10 @@ const Login = (props) => {
 
     return (
         <div className={styles.wrap}>
-            <h1>login</h1>
-            <LoginForm onSubmit={handleSubmit} />
+            <div className={styles.container}>
+                <h1 className={styles.title}>Log In</h1>
+                <LoginForm onSubmit={handleSubmit} />
+            </div>
         </div>
     );
 };

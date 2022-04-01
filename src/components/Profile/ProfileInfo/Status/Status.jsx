@@ -1,26 +1,18 @@
 import React from "react";
 import styles from "./Status.module.scss";
 import Preloader from "./../../../_common/Preloader/Preloader";
+import { Field } from "redux-form";
+import { reduxForm } from "redux-form";
 
 class Status extends React.Component {
     state = {
         editMode: false,
-        status: this.props.status,
     };
 
-    editModeBlock = React.createRef();
-    input = React.createRef();
+    statusBlockRef = React.createRef();
 
     componentDidMount = () => {
         this.props.getStatus(this.props.userId);
-    };
-
-    componentDidUpdate = (prevProps, prevState) => {
-        if (prevProps.status !== this.props.status) {
-            this.setState({
-                status: this.props.status
-            })
-        }
     };
 
     activateEditMode = () => {
@@ -35,61 +27,67 @@ class Status extends React.Component {
     deactivateEditMode = () => {
         this.setState({
             editMode: false,
-            status: this.props.status,
         });
         document.removeEventListener("mousedown", this.handleClick);
     };
 
-    saveStatus = () => {
+    saveStatus = (formData) => {
         this.setState({
             editMode: false,
-            status: this.input.current.value,
         });
         document.removeEventListener("mousedown", this.handleClick);
-        this.props.updateStatus(this.input.current.value);
+        this.props.updateStatus(formData.statusEditMode);
     };
 
     handleClick = (e) => {
-        if (!this.editModeBlock.current.contains(e.target)) {
+        if (!this.statusBlockRef.current.contains(e.target)) {
             this.deactivateEditMode();
         }
     };
 
-    handleInputChange = (e) => {
-        let text = e.target.value;
-        this.setState({
-            status: text,
-        });
-    };
-
     render() {
         return (
-            <div className={styles.wrap}>
-                {!this.props.status && <span onClick={this.activateEditMode}>no status</span>}
-                {this.props.status && (
-                    <span onClick={this.activateEditMode} className={styles.text}>
-                        {this.props.status}
-                    </span>
-                )}
+            <div ref={this.statusBlockRef} className={styles.wrap}>
+                <span onClick={this.activateEditMode} className={styles.text}>
+                    {this.props.status ? this.props.status : "no status"}
+                </span>
                 {this.props.requestInProgress && <Preloader />}
-                {this.state.editMode && (
-                    <div ref={this.editModeBlock} className={styles.edit_mode_block}>
-                        <input
-                            ref={this.input}
-                            onChange={this.handleInputChange}
-                            className={styles.input}
-                            autoFocus={true}
-                            value={this.state.status ? this.state.status : ""}
-                            type="text"
-                        />
-                        <button onClick={this.saveStatus} className={styles.save_button}>
-                            Save
-                        </button>
-                    </div>
-                )}
+                {this.state.editMode && <ReduxStatusForm value={this.props.status} onSubmit={this.saveStatus} />}
             </div>
         );
     }
 }
+
+class StatusForm extends React.Component {
+    componentDidMount = () => {
+        this.props.initialize({ statusEditMode: this.props.value ? this.props.value : "" });
+    };
+
+    render() {
+        return (
+            <form onSubmit={this.props.handleSubmit} className={styles.edit_mode_block}>
+                <Field
+                    component={textInput}
+                    name={"statusEditMode"}
+                    className={styles.input}
+                    autoFocus={true}
+                    type="text"
+                />
+                <button className={styles.save_button}>Save</button>
+            </form>
+        );
+    }
+}
+
+const textInput = ({ input, type, meta, ...props }) => {
+    input.value.length > 300 && (input.value = input.value.substr(0, 300));
+    return (
+        <div>
+            <input {...input} className={props.className} placeholder={props.placeholder} type={type} />
+        </div>
+    );
+};
+
+const ReduxStatusForm = reduxForm({ form: "status" })(StatusForm);
 
 export default Status;

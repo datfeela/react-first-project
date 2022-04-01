@@ -11,7 +11,7 @@ const Post = (props) => {
                 </div>
             </div>
             <div className={styles.content}>
-                {props.text}
+                <span className={styles.content_text}>{props.text}</span>
             </div>
             <div className={styles.footer}>
                 (здесь лукасовые)
