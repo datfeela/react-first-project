@@ -15,25 +15,15 @@ let initialState = {
         {
             text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Non quae nostrum provident cum, nemo itaque, distinctio excepturi molestiae repellat fuga ipsum ea voluptate temporibus.'
         },
-    ],
-    inputText: ''
+    ]
 };
 
 const chatReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SEND_MESSAGE:
-            let newMessage = {
-                text: state.inputText
-            }
+        case SEND_MESSAGE: 
             return {
                 ...state,
-                messages: [...state.messages, newMessage],
-                inputText: ''
-            }
-        case INPUT_CHANGE:
-            return {
-                ...state,
-                inputText: action.messageText
+                messages: [...state.messages, { text: action.messageText }]
             }
         default:
             return state;
@@ -45,8 +35,9 @@ export default chatReducer;
 
 //AC
 
-export const sendMessage = () => ({
-    type: SEND_MESSAGE
+export const sendMessage = (messageText) => ({
+    type: SEND_MESSAGE,
+    messageText
 })
 
 export const chatInputChange = (text) => ({

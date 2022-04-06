@@ -5,27 +5,31 @@ import Posts from "./Posts/Posts";
 import Preloader from "../_common/Preloader/Preloader";
 
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams, useNavigate } from "react-router-dom";
 
 const Profile = (props) => {
     //      !react router hooks testing
     const params = useParams();
 
-    const getProfileInfo = () => {
-        props.getProfileInfo(params.userId);
+    const initializeProfile = (id) => {
+        props.initializeProfile(id);
     };
 
-    // useEffect(() => {
-    //     if (!props.profile.profileInfo) {
-    //         getProfileInfo();
-    //     }
-    // });
+    let currentUserId = params.userId ? params.userId : props.authUserId;
 
     useEffect(() => {
-        if (!props.profile.profileInfo || props.profile.profileInfo.userId !== params.userId) getProfileInfo();
+        if (!props.profile.profileInfo || props.profile.profileInfo.userId !== currentUserId) {
+            currentUserId && initializeProfile(currentUserId);
+        } 
     }, []);
 
     //      !-------------------------//
+
+    if (!currentUserId && !props.isAuth) {
+        return (
+            <Navigate to={'../login'}/>
+        )
+    }
 
     if (!props.profile.profileInfo) {
         return (
@@ -36,24 +40,18 @@ const Profile = (props) => {
     }
     return (
         <div className={styles.wrap}>
-            {/* <img className={styles.banner} src="https://via.placeholder.com/1000x150?text=Banner" alt="theme" /> */}
             <div className={styles.columns_wrap}>
                 <div className={styles.column_side}>
                     <Avatar photo={props.profile.profileInfo.photos.large} />
                 </div>
                 <div className={styles.column_main}>
                     <ProfileInfo
-                        userId={params.userId}
+                        userId={currentUserId}
                         profileInfo={props.profile.profileInfo}
-                        status={props.profile.profileStatus}
-                        getStatus={props.getStatus}
+                        status={props.profile.profileStatus} 
                         updateStatus={props.updateStatus}
                     />
-                    <Posts
-                        posts={props.profile.posts}
-                        inputText={props.profile.inputText}
-                        addPost={props.addPost}
-                    />
+                    <Posts posts={props.profile.posts} inputText={props.profile.inputText} addPost={props.addPost} />
                 </div>
             </div>
         </div>

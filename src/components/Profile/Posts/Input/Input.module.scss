@@ -1,13 +1,5 @@
 @import "variables.scss";
 
-.input {
-    resize: none;
-    width: 100%;
-    border: 1px solid rgba($color: $greyColor, $alpha: 0.1);
-    border-radius: 5px;
-    padding: 10px 15px;
-}
-
 .button {
     display: block;
     margin: 10px 0px 0px auto;
@@ -20,11 +12,4 @@
     &:hover {
         background-color: rgba($color: $lightBlueColor, $alpha: 0.8);
     }
-}
-
-.error,
-.warning {
-    padding: 5px;
-    font-size: 14px;
-    color: rgba($color: $mainFontColor, $alpha: 0.5);
 }

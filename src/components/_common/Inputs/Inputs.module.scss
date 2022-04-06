@@ -1,0 +1,64 @@
+@import "variables.scss";
+
+.inputWrap{
+    position: relative;
+}
+
+.input {
+    display: block;
+    width: 100%;
+    padding: 3px 8px;
+    font-size: 15px;
+    border-radius: 3px;
+    border: 1px solid rgba($color: $greyColor, $alpha: 0.15);
+
+    &_login {
+        padding: 10px 45px 10px 20px;
+        font-size: 16px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+
+    &_error {
+        border: 1px solid rgba($color: $redColor, $alpha: 0.7);
+    }
+}
+
+.textarea {
+    resize: none;
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba($color: $greyColor, $alpha: 0.1);
+    border-radius: 5px;
+    padding: 10px 15px;
+}
+
+.textareaError,
+.textareaWarning {
+    padding: 5px;
+    font-size: 14px;
+    color: rgba($color: $mainFontColor, $alpha: 0.5);
+}
+
+.warningWrap{
+    position: absolute;
+    top: calc(50% - (#{$loginWarningiconSize} / 2));
+    right: 10px;
+}
+
+.checkboxWrap {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.checkbox {
+    height: 18px;
+    width: 18px;
+    margin-right: 10px;
+    border: 1px solid rgba($color: $greyColor, $alpha: 0.15);
+
+    &__text{
+        color: rgba($color: $greyColor, $alpha: 0.9);
+    }
+}

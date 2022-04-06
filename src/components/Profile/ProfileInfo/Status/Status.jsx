@@ -3,6 +3,7 @@ import styles from "./Status.module.scss";
 import Preloader from "./../../../_common/Preloader/Preloader";
 import { Field } from "redux-form";
 import { reduxForm } from "redux-form";
+import { renderInput } from "../../../_common/Inputs/Inputs";
 
 class Status extends React.Component {
     state = {
@@ -10,10 +11,6 @@ class Status extends React.Component {
     };
 
     statusBlockRef = React.createRef();
-
-    componentDidMount = () => {
-        this.props.getStatus(this.props.userId);
-    };
 
     activateEditMode = () => {
         if (!this.props.requestInProgress) {
@@ -58,6 +55,8 @@ class Status extends React.Component {
     }
 }
 
+export default Status;
+
 class StatusForm extends React.Component {
     componentDidMount = () => {
         this.props.initialize({ statusEditMode: this.props.value ? this.props.value : "" });
@@ -67,9 +66,9 @@ class StatusForm extends React.Component {
         return (
             <form onSubmit={this.props.handleSubmit} className={styles.edit_mode_block}>
                 <Field
-                    component={textInput}
+                    component={renderInput}
                     name={"statusEditMode"}
-                    className={styles.input}
+                    inputMaxLength={300}
                     autoFocus={true}
                     type="text"
                 />
@@ -79,15 +78,5 @@ class StatusForm extends React.Component {
     }
 }
 
-const textInput = ({ input, type, meta, ...props }) => {
-    input.value.length > 300 && (input.value = input.value.substr(0, 300));
-    return (
-        <div>
-            <input {...input} className={props.className} placeholder={props.placeholder} type={type} />
-        </div>
-    );
-};
-
 const ReduxStatusForm = reduxForm({ form: "status" })(StatusForm);
 
-export default Status;

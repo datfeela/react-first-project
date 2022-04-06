@@ -1,24 +1,24 @@
 import React from "react";
 import styles from "./Input.module.scss";
+import { reduxForm } from "redux-form";
+import { Field } from "redux-form";
+import { isRequiredNoError } from "../../../utils/formValidation";
+import { renderTextarea } from "../../_common/Inputs/Inputs";
 
 const Input = (props) => {
-    const sendMessage = () => {
-        props.sendMessage();
-    };
-
-    const inputChangeHandler = (e) => {
-        let text = e.target.value;
-        props.chatInputChange(text);
-    };
-
     return (
-        <div className={styles.wrap + " wrap"}>
-            <textarea onChange={inputChangeHandler} className={styles.input} placeholder="Type a message..." value={props.inputText} />
-            <button onClick={sendMessage} className={styles.button}>
-                Send
-            </button>
-        </div>
+        <form onSubmit={props.handleSubmit} className={styles.wrap + " wrap"}>
+            <Field
+                component={renderTextarea}
+                name="newMessageText"
+                type="text"
+                className={styles.input}
+                placeholder="Type a message..."
+                validate={isRequiredNoError}
+            />
+            <button className={styles.button}>Send</button>
+        </form>
     );
 };
 
-export default Input;
+export default reduxForm({ form: "newMessage" })(Input);

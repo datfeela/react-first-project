@@ -1,10 +1,13 @@
+import { type } from "@testing-library/user-event/dist/type";
 import { profileAPI } from "../api/api";
 
 const ADD_POST = 'ADD-POST',
     SET_PROFILE_INFO = 'GET_PROFILE_INFO',
-    SET_STATUS = 'SET_STATUS'
+    SET_STATUS = 'SET_STATUS',
+    INITIALIZE_SUCCESS = 'INITIALIZE_SUCCESS'
 
 let initialState = {
+    isInitialized: false,
     profileInfo: null,
     profileStatus: null,
     posts: [
@@ -41,6 +44,11 @@ let initialState = {
 
 const profileReducer = (state = initialState, action) => {
     switch (action.type) {
+        case INITIALIZE_SUCCESS:
+            return {
+                ...state,
+                isInitialized: true
+            }
         case ADD_POST:
             let newPost = {
                 authorId: 4,
@@ -72,6 +80,10 @@ export default profileReducer;
 
 //AC
 
+const setInitializeSuccess = () => ({
+    type: INITIALIZE_SUCCESS
+})
+
 export const setProfileInfo = (profileInfo) => ({
     type: SET_PROFILE_INFO,
     profileInfo
@@ -89,14 +101,23 @@ export const addPost = (text) => ({
 
 //TC
 
+export const initializeProfile = (userId) => (dispatch) => {
+    const profileInfoPromise = dispatch(getProfileInfo(userId));
+    const statusPromise = dispatch(getStatus(userId));
+    Promise.all([profileInfoPromise, statusPromise])
+        .then(() => {
+            dispatch(setInitializeSuccess())
+        })
+}
+
 export const getProfileInfo = (userId) => (dispatch) => {
-    profileAPI.getProfileInfo(userId).then((response) => {
+    return profileAPI.getProfileInfo(userId).then((response) => {
         dispatch(setProfileInfo(response))
     });
 }
 
 export const getStatus = (userId) => (dispatch) => {
-    profileAPI.getStatus(userId).then((response) => {
+    return profileAPI.getStatus(userId).then((response) => {
         dispatch(setStatus(response))
     });
 }

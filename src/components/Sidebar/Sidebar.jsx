@@ -4,12 +4,16 @@ import styles from "./Sidebar.module.scss";
 const linkClassName = ({ isActive }) => (isActive ? styles.link_active : styles.link_inactive);
 
 const Sidebar = (props) => {
+    const profileChangeCheck = () => {
+        if (props.authUserId !== props.profileInfo.userId) props.initializeProfile(props.authUserId);
+    };
+
     if (props.isAuth) {
         return (
             <nav className={styles.sidebar}>
                 <ul className={styles.list}>
                     <li className={styles.item}>
-                        <NavLink to="/profile" className={linkClassName}>
+                        <NavLink onClick={profileChangeCheck} to="/profile" className={linkClassName}>
                             Profile
                         </NavLink>
                     </li>
@@ -24,7 +28,7 @@ const Sidebar = (props) => {
                         </NavLink>
                     </li>
                     <li className={styles.item}>
-                        <NavLink to="users" className={linkClassName}>
+                        <NavLink to="/users" className={linkClassName}>
                             Users
                         </NavLink>
                     </li>
@@ -47,7 +51,7 @@ const Sidebar = (props) => {
             </nav>
         );
     }
-    return ('')
+    return "";
 };
 
 export default Sidebar;

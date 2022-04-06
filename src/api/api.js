@@ -30,10 +30,10 @@ export const usersAPI = {
 //!fix userId
 export const profileAPI = {
     getProfileInfo(userId) {
-        return instance.get(`profile/${userId ? userId : "22988"}`).then(response => response.data);
+        return instance.get(`profile/${userId}`).then(response => response.data);
     },
     getStatus(userId) {
-        return instance.get(`profile/status/${userId ? userId : "22988"}`).then(response => response.data);
+        return instance.get(`profile/status/${userId}`).then(response => response.data);
     },
     updateStatus(status) {
         return instance.put(`profile/status`, { status: status }).then(response => response.data);
@@ -46,5 +46,8 @@ export const authAPI = {
     },
     logIn(authData) {
         return instance.post(`auth/login`, { email: authData.login, password: authData.password, rememberMe: authData.rememberMe }).then(response => response.data);
+    },
+    logOut() {
+        return instance.delete(`auth/login`).then(response => response.data);
     }
 }

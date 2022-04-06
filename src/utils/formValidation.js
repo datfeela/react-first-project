@@ -2,6 +2,10 @@ export const isRequired = (value) => {
     return value ? undefined : 'Field is required'
 }
 
+export const isRequiredNoError = (value) => {
+    return value ? undefined : " ";
+};
+
 export const maxLength = (max) => (value) => {
     return value && value.length > max ? `Must be ${max} characters or less` : undefined
 }
