@@ -18,7 +18,7 @@ const Profile = (props) => {
     let currentUserId = params.userId ? params.userId : props.authUserId;
 
     useEffect(() => {
-        if (!props.profile.profileInfo || props.profile.profileInfo.userId !== currentUserId) {
+        if (!props.profileInfo || props.profileInfo.userId !== currentUserId) {
             currentUserId && initializeProfile(currentUserId);
         } 
     }, []);
@@ -31,27 +31,28 @@ const Profile = (props) => {
         )
     }
 
-    if (!props.profile.profileInfo) {
+    if (!props.profileInfo) {
         return (
             <div className={styles.preloaderWrap}>
                 <Preloader />
             </div>
         );
     }
+
     return (
         <div className={styles.wrap}>
             <div className={styles.columns_wrap}>
                 <div className={styles.column_side}>
-                    <Avatar photo={props.profile.profileInfo.photos.large} />
+                    <Avatar photo={props.profileInfo.photos.large} />
                 </div>
                 <div className={styles.column_main}>
                     <ProfileInfo
                         userId={currentUserId}
-                        profileInfo={props.profile.profileInfo}
-                        status={props.profile.profileStatus} 
+                        profileInfo={props.profileInfo}
+                        status={props.profileStatus} 
                         updateStatus={props.updateStatus}
                     />
-                    <Posts posts={props.profile.posts} inputText={props.profile.inputText} addPost={props.addPost} />
+                    <Posts posts={props.posts} addPost={props.addPost} />
                 </div>
             </div>
         </div>

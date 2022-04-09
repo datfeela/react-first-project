@@ -1,6 +1,7 @@
 import { connect } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { logIn } from "../../redux/authReducer";
+import { selectGeneralError, selectIsAuth } from "../../redux/authSelectors";
 import styles from "./Login.module.scss";
 import LoginForm from "./LoginForm/LoginForm";
 
@@ -25,8 +26,8 @@ const Login = (props) => {
 
 let mapStateToProps = (state) => {
     return {
-        isAuth: state.auth.isAuth,
-        generalError: state.auth.generalError,
+        isAuth: selectIsAuth(state),
+        generalError: selectGeneralError(state),
     };
 };
 

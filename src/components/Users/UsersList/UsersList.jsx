@@ -11,7 +11,7 @@ let UsersList = (props) => {
         <div className={styles.wrap + " wrap"}>
             {userElems}
             <button className={props.isFetching ? styles.buttonLoadMore_hovered : styles.buttonLoadMore} onClick={props.getUsers}>
-                load more
+                <span className={styles.DELETETHIS}>load more</span>
             </button>
             <div className={props.isFetching ? styles.preloader : styles.preloader_disabled}>
                 <Preloader />

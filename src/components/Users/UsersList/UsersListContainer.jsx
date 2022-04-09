@@ -1,6 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import { getUsers, subscribe } from "../../../redux/usersPageReducer";
+import { selectCurrentPageNumber, selectIsFetching, selectUsers, selectUsersPerLoad } from "../../../redux/usersPageSelectors";
 import UsersList from "./UsersList";
 
 class UsersListContainer extends React.Component {
@@ -24,6 +25,7 @@ class UsersListContainer extends React.Component {
                 users={this.props.users}
                 subscribe={this.subscribe}
                 getUsers={this.getUsers}
+                isFetching={this.props.isFetching}
             />
         );
     };
@@ -31,10 +33,10 @@ class UsersListContainer extends React.Component {
 
 let mapStateToProps = (state) => {
     return {
-        users: state.usersPage.users,
-        usersPerLoad: state.usersPage.usersPerLoad,
-        currentPage: state.usersPage.currentPage,
-        isFetching: state.usersPage.isFetching,
+        users: selectUsers(state),
+        usersPerLoad: selectUsersPerLoad(state),
+        currentPage: selectCurrentPageNumber(state),
+        isFetching: selectIsFetching(state),
     };
 };
 

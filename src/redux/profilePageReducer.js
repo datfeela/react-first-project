@@ -1,4 +1,3 @@
-import { type } from "@testing-library/user-event/dist/type";
 import { profileAPI } from "../api/api";
 
 const ADD_POST = 'ADD-POST',

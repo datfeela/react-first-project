@@ -1,13 +1,16 @@
 import { connect } from "react-redux";
-import { compose } from "redux";
+import { selectAuthUserId, selectIsAuth } from "../../redux/authSelectors";
+import { selectPosts, selectProfileInfo, selectStatus} from "../../redux/profilePageSelectors";
 import { initializeProfile, updateStatus, addPost } from "../../redux/profilePageReducer";
 import Profile from "./Profile";
 
 let mapStateToProps = (state) => {
     return {
-        profile: state.profilePage,
-        authUserId: state.auth.id,
-        isAuth: state.auth.isAuth
+        profileInfo: selectProfileInfo(state),
+        profileStatus: selectStatus(state),
+        posts: selectStatus(state),
+        authUserId: selectAuthUserId(state),
+        isAuth: selectIsAuth(state),
     };
 };
 
