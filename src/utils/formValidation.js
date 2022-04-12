@@ -13,3 +13,11 @@ export const maxLength = (max) => (value) => {
 export const minLength = (min) => (value) => {
     return value && value.length < min ? `Must be ${min} characters or more` : undefined
 }
+
+export const validateEmail = (value) => {
+    let error;
+    if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(value)) {
+        error = "Invalid email address";
+    }
+    return error;
+};

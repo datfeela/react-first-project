@@ -5,7 +5,8 @@ import Posts from "./Posts/Posts";
 import Preloader from "../_common/Preloader/Preloader";
 
 import { useEffect } from "react";
-import { Navigate, useParams, useNavigate } from "react-router-dom";
+import { Navigate, useParams} from "react-router-dom";
+import Comp from "./TestComponent";
 
 const Profile = (props) => {
     //      !react router hooks testing
@@ -20,8 +21,8 @@ const Profile = (props) => {
     useEffect(() => {
         if (!props.profileInfo || props.profileInfo.userId !== currentUserId) {
             currentUserId && initializeProfile(currentUserId);
-        } 
-    }, []);
+        }
+    }, [currentUserId]);
 
     //      !-------------------------//
 
@@ -38,7 +39,7 @@ const Profile = (props) => {
             </div>
         );
     }
-
+        
     return (
         <div className={styles.wrap}>
             <div className={styles.columns_wrap}>
@@ -49,10 +50,11 @@ const Profile = (props) => {
                     <ProfileInfo
                         userId={currentUserId}
                         profileInfo={props.profileInfo}
-                        status={props.profileStatus} 
+                        status={props.profileStatus}
                         updateStatus={props.updateStatus}
                     />
-                    <Posts posts={props.posts} addPost={props.addPost} />
+                    <Posts posts={props.posts} addPost={props.addPost} currentUserId={currentUserId} />
+                    {/* <Comp/> */}
                 </div>
             </div>
         </div>

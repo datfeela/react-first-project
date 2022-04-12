@@ -1,82 +1,64 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Status.module.scss";
 import Preloader from "./../../../_common/Preloader/Preloader";
 import { Field } from "redux-form";
 import { reduxForm } from "redux-form";
 import { renderInput } from "../../../_common/Inputs/Inputs";
 
-class Status extends React.Component {
-    state = {
-        editMode: false,
-    };
+const Status = (props) => {
+    const [isEditMode, setIsEditMode] = useState(false);
+    let statusBlockRef = React.useRef();
 
-    statusBlockRef = React.createRef();
-
-    activateEditMode = () => {
-        if (!this.props.requestInProgress) {
-            this.setState({
-                editMode: true,
-            });
-            document.addEventListener("mousedown", this.handleClick);
+    const activateEditMode = () => {
+        if (!props.requestInProgress) {
+            setIsEditMode(true);
+            document.addEventListener("mousedown", handleClick);
         }
     };
 
-    deactivateEditMode = () => {
-        this.setState({
-            editMode: false,
-        });
-        document.removeEventListener("mousedown", this.handleClick);
+    const deactivateEditMode = () => {
+        setIsEditMode(false);
+        document.removeEventListener("mousedown", handleClick);
     };
 
-    saveStatus = (formData) => {
-        this.setState({
-            editMode: false,
-        });
-        document.removeEventListener("mousedown", this.handleClick);
-        this.props.updateStatus(formData.statusEditMode);
+    const saveStatus = (formData) => {
+        setIsEditMode(false);
+        document.removeEventListener("mousedown", handleClick);
+        props.updateStatus(formData.statusEditMode);
     };
 
-    handleClick = (e) => {
-        if (!this.statusBlockRef.current.contains(e.target)) {
-            this.deactivateEditMode();
+    const handleClick = (e) => {
+        if (!statusBlockRef.current.contains(e.target)) {
+            deactivateEditMode();
         }
     };
 
-    render() {
-        return (
-            <div ref={this.statusBlockRef} className={styles.wrap}>
-                <span onClick={this.activateEditMode} className={styles.text}>
-                    {this.props.status ? this.props.status : "no status"}
+    return (
+        <div className={styles.wrap}>
+            <div ref={statusBlockRef} className={styles.wrap}>
+                <span onClick={activateEditMode} className={styles.text}>
+                    {props.status ? props.status : "type something here..."}
                 </span>
-                {this.props.requestInProgress && <Preloader />}
-                {this.state.editMode && <ReduxStatusForm value={this.props.status} onSubmit={this.saveStatus} />}
+                {props.requestInProgress && <Preloader />}
+                {isEditMode && <ReduxStatusForm value={props.status} onSubmit={saveStatus} />}
             </div>
-        );
-    }
-}
+        </div>
+    );
+};
 
 export default Status;
 
-class StatusForm extends React.Component {
-    componentDidMount = () => {
-        this.props.initialize({ statusEditMode: this.props.value ? this.props.value : "" });
-    };
+const StatusForm = (props) => {
+    useEffect(() => {
+        props.initialize({ statusEditMode: props.value ? props.value : "" });
+    }, [])
 
-    render() {
-        return (
-            <form onSubmit={this.props.handleSubmit} className={styles.edit_mode_block}>
-                <Field
-                    component={renderInput}
-                    name={"statusEditMode"}
-                    inputMaxLength={300}
-                    autoFocus={true}
-                    type="text"
-                />
-                <button className={styles.save_button}>Save</button>
-            </form>
-        );
-    }
-}
+    return (
+        <form onSubmit={props.handleSubmit} className={styles.edit_mode_block}>
+            <Field component={renderInput} name={"statusEditMode"} inputMaxLength={300} autoFocus={true} type="text" />
+            <button className={styles.save_button}>Save</button>
+        </form>
+    );
+};
 
 const ReduxStatusForm = reduxForm({ form: "status" })(StatusForm);
-

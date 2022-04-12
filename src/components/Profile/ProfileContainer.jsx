@@ -8,7 +8,7 @@ let mapStateToProps = (state) => {
     return {
         profileInfo: selectProfileInfo(state),
         profileStatus: selectStatus(state),
-        posts: selectStatus(state),
+        posts: selectPosts(state),
         authUserId: selectAuthUserId(state),
         isAuth: selectIsAuth(state),
     };

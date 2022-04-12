@@ -10,11 +10,11 @@ const ProfileInfo = (props) => {
             </div>
             <div className={styles.row}>
                 <h3 className={styles.label}>Looking for a Job:</h3>
-                <span className={styles.birthdate_labeled}>{props.profileInfo.lookingForAJob ? "yes" : "no"}</span> {/*!!CLASSNAME*/}
+                <span className={styles.text_labeled}>{props.profileInfo.lookingForAJob ? "yes" : "no"}</span>
             </div>
             <div className={styles.row}>
                 <h3 className={styles.label}>LFAJ Desc:</h3>
-                <span className={styles.birthdate_labeled}>{props.profileInfo.lookingForAJobDescription}</span> {/*!!CLASSNAME*/}
+                <span className={styles.text_labeled}>{props.profileInfo.lookingForAJobDescription}</span>
             </div>
             <h2 className={styles.header}>About Me</h2>
             <div className={styles.personal_info}>{props.profileInfo.aboutMe}</div>

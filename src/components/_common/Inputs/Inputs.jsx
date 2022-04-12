@@ -41,6 +41,30 @@ export const renderInput = ({ input, type, meta, ...props }) => {
     );
 };
 
+export const renderTextareaFormik = ({ form, field, ...props }) => {
+    const InputClassSwitch = (inputType) => {
+        switch (inputType) {
+            // case "loginInput":
+            //     return styles.input + " " + styles.input_login;
+            default:
+                return styles.textarea;
+        }
+    };
+
+    const inputClassName = InputClassSwitch(props.inputType);
+
+    return (
+        <textarea
+            type={props.type}
+            name={field.name}
+            onChange={form.handleChange}
+            value={field.value}
+            className={inputClassName}
+            placeholder={props.placeholder}
+        />
+    );
+};
+
 export const renderTextarea = ({ input, type, meta, ...props }) => {
     const hasError = meta.touched && meta.error;
     const hasWarning = meta.touched && meta.warning;

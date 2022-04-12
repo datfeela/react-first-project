@@ -4,16 +4,12 @@ import styles from "./Sidebar.module.scss";
 const linkClassName = ({ isActive }) => (isActive ? styles.link_active : styles.link_inactive);
 
 const Sidebar = (props) => {
-    const profileChangeCheck = () => {
-        if (props.authUserId !== props.profileInfo.userId) props.initializeProfile(props.authUserId);
-    };
-
     if (props.isAuth) {
         return (
             <nav className={styles.sidebar}>
                 <ul className={styles.list}>
                     <li className={styles.item}>
-                        <NavLink onClick={profileChangeCheck} to="/profile" className={linkClassName}>
+                        <NavLink to="/profile" className={linkClassName}>
                             Profile
                         </NavLink>
                     </li>
