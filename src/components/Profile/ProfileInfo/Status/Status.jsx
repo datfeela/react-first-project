@@ -28,6 +28,7 @@ const Status = (props) => {
     };
 
     const handleClick = (e) => {
+        if(!statusBlockRef.current) document.removeEventListener("mousedown", handleClick);
         if (!statusBlockRef.current.contains(e.target)) {
             deactivateEditMode();
         }

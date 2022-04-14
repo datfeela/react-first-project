@@ -1,5 +1,31 @@
 import WarningWithPopup from "../WarningWithPopup/WarningWithPopup";
 import styles from "./Inputs.module.scss";
+import React, { useEffect } from "react";
+
+
+// export const renderInputFormik = ({ form, field, ...props }) => {
+//         const InputClassSwitch = (inputType) => {
+//             switch (inputType) {
+//                 // case "loginInput":
+//                 //     return styles.input + " " + styles.input_login;
+//                 default:
+//                     return styles.input;
+//             }
+//         };
+
+//         const inputClassName = InputClassSwitch(props.inputType);
+
+//         return (
+//             <input
+//                 type={props.type}
+//                 name={field.name}
+//                 onChange={form.handleChange}
+//                 value={field.value}
+//                 className={inputClassName}
+//                 placeholder={props.placeholder}
+//             />
+//         );
+// };
 
 export const renderInput = ({ input, type, meta, ...props }) => {
     const hasError = meta.touched && meta.error;
@@ -41,7 +67,7 @@ export const renderInput = ({ input, type, meta, ...props }) => {
     );
 };
 
-export const renderTextareaFormik = ({ form, field, ...props }) => {
+export const RenderTextareaFormik = ({ form, field, ...props }) => {
     const InputClassSwitch = (inputType) => {
         switch (inputType) {
             // case "loginInput":
@@ -51,13 +77,35 @@ export const renderTextareaFormik = ({ form, field, ...props }) => {
         }
     };
 
+    const textareaRef = React.createRef();
+
+    const changeHeight = (e) => {
+        textareaRef.current.style.height = `${props.defaultHeight + 2}px`;
+        let contentHeight = `${e.target.scrollHeight}px`;
+        textareaRef.current.style.height = contentHeight;
+    };
+
+    //проверяю значение на пустое для ресета высоты при сабмите
+    useEffect(() => {
+        if (!form.values[field.name]) resetHeight();
+    }, [form.values]);
+
+    const resetHeight = () => {
+        textareaRef.current.style.height = `${props.defaultHeight + 2}px`;
+    };
+
     const inputClassName = InputClassSwitch(props.inputType);
 
     return (
         <textarea
+            ref={textareaRef}
+            style={{ height: `${props.defaultHeight}px`, maxHeight: props.maxHeight }}
             type={props.type}
             name={field.name}
-            onChange={form.handleChange}
+            onChange={(e) => {
+                form.handleChange(e);
+                changeHeight(e);
+            }}
             value={field.value}
             className={inputClassName}
             placeholder={props.placeholder}

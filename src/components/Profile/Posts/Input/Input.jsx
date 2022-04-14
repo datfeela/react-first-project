@@ -1,8 +1,8 @@
 import styles from "./Input.module.scss";
 // import { reduxForm, Field } from "redux-form";
-import { ErrorMessage, Field, Formik } from "formik";
+import { ErrorMessage, Field, Form, Formik } from "formik";
 import { maxLength, isRequiredNoError } from "../../../../utils/formValidation";
-import { renderTextarea, renderTextareaFormik } from "../../../_common/Inputs/Inputs";
+import { renderTextarea, RenderTextareaFormik } from "../../../_common/Inputs/Inputs";
 
 //validation
 const maxLength500 = maxLength(500);
@@ -15,28 +15,28 @@ const validateNewPostField = (value) => {
 
 const NewPostForm = (props) => {
     const submit = (values, actions) => {
-        props.addPost(values.newPostText);
+        props.addPost(values.newPostText, props.currentUserId);
         actions.setSubmitting(false);
         actions.resetForm();
     };
     return (
         <Formik initialValues={{ newPostText: "" }} onSubmit={submit}>
-            {({ values, handleChange, handleSubmit, isSubmitting }) => (
-                <form onSubmit={handleSubmit}>
+            {({ isSubmitting }) => (
+                <Form>
                     <Field
                         type="text"
                         name="newPostText"
-                        onChange={handleChange}
-                        value={values.newPostText}
-                        component={renderTextareaFormik}
+                        component={RenderTextareaFormik}
                         validate={validateNewPostField}
                         placeholder={"What's new?"}
+                        defaultHeight={62}
+                        maxHeight={'240px'}
                     />
                     <ErrorMessage name="newPostText" component={ErrorComponent} />
                     <button className={styles.button} type="submit" disabled={isSubmitting}>
                         Publish
                     </button>
-                </form>
+                </Form>
             )}
         </Formik>
     );

@@ -1,6 +1,8 @@
 import Chat from "./Chat";
 import { connect } from "react-redux";
 import { sendMessage } from "../../redux/chatPageReducer"
+import { compose } from "redux";
+import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 
 const mapStateToProps = (state) => {
     return {
@@ -12,6 +14,7 @@ const dispatchObj = {
     sendMessage
 }
 
-const ChatContainer = connect(mapStateToProps, dispatchObj)(Chat);
-
-export default ChatContainer;
+export default compose(
+    withAuthRedirect,
+    connect(mapStateToProps, dispatchObj),
+)(Chat);

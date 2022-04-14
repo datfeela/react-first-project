@@ -1,15 +1,14 @@
-@import 'variables.scss';
+@import "variables.scss";
 
-.wrap{
+.form {
     border: 1px solid rgba($color: $greyColor, $alpha: 0.2);
     border-top: none;
     border-radius: 0px 0px 5px 5px;
     padding: 12px 18px;
-
     display: grid;
     grid-template-columns: 1fr 80px;
-    grid-template-rows: 40px;
     grid-gap: 10px;
+    align-items: flex-end;
 }
 
 .button {
@@ -20,8 +19,9 @@
     color: #fff;
 
     width: 80px;
+    height: 40px;
 
-    &:hover{
+    &:hover {
         background-color: rgba($color: $lightBlueColor, $alpha: 0.8);
     }
 }
