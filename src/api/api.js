@@ -9,8 +9,9 @@ const instance = axios.create({
 })
 
 export const usersAPI = {
-    getUsers(usersPerLoad, currentPage) {
-        return instance.get(`users?count=${usersPerLoad}&page=${currentPage}`)
+    getUsers(usersPerLoad, currentPage, isSubscribedOn, searchTerm) {
+        let searchTermLocal = searchTerm ? searchTerm : '';
+        return instance.get(`users?count=${usersPerLoad}&page=${currentPage}&friend=${isSubscribedOn}&term=${searchTermLocal}`)
             .then(response => response.data)
     },
     getIsFollowed(userId) {

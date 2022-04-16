@@ -1,13 +1,14 @@
 import styles from "./Friends.module.scss";
-import FriendsListContainer from "./FriendsList/FriendsListContainer";
 import { withAuthRedirect } from "../../hoc/withAuthRedirect";
+import UsersListContainer from "../Users/UsersList/UsersListContainer";
+import UsersSearch from "../Users/UsersSearch/UsersSearch";
 
 
 const Friends = (props) => {
     return (
         <div className={styles.wrap + " wrap"}>
-            {/* <Header/> */}
-            <FriendsListContainer/>
+            <UsersSearch />
+            <UsersListContainer loadFriends={true} />
         </div>
     );
 };

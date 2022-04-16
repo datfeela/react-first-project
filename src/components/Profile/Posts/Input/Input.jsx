@@ -2,7 +2,7 @@ import styles from "./Input.module.scss";
 // import { reduxForm, Field } from "redux-form";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { maxLength, isRequiredNoError } from "../../../../utils/formValidation";
-import { renderTextarea, RenderTextareaFormik } from "../../../_common/Inputs/Inputs";
+import { RenderTextareaFormik } from "../../../_common/Inputs/Inputs";
 
 //validation
 const maxLength500 = maxLength(500);

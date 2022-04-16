@@ -1,48 +1,69 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
-import { getUsers, subscribe } from "../../../redux/usersPageReducer";
-import { selectCurrentPageNumber, selectIsFetching, selectUsers, selectUsersPerLoad } from "../../../redux/usersPageSelectors";
+import { initializeUsers, getUsers, subscribe, cleanUp, resetUsers, updateUsersLoadPage, setAllUsersLoaded } from "../../../redux/usersPageReducer";
+import {
+    selectCurrentPageNumber,
+    selectIsFetching,
+    selectUsers,
+    selectUsersPerLoad,
+    selectIsAllUsersLoaded,
+    selectSearchTerm,
+    selectIsInit,
+} from "../../../redux/usersPageSelectors";
 import UsersList from "./UsersList";
 
-class UsersListContainer extends React.Component {
-    subscribe = (userId) => {
-        this.props.subscribe(userId);
-    }
-
-    getUsers = () => {
-        this.props.getUsers(this.props.usersPerLoad, this.props.currentPage);
+const UsersListContainer = (props) => {
+    const subscribe = (userId) => {
+        props.subscribe(userId);
     };
 
-    componentDidMount = () => {
-        if (this.props.users.length === 0) {
-            this.getUsers();
-        }
+    const getUsers = () => {
+        props.getUsers(props.usersPerLoad, props.currentPage, props.loadFriends, props.searchTerm);
     };
 
-    render = () => {
+    useEffect(() => {
+        if (!props.isInit) props.initializeUsers(props.loadFriends);
+    }, [props.isInit]);
+
+    if (!props.isInit) return <div>fix this pls</div>;
+
+    if (props.isInit)
         return (
             <UsersList
-                users={this.props.users}
-                subscribe={this.subscribe}
-                getUsers={this.getUsers}
-                isFetching={this.props.isFetching}
+                users={props.users}
+                searchTerm={props.searchTerm}
+                cleanUp={props.cleanUp}
+                subscribe={subscribe}
+                getUsers={getUsers}
+                resetUsers={props.resetUsers}
+                updateUsersLoadPage={props.updateUsersLoadPage}
+                isFetching={props.isFetching}
+                isAllUsersLoaded={props.isAllUsersLoaded}
             />
         );
-    };
-}
+};
 
 let mapStateToProps = (state) => {
     return {
+        isInit: selectIsInit(state),
         users: selectUsers(state),
         usersPerLoad: selectUsersPerLoad(state),
         currentPage: selectCurrentPageNumber(state),
         isFetching: selectIsFetching(state),
+        isAllUsersLoaded: selectIsAllUsersLoaded(state),
+        searchTerm: selectSearchTerm(state),
     };
 };
 
 let dispatchObj = {
+    initializeUsers,
     getUsers,
-    subscribe
+    subscribe,
+    selectSearchTerm,
+    cleanUp,
+    setAllUsersLoaded,
+    updateUsersLoadPage,
+    resetUsers,
 };
 
 export default connect(mapStateToProps, dispatchObj)(UsersListContainer);

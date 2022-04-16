@@ -2,7 +2,6 @@ import WarningWithPopup from "../WarningWithPopup/WarningWithPopup";
 import styles from "./Inputs.module.scss";
 import React, { useEffect } from "react";
 
-
 // export const renderInputFormik = ({ form, field, ...props }) => {
 //         const InputClassSwitch = (inputType) => {
 //             switch (inputType) {
@@ -26,6 +25,34 @@ import React, { useEffect } from "react";
 //             />
 //         );
 // };
+
+export const RenderInputFormik = ({ form, field, ...props }) => {
+    const InputClassSwitch = (inputType) => {
+        switch (inputType) {
+            // case "loginInput":
+            //     return styles.input + " " + styles.input_login;
+            default:
+                return styles.input;
+        }
+    };
+
+    useEffect(() => {
+        props.returnValueOnChange && props.returnValueOnChange(field.value);
+    }, [field.value]);
+
+    const inputClassName = InputClassSwitch(props.inputType);
+
+    return (
+        <input
+            type={props.type}
+            name={field.name}
+            value={field.value}
+            onChange={form.handleChange}
+            className={inputClassName}
+            placeholder={props.placeholder}
+        />
+    );
+};
 
 export const renderInput = ({ input, type, meta, ...props }) => {
     const hasError = meta.touched && meta.error;
