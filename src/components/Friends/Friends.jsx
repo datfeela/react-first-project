@@ -8,10 +8,11 @@ const Friends = (props) => {
     return (
         <div className={styles.wrap + " wrap"}>
             <UsersSearch />
-            <UsersListContainer loadFriends={true} />
+            <UsersListContainer isLoadingFriends={true} />
         </div>
     );
 };
 
 let AuthRedirectComponent = withAuthRedirect(Friends);
 export default AuthRedirectComponent;
+

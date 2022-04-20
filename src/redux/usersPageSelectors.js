@@ -6,6 +6,10 @@ export const selectUsers = (state) => {
     return state.usersPage.users
 }
 
+export const selectUser = (state, userId) => {
+    return state.usersPage.users.find(user => user.id == userId);
+}
+
 export const selectUsersPerLoad = (state) => {
     return state.usersPage.usersPerLoad
 }

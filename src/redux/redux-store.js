@@ -1,7 +1,6 @@
 import { combineReducers, createStore, applyMiddleware } from "redux";
 import authReducer from "./authReducer";
-import chatReducer from "./chatPageReducer";
-import dialogsReducer from "./dialogsPageReducer"
+import chatReducer from "./chatReducer";
 import friendsReducer from "./friendsPageReducer";
 import profileReducer from "./profilePageReducer";
 import usersReducer from "./usersPageReducer";
@@ -13,8 +12,7 @@ let reducers = combineReducers({
     auth: authReducer,
     app: appReducer,
     profilePage: profileReducer,
-    dialogsPage: dialogsReducer,
-    chatPage: chatReducer,
+    chat: chatReducer,
     usersPage: usersReducer,
     friendsPage: friendsReducer,
     form: formReducer

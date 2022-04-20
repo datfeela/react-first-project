@@ -6,7 +6,6 @@ import Preloader from "../_common/Preloader/Preloader";
 
 import { useEffect } from "react";
 import { Navigate, useParams} from "react-router-dom";
-import Comp from "./TestComponent";
 
 const Profile = (props) => {
     //      !react router hooks testing
@@ -54,7 +53,6 @@ const Profile = (props) => {
                         updateStatus={props.updateStatus}
                     />
                     <Posts posts={props.posts} addPost={props.addPost} currentUserId={currentUserId} />
-                    {/* <Comp/> */}
                 </div>
             </div>
         </div>

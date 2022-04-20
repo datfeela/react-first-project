@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useRef } from "react";
 import styles from "./Input.module.scss";
 // import { reduxForm } from "redux-form";
 // import { Field } from "redux-form";
@@ -11,34 +11,45 @@ const validateNewMessageField = (value) => {
     return error;
 };
 
-const Input = (props) => {
+const Input = ({ dialogId, onInputHeightChange, ...props }) => {
+    const wrapRef = useRef();
+    // wrapRef.current && console.log(window.getComputedStyle(wrapRef.current).height);
+
     const submit = (values, actions) => {
-        props.sendMessage(values.newMessageText);
+        props.sendMessage(dialogId, values.newMessageText);
+        onInputHeightChange('67px')
         actions.setSubmitting(false);
         actions.resetForm();
     };
 
-    return (
-        <Formik initialValues={{ newMessageText: "" }} onSubmit={submit}>
-            {({ isSubmitting }) => (
-                <Form className={styles.form}>
-                    <Field
-                        type="text"
-                        name="newMessageText"
-                        component={RenderTextareaFormik}
-                        validate={validateNewMessageField}
-                        placeholder={"Type a message..."}
-                        defaultHeight={40}
-                        maxHeight={'200px'}
-                    />
+    const onHeightChange = () => {
+        onInputHeightChange(window.getComputedStyle(wrapRef.current).height);
+    };
 
-                    {/* <ErrorMessage name="newPostText" component={ErrorComponent} /> */}
-                    <button className={styles.button} type="submit" disabled={isSubmitting}>
-                        Send
-                    </button>
-                </Form>
-            )}
-        </Formik>
+    return (
+        <div ref={wrapRef} className={styles.wrap}>
+            <Formik initialValues={{ newMessageText: "" }} onSubmit={submit}>
+                {({ isSubmitting }) => (
+                    <Form className={styles.form}>
+                        <Field
+                            type="text"
+                            name="newMessageText"
+                            component={RenderTextareaFormik}
+                            onHeightChange={onHeightChange}
+                            validate={validateNewMessageField}
+                            placeholder={"Type a message..."}
+                            defaultHeight={40}
+                            maxHeight={"200px"}
+                        />
+
+                        {/* <ErrorMessage name="newPostText" component={ErrorComponent} /> */}
+                        <button className={styles.button} type="submit" disabled={isSubmitting}>
+                            Send
+                        </button>
+                    </Form>
+                )}
+            </Formik>
+        </div>
     );
 };
 

@@ -12,22 +12,18 @@ import {
 } from "../../../redux/usersPageSelectors";
 import UsersList from "./UsersList";
 
-const UsersListContainer = (props) => {
-    const subscribe = (userId) => {
-        props.subscribe(userId);
-    };
+const UsersListContainer = ({ isInit, initializeUsers, subscribe, ...props }) => {
+    useEffect(() => {
+        if (!isInit) initializeUsers(props.isLoadingFriends);
+    }, [isInit]);
 
     const getUsers = () => {
-        props.getUsers(props.usersPerLoad, props.currentPage, props.loadFriends, props.searchTerm);
+        props.getUsers(props.usersPerLoad, props.currentPage, props.isLoadingFriends, props.searchTerm);
     };
 
-    useEffect(() => {
-        if (!props.isInit) props.initializeUsers(props.loadFriends);
-    }, [props.isInit]);
+    if (!isInit) return <div>fix this pls</div>;
 
-    if (!props.isInit) return <div>fix this pls</div>;
-
-    if (props.isInit)
+    if (isInit)
         return (
             <UsersList
                 users={props.users}

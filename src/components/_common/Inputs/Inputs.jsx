@@ -37,7 +37,7 @@ export const RenderInputFormik = ({ form, field, ...props }) => {
     };
 
     useEffect(() => {
-        props.returnValueOnChange && props.returnValueOnChange(field.value);
+        props.onValueChange && props.onValueChange(field.value);
     }, [field.value]);
 
     const inputClassName = InputClassSwitch(props.inputType);
@@ -110,6 +110,7 @@ export const RenderTextareaFormik = ({ form, field, ...props }) => {
         textareaRef.current.style.height = `${props.defaultHeight + 2}px`;
         let contentHeight = `${e.target.scrollHeight}px`;
         textareaRef.current.style.height = contentHeight;
+        props.onHeightChange && props.onHeightChange();
     };
 
     //проверяю значение на пустое для ресета высоты при сабмите

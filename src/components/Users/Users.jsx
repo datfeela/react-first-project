@@ -6,7 +6,7 @@ import UsersSearch from "./UsersSearch/UsersSearch";
 const Users = (props) => {
     return (
         <div className={styles.wrap}>
-            <UsersSearch />
+            <UsersSearch/>
             <UsersListContainer />
         </div>
     );

@@ -1,6 +1,49 @@
 @import 'variables.scss';
 
+$avatarSize: 40px;
+$avatarMargin: 10px;
+
 .wrap{
     overflow-wrap: break-word;
     padding: 10px 5px;
+    display: grid;
+
+    &_notViewed{
+        background-color: $lightBlueColor01;
+    }
+
+    &_sentByUser{
+        grid-template-areas: 'cnt ava';
+        grid-template-columns: 1fr calc(#{$avatarSize} + 2 * #{$avatarMargin});
+        padding-left: 20%;
+        text-align: end;
+    }
+
+    &_sentByRecipient{
+        grid-template-areas: 'ava cnt';
+        grid-template-columns: calc(#{$avatarSize} + 2 * #{$avatarMargin}) 1fr;
+        padding-right: 20%;
+        text-align: start;
+    }
+}
+
+.avatar{
+    height: $avatarSize;
+    border-radius: 50%;
+    margin: 0px $avatarMargin;
+    grid-area: ava;
+}
+
+.content {
+    grid-area: cnt;
+}
+
+.author {
+    display: block;
+    font-weight: 600;
+    color: $darkBlueColor;
+}
+.arrivalTime {
+    font-size: 12px;
+    color: $semiLightGreyColor;
 }

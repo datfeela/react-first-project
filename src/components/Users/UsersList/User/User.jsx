@@ -1,27 +1,27 @@
 import styles from "./User.module.scss";
 import { NavLink } from "react-router-dom";
 
-const User = (props) => {
-    let subscribeText = props.user.followed ? "Unsubscribe" : "Subscribe";
-    let imgSrc = props.user.photos.small != null ? props.user.photos.small : "https://via.placeholder.com/160x160?text=Pic";
+const User = ({user, subscribe}) => {
+    let subscribeText = user.followed ? "Unsubscribe" : "Subscribe";
+    let imgSrc = user.photos.small != null ? user.photos.small : "https://via.placeholder.com/160x160?text=Pic";
 
     const subscribeButtonClickHandler = () => {
-        if (props.user.subscribeBtnIsActive) {
-            props.subscribe(props.user.id);
+        if (user.subscribeBtnIsActive) {
+            subscribe(user.id);
         }
     };
 
     return (
         <div className={styles.wrap}>
-            <NavLink to={`/profile/${props.user.id}`}>
+            <NavLink to={`/profile/${user.id}`}>
                 <img src={imgSrc} alt="avatar" className={styles.avatar} />
             </NavLink>
             <div className={styles.info}>
-                <NavLink to={`/profile/${props.user.id}`}>
-                    <span className={styles.name}>{props.user.name}</span>
+                <NavLink to={`/profile/${user.id}`}>
+                    <span className={styles.name}>{user.name}</span>
                 </NavLink>
-                {/* <span className={styles.location}>props.user.location</span> */}
-                <span className={styles.status}>{props.user.status}</span>
+                {/* <span className={styles.location}>user.location</span> */}
+                <span className={styles.status}>{user.status}</span>
                 <div className={styles.actions}>
                     <NavLink to="/dialog" className={styles.actions_item}>
                         Message
@@ -29,7 +29,7 @@ const User = (props) => {
                     <span className={styles.divider}></span>
                     <button
                         onClick={subscribeButtonClickHandler}
-                        className={props.user.subscribeBtnIsActive ? styles.actions_item : styles.actions_item + " " + styles.button_disabled}
+                        className={user.subscribeBtnIsActive ? styles.actions_item : styles.actions_item + " " + styles.button_disabled}
                     >
                         {subscribeText}
                     </button>

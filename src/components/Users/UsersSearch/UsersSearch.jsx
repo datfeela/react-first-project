@@ -1,9 +1,8 @@
 import styles from "./UsersSearch.module.scss";
-import { Field, Form, Formik, ErrorMessage } from "formik";
+import { Field, Form, Formik } from "formik";
 import { RenderInputFormik } from "../../_common/Inputs/Inputs";
 import { setSearchTerm } from "../../../redux/usersPageReducer";
 import { connect } from "react-redux";
-import { useEffect } from "react";
 
 const UsersSearch = (props) => {
     const submit = (values, actions) => {
@@ -14,13 +13,6 @@ const UsersSearch = (props) => {
         props.setSearchTerm(value);
     };
 
-    //! useEffect(() => {
-    //!     return () => {
-    //!         setSearchTerm("");
-    //!     };
-    //! }, []);
-    //!better to initialize
-
     return (
         <div className={styles.wrap + " wrapNoPadding"}>
             <Formik initialValues={{ usersSearchInput: "" }} onSubmit={submit}>
@@ -30,8 +22,8 @@ const UsersSearch = (props) => {
                             type="text"
                             name="usersSearchInput"
                             component={RenderInputFormik}
-                            placeholder={"blabla"}
-                            returnValueOnChange={setSearchTerm}
+                            placeholder={"Search"}
+                            onValueChange={setSearchTerm}
                         />
                     </Form>
                 )}
@@ -39,8 +31,6 @@ const UsersSearch = (props) => {
         </div>
     );
 };
-
-// export default UsersSearch;
 
 let mapStateToProps = (state) => {
     return {};

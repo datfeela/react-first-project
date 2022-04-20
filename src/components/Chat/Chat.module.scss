@@ -1,14 +1,19 @@
 @import 'variables.scss';
 
 .wrap{
+    position: fixed;
+    overflow: hidden;
+    top: calc(#{$headerHeight} + #{$blocksMargin});
     width: $centerAreaWidth;
     border-radius: 5px;
     height: calc(100vh - #{$headerHeight} - 40px);
 }
 
 .contentWrap{
+    position: relative;
     height: 100%;
+    max-height: 100%;
     display: grid;
     grid-auto-flow: row;
-    grid-template-rows: 50px 1fr auto;
+    grid-template-rows: 50px 1fr;
 }

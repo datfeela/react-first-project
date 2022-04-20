@@ -3,36 +3,35 @@ import styles from "./UsersList.module.scss";
 import Preloader from "./../../_common/Preloader/Preloader";
 import { useEffect } from "react";
 
-let UsersList = (props) => {
+let UsersList = ({ isAllUsersLoaded, isFetching, users, searchTerm, subscribe, getUsers, resetUsers, updateUsersLoadPage, cleanUp }) => {
     useEffect(() => {
-        if (props.users.length === 0) {
-            props.getUsers();
+        if (users.length === 0) {
+            getUsers();
         }
-    }, [props.users.length, props.searchTerm]);
+    }, [users.length, searchTerm]);
 
     useEffect(() => {
-        // debugger;
-        props.updateUsersLoadPage(1);
-        props.users.length && props.resetUsers()
-    }, [props.searchTerm]);
+        updateUsersLoadPage(1);
+        users.length && resetUsers();
+    }, [searchTerm]);
 
     //cleanup
     useEffect(() => {
         return () => {
-            props.cleanUp();
+            cleanUp();
         };
     }, []);
 
-    let userElems = props.users.map((u) => <User key={u.id} user={u} subscribe={props.subscribe} />);
+    let userElems = users.map((u) => <User key={u.id} user={u} subscribe={subscribe} />);
     return (
         <div className={styles.wrap + " wrap"}>
             {userElems}
-            {!props.isAllUsersLoaded && (
-                <button className={props.isFetching ? styles.buttonLoadMore_hovered : styles.buttonLoadMore} onClick={props.getUsers}>
+            {!isAllUsersLoaded && (
+                <button className={isFetching ? styles.buttonLoadMore_hovered : styles.buttonLoadMore} onClick={getUsers}>
                     <span className={styles.DELETETHIS}>load more</span>
                 </button>
             )}
-            <div className={props.isFetching ? styles.preloader : styles.preloader_disabled}>
+            <div className={isFetching ? styles.preloader : styles.preloader_disabled}>
                 <Preloader />
             </div>
         </div>

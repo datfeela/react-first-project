@@ -1,9 +1,10 @@
 import { usersAPI } from "../api/api";
+import { selectUser } from "./usersPageSelectors";
 
 const SET_IS_INIT = 'users/SET_IS_INIT',
-    FOLLOW = 'users/FOLLOW',
-    UNFOLLOW = 'users/UNFOLLOW',
+    SUBSCRIBE = 'users/SUBSCRIBE',
     SET_USERS = 'users/SET_USERS',
+    SET_USERS_FOUND_COUNT = 'users/SET_USERS_FOUND_COUNT',
     SET_SEARCH_TERM = 'users/SET_SEARCH_TERM',
     RESET_USERS = 'users/RESET_USERS',
     UPDATE_USERS_LOAD_PAGE = 'users/UPDATE_USERS_LOAD_PAGE',
@@ -13,9 +14,10 @@ const SET_IS_INIT = 'users/SET_IS_INIT',
 
 let initialState = {
     users: [],
+    usersFoundCount: null,
     usersPerLoad: 10,
     currentPage: 1,
-    searchTerm: null,
+    searchTerm: "",
     isFetching: false,
     isInit: false,
     allUsersLoaded: false
@@ -28,24 +30,14 @@ const usersReducer = (state = initialState, action) => {
                 ...state,
                 isInit: action.isInit
             }
-        case FOLLOW:
+        case SUBSCRIBE:
             return {
                 ...state,
                 users: state.users.map(user => {
                     if (user.id === action.userId) {
-                        return { ...user, followed: true }
+                        return { ...user, followed: !user.followed }
                     }
-                    else return user;
-                })
-            }
-        case UNFOLLOW:
-            return {
-                ...state,
-                users: state.users.map(user => {
-                    if (user.id === action.userId) {
-                        return { ...user, followed: false }
-                    }
-                    else return user;
+                    return user;
                 })
             }
         case SET_USERS:
@@ -53,6 +45,8 @@ const usersReducer = (state = initialState, action) => {
             return { ...state, users: [...state.users, ...users] }
         case RESET_USERS:
             return { ...state, users: [] }
+        case SET_USERS_FOUND_COUNT:
+            return { ...state, usersFoundCount: action.count }
         case SET_SEARCH_TERM:
             return { ...state, searchTerm: action.searchTerm }
         case SET_IS_ALL_USERS_LOADED:
@@ -85,19 +79,19 @@ export const setIsInit = (isInit) => ({
     isInit
 })
 
-export const follow = (userId) => ({
-    type: FOLLOW,
-    userId
-})
-
-export const unfollow = (userId) => ({
-    type: UNFOLLOW,
+const subscribeToggle = (userId) => ({
+    type: SUBSCRIBE,
     userId
 })
 
 export const setUsers = (users) => ({
     type: SET_USERS,
     users
+})
+
+export const setUsersFoundCount = (count) => ({
+    type: SET_USERS_FOUND_COUNT,
+    count
 })
 
 export const resetUsers = () => ({
@@ -131,52 +125,42 @@ export const toggleSubscribeButton = (userId) => ({
 
 //thunk creators
 
-export const initializeUsers = (isSubscribedOn) => async (dispatch, getState) => {
-    console.log(getState().usersPage)
-    dispatch(setSearchTerm(""));
-    dispatch(updateUsersLoadPage(1))
-    getState().usersPage.users.length && dispatch(resetUsers); //???
-    // dispatch(setAllUsersLoaded(false));
+export const initializeUsers = (isSubscribedOn) => (dispatch, getState) => {
     dispatch(getUsers(getState().usersPage.usersPerLoad, 1, isSubscribedOn, ""))
 }
 
 export const cleanUp = () => (dispatch) => {
     dispatch(setIsInit(false));
+    dispatch(setSearchTerm(""));
     dispatch(resetUsers());
     dispatch(setAllUsersLoaded(false))
     dispatch(updateUsersLoadPage(1))
 }
 
-export const getUsers = (usersPerLoad, currentPage, isSubscribedOn, searchTerm) => (dispatch, getState) => {
-    // debugger;
+export const getUsers = (usersPerLoad, currentPage, isSubscribedOn, searchTerm) => async (dispatch, getState) => {
     if (!getState().usersPage.isFetching) {
         dispatch(updateIsFetching(true))
-        usersAPI.getUsers(usersPerLoad, currentPage, isSubscribedOn, searchTerm).then((response) => {
-            if (response.items.length > 0) {
-                dispatch(setUsers(response.items))
-                dispatch(updateUsersLoadPage(getState().usersPage.currentPage + 1))
-            }
-            if (response.items.length < usersPerLoad) {
-                dispatch(setAllUsersLoaded(true))
-            }
-            dispatch(updateIsFetching(false))
-            !getState().usersPage.isInit && dispatch(setIsInit(true))
-        });
+
+        let response = await usersAPI.getUsers(usersPerLoad, currentPage, isSubscribedOn, searchTerm)
+
+        dispatch(setUsersFoundCount(response.totalCount))//!
+        if (response.items.length > 0) {
+            dispatch(setUsers(response.items))
+            dispatch(updateUsersLoadPage(getState().usersPage.currentPage + 1))
+        }
+        //check if all users are loaded
+        if (getState().usersPage.users.length === response.totalCount) dispatch(setAllUsersLoaded(true))
+
+        dispatch(updateIsFetching(false))
+        !getState().usersPage.isInit && dispatch(setIsInit(true))
     }
 }
 
-export const subscribe = (userId) => async (dispatch) => {
+export const subscribe = (userId) => async (dispatch, getState) => {
+    const isFollowed = selectUser(getState(), userId).followed;
+
     dispatch(toggleSubscribeButton(userId))
-    let response = await usersAPI.getIsFollowed(userId);
-    if (response === true) {
-        usersAPI.unfollow(userId).then((response) => {
-            response.resultCode === 0 ? dispatch(unfollow(userId)) : console.log(response);
-            dispatch(toggleSubscribeButton(userId));
-        });
-    } else {
-        usersAPI.follow(userId).then((response) => {
-            response.resultCode === 0 ? dispatch(follow(userId)) : console.log(response);
-            dispatch(toggleSubscribeButton(userId));
-        });
-    }
+    let followResponse = isFollowed ? await usersAPI.unfollow(userId) : await usersAPI.follow(userId)
+    followResponse.resultCode === 0 ? dispatch(subscribeToggle(userId)) : console.log(followResponse);
+    dispatch(toggleSubscribeButton(userId));
 }

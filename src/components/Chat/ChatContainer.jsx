@@ -1,17 +1,21 @@
 import Chat from "./Chat";
 import { connect } from "react-redux";
-import { sendMessage } from "../../redux/chatPageReducer"
+import { getDialog, sendMessage, initializeChat } from "../../redux/chatReducer"
 import { compose } from "redux";
 import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 
 const mapStateToProps = (state) => {
     return {
-        messages: state.chatPage.messages
+        isInit: state.chat.isInit,
+        messages: state.chat.messages,
+        userImage: state.chat.userPhoto,
+        recipientImage: state.chat.recipientPhoto,
     };
 };
 
 const dispatchObj = {
-    sendMessage
+    initializeChat,
+    sendMessage,
 }
 
 export default compose(

@@ -4,6 +4,10 @@ export const selectProfile = (state) => {
     return state.profilePage
 }
 
+export const selectImgPlaceholderSmall = () => {
+    return 'https://via.placeholder.com/250x250';
+}
+
 export const selectProfileInfo = (state) => {
     return state.profilePage.profileInfo
 }
