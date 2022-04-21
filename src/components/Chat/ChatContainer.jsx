@@ -1,6 +1,6 @@
 import Chat from "./Chat";
 import { connect } from "react-redux";
-import { getDialog, sendMessage, initializeChat } from "../../redux/chatReducer"
+import { getDialog, sendMessage, initializeChat, cleanUp } from "../../redux/chatReducer"
 import { compose } from "redux";
 import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 
@@ -16,6 +16,8 @@ const mapStateToProps = (state) => {
 const dispatchObj = {
     initializeChat,
     sendMessage,
+    getDialog,
+    cleanUp
 }
 
 export default compose(

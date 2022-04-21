@@ -68,13 +68,12 @@ export const chatAPI = {
     async getDialogs() {
         return await instance.get(`dialogs`)
     },
-    async getDialog(userId) {
-        let response = await instance.get(`dialogs/${userId}/messages`)//&page=${currentPage}&count=${portionSize}
+    async getDialog(userId, page, count=10) {
+        let response = await instance.get(`dialogs/${userId}/messages?page=${page}&count=${count}`)
         return response;
     },
     async sendMessage(userId, message) { //!!
         let response = await instance.post(`dialogs/${userId}/messages`, { body: message })
-        debugger;
         return response.data;
     },
     async isMessageViewed(messageId) {

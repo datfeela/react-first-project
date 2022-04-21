@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { dateToObj } from "../../../../utils/dateTransform";
 import styles from "./Message.module.scss";
@@ -10,10 +11,9 @@ const Message = (props) => {
 
     const date = dateToObj(props.addedAt);
     const arrivalTime = setDate(date);
-    
 
     return (
-        <div className={wrapClassName}>
+        <div id={props.id} className={wrapClassName}>
             <img className={styles.avatar} src={imgUrl} alt="avatar" />
             <div className={styles.content}>
                 <span className={styles.author}>{props.senderName}</span>

@@ -9,7 +9,7 @@ const Dialogs = ({ dialogs, getDialogs }) => {
     }, []);
 
     // let dialogElems = dialogs.map((el) => <Dialog id={el.id} name={el.name} message={el.message} />);
-    let dialogElems = dialogs.map((el) => <Dialog {...el} />);
+    let dialogElems = dialogs.map((el) => <Dialog key={el.id} {...el} />);
 
     return (
         <div className={styles.wrap}>

@@ -8,7 +8,6 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 const Chat = ({ isInit, messages, sendMessage, initializeChat, ...props }) => {
-    // console.log(props);
     const dialogId = useParams().userId;
     const [inputHeight, setInputHeight] = useState('67px');
 
@@ -26,7 +25,15 @@ const Chat = ({ isInit, messages, sendMessage, initializeChat, ...props }) => {
         <div className={styles.wrap}>
             <div className={styles.contentWrap + " wrapNoPadding"}>
                 <Header />
-                <Messages messages={messages} userImage={props.userImage} recipientImage={props.recipientImage} inputHeight={inputHeight} />
+                <Messages
+                    messages={messages}
+                    userImage={props.userImage}
+                    recipientImage={props.recipientImage}
+                    inputHeight={inputHeight}
+                    dialogId={dialogId}
+                    getDialog={props.getDialog}
+                    // cleanUp={props.cleanUp}
+                />
                 <Input sendMessage={sendMessage} dialogId={dialogId} onInputHeightChange={onInputHeightChange} />
             </div>
             {/* <Sidebar /> */}
