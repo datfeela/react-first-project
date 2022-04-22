@@ -5,12 +5,11 @@ const SET_IS_INIT = 'chat/SET_IS_INIT'
 const SET_DIALOGS = 'chat/SET_DIALOGS'
 const SET_DIALOG = 'chat/SET_DIALOG'
 const SET_NEW_MESSAGE = 'chat/SET_NEW_MESSAGE'
-const RESET_DIALOG = 'chat/RESET_DIALOG'
 const SET_USER_PHOTO = 'chat/SET_USER_PHOTO'
 const SET_RECIPIENT_PHOTO = 'chat/SET_RECIPIENT_PHOTO'
-const SEND_MESSAGE = 'chat/SEND-MESSAGE'
 const SET_CURRENT_PAGE = 'chat/SET_CURRENT_PAGE'
 const SET_ALL_MESSAGES_LOADED = 'chat/SET_ALL_MESSAGES_LOADED'
+const SET_IS_NEW_MESSAGE = 'chat/SET_IS_NEW_MESSAGE'
 
 let initialState = {
     isInit: false,
@@ -44,7 +43,10 @@ let initialState = {
             }
         }
     ],
-    messages: [],
+    messages: {
+        data: [],
+        isNewMessage: false
+    },
     userPhoto: null,
     recipientPhoto: null
 };
@@ -64,19 +66,20 @@ const chatReducer = (state = initialState, action) => {
         case SET_DIALOG:
             return {
                 ...state,
-                messages: [...action.data, ...state.messages]
+                messages: {
+                    ...state.messages,
+                    data: [...action.data, ...state.messages.data]
+                }
             }
         case SET_NEW_MESSAGE:
-            let oldMessages = (state.messages.length % 10 === 0) ? [...state.messages.slice([1], [state.messages.length])] : [...state.messages]
+            let oldMessages = (state.messages.data.length % 10 === 0) ? [...state.messages.data.slice([1], [state.messages.data.length])] : [...state.messages.data]
             return {
                 ...state,
-                messages: [...oldMessages, ...action.data]
-            }
-
-        case RESET_DIALOG://!
-            return {
-                ...state,
-                messages: []
+                messages: {
+                    ...state.messages,
+                    data: [...oldMessages, ...action.data],
+                    isNewMessage: true
+                }
             }
         case SET_CURRENT_PAGE:
             return {
@@ -98,10 +101,13 @@ const chatReducer = (state = initialState, action) => {
                 ...state,
                 recipientPhoto: action.url
             }
-        case SEND_MESSAGE:
+        case SET_IS_NEW_MESSAGE:
             return {
                 ...state,
-                messages: [...state.messages, { text: action.messageText }]
+                messages: {
+                    ...state.messages,
+                    isNewMessage: action.isNewMessage
+                }
             }
         default:
             return state;
@@ -117,11 +123,6 @@ export const setIsInit = (isInit) => ({
     isInit
 })
 
-export const sendMessageAction = (messageText) => ({
-    type: SEND_MESSAGE,
-    messageText
-})
-
 export const setDialogs = (data) => ({
     type: SET_DIALOGS,
     data
@@ -135,11 +136,6 @@ export const setDialog = (data) => ({
 export const setNewMessage = (data) => ({
     type: SET_NEW_MESSAGE,
     data
-})
-
-
-export const resetDialog = () => ({
-    type: RESET_DIALOG
 })
 
 export const setCurrentPage = (page) => ({
@@ -159,6 +155,11 @@ export const setUserPhotoUrl = (url, target) => {
         url
     })
 }
+
+export const setIsNewMessage = (isNewMessage) => ({
+    type: SET_IS_NEW_MESSAGE,
+    isNewMessage
+})
 
 //TC
 
@@ -198,8 +199,8 @@ export const getDialog = (userId, msgToLoadCount = 10) => async (dispatch, getSt
             dispatch(setNewMessage(response.data.items))
             //если количество сообщений в сторе кратно десяти, сообщения из начала массива будут вырезаться из-за особенностей запроса на сервер
             //нужно сбросить запрет на загрузку новых сообщений и обновить номер страницы для загрузки старых сообщений
-            if (getState().chat.messages.length % 10 === 0 && getState().chat.allMessagesLoaded) { 
-                dispatch(setCurrentPage(getState().chat.messages.length / 10 + 1))
+            if (getState().chat.messages.data.length % 10 === 0 && getState().chat.allMessagesLoaded) {
+                dispatch(setCurrentPage(getState().chat.messages.data.length / 10 + 1))
                 dispatch(setAllMessagesLoaded(false))
             }
         }
@@ -226,12 +227,4 @@ export const getDialog = (userId, msgToLoadCount = 10) => async (dispatch, getSt
 export const sendMessage = (userId, message) => async (dispatch) => {
     let response = await chatAPI.sendMessage(userId, message);
     response.resultCode === 0 ? dispatch(getDialog(userId, 1)) : console.log(response)
-}
-
-
-export const cleanUp = () => (dispatch) => {
-    dispatch(setIsInit(false))
-    dispatch(setAllMessagesLoaded(false))
-    dispatch(setCurrentPage(1))
-    dispatch(resetDialog())
 }
