@@ -126,7 +126,7 @@ export const toggleSubscribeButton = (userId) => ({
 //thunk creators
 
 export const initializeUsers = (isSubscribedOn) => (dispatch, getState) => {
-    dispatch(getUsers(getState().usersPage.usersPerLoad, 1, isSubscribedOn, ""))
+    dispatch(getUsers(isSubscribedOn))
 }
 
 export const cleanUp = () => (dispatch) => {
@@ -137,12 +137,14 @@ export const cleanUp = () => (dispatch) => {
     dispatch(updateUsersLoadPage(1))
 }
 
-export const getUsers = (usersPerLoad, currentPage, isSubscribedOn, searchTerm) => async (dispatch, getState) => {
+export const getUsers = (isLoadingFriends) => async (dispatch, getState) => {
+    const usersPerLoad = getState().usersPage.usersPerLoad;
+    const currentPage = getState().usersPage.currentPage;
+    const searchTerm = getState().usersPage.searchTerm;
     if (!getState().usersPage.isFetching) {
         dispatch(updateIsFetching(true))
-
-        let response = await usersAPI.getUsers(usersPerLoad, currentPage, isSubscribedOn, searchTerm)
-
+        
+        let response = await usersAPI.getUsers(usersPerLoad, currentPage, isLoadingFriends, searchTerm)
         dispatch(setUsersFoundCount(response.totalCount))//!
         if (response.items.length > 0) {
             dispatch(setUsers(response.items))

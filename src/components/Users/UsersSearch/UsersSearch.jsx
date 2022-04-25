@@ -3,6 +3,7 @@ import { Field, Form, Formik } from "formik";
 import { RenderInputFormik } from "../../_common/Inputs/Inputs";
 import { setSearchTerm } from "../../../redux/usersPageReducer";
 import { connect } from "react-redux";
+import { selectSearchTerm } from "../../../redux/usersPageSelectors";
 
 const UsersSearch = (props) => {
     const submit = (values, actions) => {
@@ -10,7 +11,7 @@ const UsersSearch = (props) => {
     };
 
     const setSearchTerm = (value) => {
-        props.setSearchTerm(value);
+        value !== props.searchTerm && props.setSearchTerm(value);
     };
 
     return (
@@ -33,7 +34,9 @@ const UsersSearch = (props) => {
 };
 
 let mapStateToProps = (state) => {
-    return {};
+    return {
+        searchTerm: selectSearchTerm(state)
+    };
 };
 
 let dispatchObj = {

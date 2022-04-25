@@ -13,13 +13,13 @@ import {
 import UsersList from "./UsersList";
 
 const UsersListContainer = ({ isInit, initializeUsers, subscribe, ...props }) => {
+    const getUsers = () => {
+        props.getUsers(props.isLoadingFriends);
+    }
+
     useEffect(() => {
         if (!isInit) initializeUsers(props.isLoadingFriends);
     }, [isInit]);
-
-    const getUsers = () => {
-        props.getUsers(props.usersPerLoad, props.currentPage, props.isLoadingFriends, props.searchTerm);
-    };
 
     if (!isInit) return <div>fix this pls</div>;
 

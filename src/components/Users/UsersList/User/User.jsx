@@ -12,7 +12,7 @@ const User = ({user, subscribe}) => {
     };
 
     return (
-        <div className={styles.wrap}>
+        <div className={styles.wrap} id={user.id}>
             <NavLink to={`/profile/${user.id}`}>
                 <img src={imgSrc} alt="avatar" className={styles.avatar} />
             </NavLink>
@@ -23,7 +23,7 @@ const User = ({user, subscribe}) => {
                 {/* <span className={styles.location}>user.location</span> */}
                 <span className={styles.status}>{user.status}</span>
                 <div className={styles.actions}>
-                    <NavLink to="/dialog" className={styles.actions_item}>
+                    <NavLink to={`/dialog/${user.id}`} className={styles.actions_item}>
                         Message
                     </NavLink>
                     <span className={styles.divider}></span>

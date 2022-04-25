@@ -1,4 +1,4 @@
-export const infiniteScrollObserver = ({ root, rootMargin = '0px', threshold=0.1 }, callbackFunc ) => {
+export const infiniteScrollObserver = ({ root, rootMargin = '0px', threshold = 0.1 }, callbackFunc) => {
     let options = {
         root: root,
         rootMargin: rootMargin,
