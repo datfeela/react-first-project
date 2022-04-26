@@ -26,7 +26,7 @@ import React, { useEffect } from "react";
 //         );
 // };
 
-export const RenderInputFormik = ({ form, field, ...props }) => {
+export const RenderInputFormik = ({ form, field, options, ...props }) => {
     const InputClassSwitch = (inputType) => {
         switch (inputType) {
             // case "loginInput":
@@ -44,6 +44,10 @@ export const RenderInputFormik = ({ form, field, ...props }) => {
 
     return (
         <input
+            style={{
+                border: options && options.border,
+                padding: options && options.padding
+            }}
             type={props.type}
             name={field.name}
             value={field.value}

@@ -1,18 +1,25 @@
+import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
 import styles from "./Dialog.module.scss";
 
+const Dialog = ({ id, userName, hasNewMessages, newMessagesCount, photos, ...props }) => {
+    let wrapClassName = hasNewMessages ? styles.wrap + " " + styles.wrap_newMessage : styles.wrap;
 
-const Dialog = ({ id, ...props }) => {
     return (
-        <NavLink to={`/dialog/${id}`} className={styles.wrap}>
-            <img src={props.photos.small ? props.photos.small : "https://via.placeholder.com/120x120?text=Pic"} alt="" className={styles.avatar} />
+        <NavLink to={`/dialog/${id}`} className={wrapClassName}>
+            <img src={photos.small ? photos.small : "https://via.placeholder.com/120x120?text=Pic"} alt="" className={styles.avatar} />
             <div className={styles.content}>
-                <span className={styles.name}>{props.userName}</span>
-                <span className={styles.who}>Вы: </span>
-                <span className={styles.message}>{props.message}</span>
+                <span className={styles.name}>{userName}</span>
+                {hasNewMessages && <div className={styles.newMessageNotification}>{newMessagesCount}</div>}
             </div>
         </NavLink>
     );
-}
+};
 
-export default Dialog;
+let mapStateToProps = (state) => {
+    return {};
+};
+
+let dispatchObj = {};
+
+export default connect(mapStateToProps, dispatchObj)(Dialog);

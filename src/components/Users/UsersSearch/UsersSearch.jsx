@@ -25,6 +25,11 @@ const UsersSearch = (props) => {
                             component={RenderInputFormik}
                             placeholder={"Search"}
                             onValueChange={setSearchTerm}
+                            options={{
+                                border: 'none',
+                                icon: 'search',
+                                padding: '0px'
+                            }}
                         />
                     </Form>
                 )}

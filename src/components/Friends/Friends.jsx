@@ -3,6 +3,7 @@ import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 import UsersListContainer from "../Users/UsersList/UsersListContainer";
 import UsersSearch from "../Users/UsersSearch/UsersSearch";
 import { useState } from "react";
+import UsersHeader from "../Users/UsersHeader/UsersHeader";
 
 
 const Friends = (props) => {
@@ -13,7 +14,7 @@ const Friends = (props) => {
     
     return (
         <div className={styles.wrap + " wrap"}>
-            <UsersSearch />
+            <UsersHeader />
             <UsersListContainer isLoadingFriends={true} observerRef={childObserverRef} setObserverRef={setObserverRef} />
         </div>
     );

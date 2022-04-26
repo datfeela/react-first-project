@@ -3,13 +3,14 @@ import { connect } from "react-redux";
 import { getDialog, setIsNewMessage, sendMessage, initializeChat } from "../../redux/chatReducer"
 import { compose } from "redux";
 import { withAuthRedirect } from "../../hoc/withAuthRedirect";
+import { selectChatIsInit, selectMessages, selectRecipientImg, selectUserImg } from "../../redux/chatSelectors";
 
 const mapStateToProps = (state) => {
     return {
-        isInit: state.chat.isInit,
-        messages: state.chat.messages,
-        userImage: state.chat.userPhoto,
-        recipientImage: state.chat.recipientPhoto,
+        isInit: selectChatIsInit(state),
+        messages: selectMessages(state),
+        userImage: selectUserImg(state),
+        recipientImage: selectRecipientImg(state),
     };
 };
 

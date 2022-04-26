@@ -14,6 +14,10 @@ export const selectUsersPerLoad = (state) => {
     return state.usersPage.usersPerLoad
 }
 
+export const selectUsersFoundCount = (state) => {
+    return state.usersPage.usersFoundCount
+}
+
 export const selectCurrentPageNumber = (state) => {
     return state.usersPage.currentPage
 }

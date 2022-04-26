@@ -1,6 +1,7 @@
 @import "variables.scss";
 
 .wrap {
+    position: relative;
     padding: 10px 20px;
     font-size: 14px;
     display: grid;
@@ -8,13 +9,22 @@
     grid-gap: 15px;
     border-bottom: 1px solid rgba($color: $greyColor, $alpha: 0.1);
 
-    &:hover{
-        background-color: rgba($color: $lightGreyColor, $alpha: 0.4);  
+    &:hover {
+        background-color: rgba($color: $lightGreyColor, $alpha: 0.4);
     }
 
-    &:first-child:hover{
+    &:first-child:hover {
         padding-top: 9px;
         border-top: 1px solid rgba($color: $greyColor, $alpha: 0.1);
+    }
+
+    &_newMessage {
+        background-color: rgba($color: $lightGreyColor, $alpha: 0.4);
+
+        &:first-child {
+            padding-top: 9px;
+            border-top: 1px solid rgba($color: $greyColor, $alpha: 0.1);
+        }
     }
 }
 
@@ -35,12 +45,15 @@
     padding: 2px 0px 5px 0px;
 }
 
-.who {
-    display: none;
-    color: $greyColor;
-    font-weight: 600;
-}
-
-.message {
-    color: $greyColor;
+.newMessageNotification {
+    text-align: center;
+    line-height: 21px;
+    height: 22px;
+    width: 22px;
+    border-radius: 50%;
+    position: absolute;
+    right: 10px;
+    top: calc(50% - 10px);
+    color: #fff;
+    background-color: $lightBlueColor07;
 }

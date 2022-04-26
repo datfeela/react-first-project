@@ -2,16 +2,18 @@ import Dialogs from "./Dialogs";
 import { connect } from "react-redux";
 import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 import { compose } from "redux";
-import { getDialogs } from "../../redux/chatReducer";
+import { initializeDialogs } from "../../redux/chatReducer";
+import { selectDialogs, selectDialogsIsInit } from "../../redux/chatSelectors";
 
 let mapStateToProps = (state) => {
     return {
-        dialogs: state.chat.dialogs
+        isInit: selectDialogsIsInit(state),
+        dialogs: selectDialogs(state)
     };
 };
 
 let dispatchObj = {
-    getDialogs
+    initializeDialogs
 }; 
 
 export default compose(

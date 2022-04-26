@@ -1,7 +1,8 @@
 import { chatAPI, profileAPI } from "../api/api";
 import { selectImgPlaceholderSmall } from "./profilePageSelectors";
 
-const SET_IS_INIT = 'chat/SET_IS_INIT'
+const SET_DIALOGS_IS_INIT = 'chat/SET_DIALOGS_IS_INIT'
+const SET_CHAT_IS_INIT = 'chat/SET_CHAT_IS_INIT'
 const SET_DIALOGS = 'chat/SET_DIALOGS'
 const SET_DIALOG = 'chat/SET_DIALOG'
 const SET_NEW_MESSAGE = 'chat/SET_NEW_MESSAGE'
@@ -12,7 +13,8 @@ const SET_ALL_MESSAGES_LOADED = 'chat/SET_ALL_MESSAGES_LOADED'
 const SET_IS_NEW_MESSAGE = 'chat/SET_IS_NEW_MESSAGE'
 
 let initialState = {
-    isInit: false,
+    dialogsIsInit: false,
+    chatIsInit: false,
     currentPage: 1,
     allMessagesLoaded: false,
     dialogs: [
@@ -53,10 +55,15 @@ let initialState = {
 
 const chatReducer = (state = initialState, action) => {
     switch (action.type) {
-        case SET_IS_INIT:
+        case SET_DIALOGS_IS_INIT:
             return {
                 ...state,
-                isInit: action.isInit
+                dialogsIsInit: action.isInit
+            }
+        case SET_CHAT_IS_INIT:
+            return {
+                ...state,
+                chatIsInit: action.isInit
             }
         case SET_DIALOGS:
             return {
@@ -118,8 +125,13 @@ const chatReducer = (state = initialState, action) => {
 export default chatReducer;
 
 //AC
-export const setIsInit = (isInit) => ({
-    type: SET_IS_INIT,
+export const setDialogsIsInit = (isInit) => ({
+    type: SET_DIALOGS_IS_INIT,
+    isInit
+})
+
+export const setChatIsInit = (isInit) => ({
+    type: SET_CHAT_IS_INIT,
     isInit
 })
 
@@ -163,13 +175,18 @@ export const setIsNewMessage = (isNewMessage) => ({
 
 //TC
 
+export const initializeDialogs = () => async (dispatch, getState) => {
+    await dispatch(getDialogs());
+    dispatch(setDialogsIsInit(true));
+}
+
 export const initializeChat = (userId) => async (dispatch, getState) => {
     let recipientPhotoPromise = dispatch(setUserPhoto(userId, 'recipient'))
     let userPhotoPromise = dispatch(setUserPhoto(getState().auth.id, 'user'));
     let getDialogPromise = dispatch(getDialog(userId));
 
     await Promise.all([recipientPhotoPromise, userPhotoPromise, getDialogPromise])
-    dispatch(setIsInit(true));
+    dispatch(setChatIsInit(true));
 }
 
 const setUserPhoto = (userId, target) => async (dispatch) => {
@@ -223,6 +240,10 @@ export const getDialog = (userId, msgToLoadCount = 10) => async (dispatch, getSt
     }
     return response;
 }
+
+// export const getMessage = (userId) => async (dispatch) => {
+//     response = await chatAPI.getDialog(userId, 1, 1)
+// }
 
 export const sendMessage = (userId, message) => async (dispatch) => {
     let response = await chatAPI.sendMessage(userId, message);
