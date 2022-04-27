@@ -1,24 +1,21 @@
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import './App.scss';
 import { Route, Routes } from 'react-router-dom';
-
-import Login from './components/Login/Login'
-import Header from './components/Header/Header';
-import Profile from './components/Profile/Profile';
-import DialogsContainer from './components/Dialogs/DialogsContainer';
-import ChatContainer from './components/Chat/ChatContainer';
-import Feed from './components/Feed/Feed';
-import Audio from './components/Audio/Audio';
-import Settings from './components/Settings/Settings';
-import Friends from './components/Friends/Friends';
-import Users from './components/Users/Users';
-import ProfileContainer from './components/Profile/ProfileContainer';
+import { connect } from "react-redux";
+import { initialize } from './redux/appReducer'
 
 import HeaderContainer from './components/Header/HeaderContainer';
 import SidebarContainer from './components/Sidebar/SidebarContainer';
+import Preloader from "./components/_common/Preloader/Preloader";
 
-import { connect } from "react-redux";
-import { initialize } from './redux/appReducer'
+//! import Settings from './components/Settings/Settings';
+
+const Login = lazy(() => import('./components/Login/Login'))
+const ProfileContainer = lazy(() => import('./components/Profile/ProfileContainer'))
+const Dialogs = lazy(() => import('./components/Dialogs/Dialogs'))
+const ChatContainer = lazy(() => import('./components/Chat/ChatContainer'))
+const Friends = lazy(() => import('./components/Friends/Friends'))
+const Users = lazy(() => import('./components/Users/Users'))
 
 
 class App extends React.Component {
@@ -33,24 +30,27 @@ class App extends React.Component {
           <HeaderContainer />
           <div className="App__wrap">
             <main className="main">
-              <Routes>
-                <Route path='/profile' element={<ProfileContainer />} />
-                <Route path='/profile/:userId' element={<ProfileContainer />} />
-                <Route path='/messages' element={<DialogsContainer />} />
-                <Route path='/dialog/:userId' element={<ChatContainer />} />
-                <Route path='/friends' element={<Friends />} />
-                <Route path='/users' element={<Users />} />
-                <Route path='/login' element={<Login />} />
+              <Suspense fallback={<div></div>}>
+                {/* <div className="preloader-wrap"><Preloader /></div> */}
+                <Routes>
+                  <Route path='/profile' element={<ProfileContainer />} />
+                  <Route path='/profile/:userId' element={<ProfileContainer />} />
+                  <Route path='/messages' element={<Dialogs />} />
+                  <Route path='/dialog/:userId' element={<ChatContainer />} />
+                  <Route path='/friends' element={<Friends />} />
+                  <Route path='/users' element={<Users />} />
+                  <Route path='/login' element={<Login />} />
+                  {/* <Route path='*' element={<Error/> }/> */}
+                  {/* <Route path='/feed' element={<Feed />} /> */}
+                  {/* <Route path='/audio' element={<Audio />} /> */}
+                  {/* <Route path='/settings' element={<Settings />} /> */}
 
-                {/* <Route path='*' element={<Error/> }/> */}
-                {/* <Route path='/feed' element={<Feed />} /> */}
-                {/* <Route path='/audio' element={<Audio />} /> */}
-                {/* <Route path='/settings' element={<Settings />} /> */}
-              </Routes>
+                </Routes>
+              </Suspense>
             </main>
             <SidebarContainer />
           </div>
-        </div>
+        </div >
       );
     }
     return (

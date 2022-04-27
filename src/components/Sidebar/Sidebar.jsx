@@ -1,5 +1,6 @@
 import { NavLink } from "react-router-dom";
 import styles from "./Sidebar.module.scss";
+import { SvgSelector } from "../_common/SvgSelector/SvgSelector";
 
 const linkClassName = ({ isActive }) => (isActive ? styles.link_active : styles.link_inactive);
 
@@ -10,22 +11,42 @@ const Sidebar = (props) => {
                 <ul className={styles.list}>
                     <li className={styles.item}>
                         <NavLink to="/profile" className={linkClassName}>
-                            Profile
+                            <div className={styles.linkWrap}>
+                                <SvgSelector className={styles.icon} id="user" />
+                                <span>Profile</span>
+                            </div>
                         </NavLink>
                     </li>
                     <li className={styles.item}>
                         <NavLink to="/messages" className={linkClassName}>
-                            Messages
+                            <div className={styles.linkWrap}>
+                                <SvgSelector className={styles.icon} id="messenger" />
+                                <span>Messages</span>
+                            </div>
                         </NavLink>
                     </li>
                     <li className={styles.item}>
                         <NavLink to="/friends" className={linkClassName}>
-                            Friends
+                            <div className={styles.linkWrap}>
+                                <SvgSelector className={styles.icon} id="users" />
+                                <span>Friends</span>
+                            </div>
                         </NavLink>
                     </li>
                     <li className={styles.item}>
                         <NavLink to="/users" className={linkClassName}>
-                            Users
+                            <div className={styles.linkWrap}>
+                                <SvgSelector className={styles.icon} id="search" />
+                                <span>Users</span>
+                            </div>
+                        </NavLink>
+                    </li>
+                    <li className={styles.item}>
+                        <NavLink to="/settings" className={linkClassName}>
+                            <div className={styles.linkWrap}>
+                                <SvgSelector className={styles.icon} id="settings" />
+                                <span>Settings</span>
+                            </div>
                         </NavLink>
                     </li>
                     {/* <li className={styles.item}>
@@ -33,11 +54,7 @@ const Sidebar = (props) => {
                         Music
                     </NavLink>
                 </li>
-                <li className={styles.item}>
-                    <NavLink to="/settings" className={linkClassName}>
-                        Settings
-                    </NavLink>
-                </li> */}
+                 */}
                     {/* <li className={styles.item}>
                     <NavLink to="/feed" className={linkClassName}>
                         Feed

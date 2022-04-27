@@ -27,11 +27,15 @@ $avatarMargin: 10px;
     }
 }
 
+
+.avatarWrap {
+    grid-area: ava;
+}
+
 .avatar{
     height: $avatarSize;
     border-radius: 50%;
     margin: 0px $avatarMargin;
-    grid-area: ava;
 }
 
 .content {

@@ -15,7 +15,7 @@ body {
     padding: 0px 20px;
     margin: 0 auto;
     display: grid;
-    grid-template-columns: 170px 1fr;
+    grid-template-columns: 150px 1fr;
     grid-template-areas: "sidebar main";
 }
 
@@ -24,8 +24,15 @@ body {
 }
 
 .main {
+    min-height: calc(99vh - #{$headerHeight} - #{$blocksMargin});
     grid-area: main;
     margin: $blocksMargin 0px 0px $blocksMargin;
+}
+
+.preloader-wrap{
+    width: 100%;
+    height: 100%;
+    display: flex;
 }
 
 .wrap {

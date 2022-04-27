@@ -1,4 +1,13 @@
-.gif{
+.wrap {
+    position: relative;
+    top: calc(50% - 32px);
+    height: 64px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.gif {
     height: 100%;
     // width: 100%;
 }

@@ -1,18 +1,22 @@
 import { chatAPI, profileAPI } from "../api/api";
 import { selectImgPlaceholderSmall } from "./profilePageSelectors";
 
+const CLEAN_UP_CHAT = 'chat/CLEAN_UP_CHAT'
 const SET_DIALOGS_IS_INIT = 'chat/SET_DIALOGS_IS_INIT'
 const SET_CHAT_IS_INIT = 'chat/SET_CHAT_IS_INIT'
+const SET_DIALOGS_SEARCH_TERM = 'chat/SET_DIALOGS_SEARCH_TERM'
 const SET_DIALOGS = 'chat/SET_DIALOGS'
 const SET_DIALOG = 'chat/SET_DIALOG'
 const SET_NEW_MESSAGE = 'chat/SET_NEW_MESSAGE'
 const SET_USER_PHOTO = 'chat/SET_USER_PHOTO'
 const SET_RECIPIENT_PHOTO = 'chat/SET_RECIPIENT_PHOTO'
+const SET_RECIPIENT_NAME = 'chat/SET_RECIPIENT_NAME'
 const SET_CURRENT_PAGE = 'chat/SET_CURRENT_PAGE'
 const SET_ALL_MESSAGES_LOADED = 'chat/SET_ALL_MESSAGES_LOADED'
 const SET_IS_NEW_MESSAGE = 'chat/SET_IS_NEW_MESSAGE'
 
 let initialState = {
+    dialogsSearchTerm: '',
     dialogsIsInit: false,
     chatIsInit: false,
     currentPage: 1,
@@ -50,11 +54,26 @@ let initialState = {
         isNewMessage: false
     },
     userPhoto: null,
-    recipientPhoto: null
+    recipientPhoto: null,
+    recipientName: null,
 };
 
 const chatReducer = (state = initialState, action) => {
     switch (action.type) {
+        case CLEAN_UP_CHAT:
+            return {
+                ...state,
+                chatIsInit: false,
+                currentPage: 1,
+                allMessagesLoaded: false,
+                userPhoto: null,
+                recipientPhoto: null,
+                recipientName: null,
+                messages: {
+                    data: [],
+                    isNewMessage: false
+                }
+            }
         case SET_DIALOGS_IS_INIT:
             return {
                 ...state,
@@ -64,6 +83,11 @@ const chatReducer = (state = initialState, action) => {
             return {
                 ...state,
                 chatIsInit: action.isInit
+            }
+        case SET_DIALOGS_SEARCH_TERM:
+            return {
+                ...state,
+                dialogsSearchTerm: action.searchTerm
             }
         case SET_DIALOGS:
             return {
@@ -108,6 +132,11 @@ const chatReducer = (state = initialState, action) => {
                 ...state,
                 recipientPhoto: action.url
             }
+        case SET_RECIPIENT_NAME:
+            return {
+                ...state,
+                recipientName: action.name
+            }
         case SET_IS_NEW_MESSAGE:
             return {
                 ...state,
@@ -133,6 +162,11 @@ export const setDialogsIsInit = (isInit) => ({
 export const setChatIsInit = (isInit) => ({
     type: SET_CHAT_IS_INIT,
     isInit
+})
+
+export const setDialogsSearchTerm = (searchTerm) => ({
+    type: SET_DIALOGS_SEARCH_TERM,
+    searchTerm
 })
 
 export const setDialogs = (data) => ({
@@ -173,6 +207,15 @@ export const setIsNewMessage = (isNewMessage) => ({
     isNewMessage
 })
 
+export const setRecipientName = (name) => ({
+    type: SET_RECIPIENT_NAME,
+    name
+})
+
+export const cleanUpChat = () => ({
+    type: CLEAN_UP_CHAT
+})
+
 //TC
 
 export const initializeDialogs = () => async (dispatch, getState) => {
@@ -181,19 +224,20 @@ export const initializeDialogs = () => async (dispatch, getState) => {
 }
 
 export const initializeChat = (userId) => async (dispatch, getState) => {
-    let recipientPhotoPromise = dispatch(setUserPhoto(userId, 'recipient'))
-    let userPhotoPromise = dispatch(setUserPhoto(getState().auth.id, 'user'));
+    let recipientInfoPromise = dispatch(setUserInfo(userId, 'recipient'))
+    let userInfoPromise = dispatch(setUserInfo(getState().auth.id, 'user'));
     let getDialogPromise = dispatch(getDialog(userId));
 
-    await Promise.all([recipientPhotoPromise, userPhotoPromise, getDialogPromise])
+    await Promise.all([recipientInfoPromise, userInfoPromise, getDialogPromise])
     dispatch(setChatIsInit(true));
 }
 
-const setUserPhoto = (userId, target) => async (dispatch) => {
-    let photoResponse = await profileAPI.getProfileInfo(userId);
-    let photo = photoResponse.photos.small ? photoResponse.photos.small : selectImgPlaceholderSmall();
+const setUserInfo = (userId, target) => async (dispatch) => {
+    let response = await profileAPI.getProfileInfo(userId);
+    let photo = response.photos.small ? response.photos.small : selectImgPlaceholderSmall();
+    target === 'recipient' && dispatch(setRecipientName(response.fullName))
     dispatch(setUserPhotoUrl(photo, target));
-    return photoResponse;
+    return response;
 }
 
 export const startChat = (userId) => async () => {

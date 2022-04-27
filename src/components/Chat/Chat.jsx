@@ -4,12 +4,16 @@ import Header from "./Header/Header";
 import Messages from "./Messages/Messages";
 import Input from "./Input/Input";
 import Sidebar from "./Sidebar/Sidebar";
+import Preloader from "../_common/Preloader/Preloader";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
-const Chat = ({ isInit, initializeChat, setIsNewMessage, messages, sendMessage, ...props }) => {
+const Chat = ({ isInit, initializeChat, cleanUpChat, setIsNewMessage, messages, sendMessage, ...props }) => {
     useEffect(() => {
         initializeChat(dialogId);
+        return () => {
+            cleanUpChat();
+        };
     }, []);
 
     const dialogId = useParams().userId;
@@ -25,13 +29,18 @@ const Chat = ({ isInit, initializeChat, setIsNewMessage, messages, sendMessage, 
         setInputHeight(height);
     };
 
-    if (!isInit) return <div>fix me pls</div>;
+    if (!isInit)
+        return (
+            <div className={styles.wrap + " wrapNoPadding"}>
+                <Preloader />
+            </div>
+        );
 
     if (isInit)
         return (
             <div className={styles.wrap}>
                 <div className={styles.contentWrap + " wrapNoPadding"}>
-                    <Header />
+                    <Header recipientImage={props.recipientImage} recipientName={props.recipientName} dialogId={dialogId} />
                     <Messages
                         setIsNewMessage={setIsNewMessage}
                         messages={messages}

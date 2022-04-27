@@ -1,9 +1,9 @@
 import Chat from "./Chat";
 import { connect } from "react-redux";
-import { getDialog, setIsNewMessage, sendMessage, initializeChat } from "../../redux/chatReducer"
+import { getDialog, cleanUpChat, setIsNewMessage, sendMessage, initializeChat } from "../../redux/chatReducer"
 import { compose } from "redux";
 import { withAuthRedirect } from "../../hoc/withAuthRedirect";
-import { selectChatIsInit, selectMessages, selectRecipientImg, selectUserImg } from "../../redux/chatSelectors";
+import { selectChatIsInit, selectMessages, selectRecipientImg, selectRecipientName, selectUserImg } from "../../redux/chatSelectors";
 
 const mapStateToProps = (state) => {
     return {
@@ -11,11 +11,13 @@ const mapStateToProps = (state) => {
         messages: selectMessages(state),
         userImage: selectUserImg(state),
         recipientImage: selectRecipientImg(state),
+        recipientName: selectRecipientName(state)
     };
 };
 
 const dispatchObj = {
     initializeChat,
+    cleanUpChat,
     setIsNewMessage,
     sendMessage,
     getDialog,

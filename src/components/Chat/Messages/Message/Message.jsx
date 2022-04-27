@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { connect } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { dateToObj } from "../../../../utils/dateTransform";
 import styles from "./Message.module.scss";
 
@@ -14,9 +15,14 @@ const Message = (props) => {
 
     return (
         <div id={props.id} className={wrapClassName}>
-            <img className={styles.avatar} src={imgUrl} alt="avatar" />
+            <NavLink to={`/profile/${props.senderId}`} className={styles.avatarWrap}>
+                <img className={styles.avatar} src={imgUrl} alt="avatar" />
+            </NavLink>
             <div className={styles.content}>
-                <span className={styles.author}>{props.senderName}</span>
+                <NavLink to={`/profile/${props.senderId}`} className={styles.author}>
+                    {props.senderName}
+                </NavLink>
+                {/* <span className={styles.author}>{props.senderName}</span> */}
                 <div dangerouslySetInnerHTML={{ __html: props.body }}></div>
                 {/* {props.body} */}
                 <div className={styles.meta}>

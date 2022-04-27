@@ -1,6 +1,7 @@
 import WarningWithPopup from "../WarningWithPopup/WarningWithPopup";
 import styles from "./Inputs.module.scss";
 import React, { useEffect } from "react";
+import { SvgSelector } from "../SvgSelector/SvgSelector";
 
 // export const renderInputFormik = ({ form, field, ...props }) => {
 //         const InputClassSwitch = (inputType) => {
@@ -27,7 +28,7 @@ import React, { useEffect } from "react";
 // };
 
 export const RenderInputFormik = ({ form, field, options, ...props }) => {
-    const InputClassSwitch = (inputType) => {
+    const inputClassSwitch = (inputType) => {
         switch (inputType) {
             // case "loginInput":
             //     return styles.input + " " + styles.input_login;
@@ -40,21 +41,25 @@ export const RenderInputFormik = ({ form, field, options, ...props }) => {
         props.onValueChange && props.onValueChange(field.value);
     }, [field.value]);
 
-    const inputClassName = InputClassSwitch(props.inputType);
+    const wrapClassName = options.icon ? styles.inputWrap + " " + styles.inputWrap_withIcon : styles.inputWrap;
+    const inputClassName = inputClassSwitch(props.inputType);
 
     return (
-        <input
-            style={{
-                border: options && options.border,
-                padding: options && options.padding
-            }}
-            type={props.type}
-            name={field.name}
-            value={field.value}
-            onChange={form.handleChange}
-            className={inputClassName}
-            placeholder={props.placeholder}
-        />
+        <div className={wrapClassName}>
+            <input
+                style={{
+                    border: options && options.border,
+                    padding: options && options.padding,
+                }}
+                type={props.type}
+                name={field.name}
+                value={field.value}
+                onChange={form.handleChange}
+                className={inputClassName}
+                placeholder={props.placeholder}
+            />
+            {options.icon && <SvgSelector className={styles.icon} id={options.icon} />}
+        </div>
     );
 };
 
