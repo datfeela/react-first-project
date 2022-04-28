@@ -1,0 +1,26 @@
+.wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    // background-color: beige;
+    z-index: 1;
+
+    &::before {
+        position: absolute;
+        content: "";
+        display: block;
+        width: 100vw;
+        height: 100vh;
+        background-color: beige;
+        z-index: 10;
+    }
+}
+
+.wrapInner {
+    position: relative;
+    background-color: #fff;
+    margin: 200px 300px;
+    z-index: 11;
+}

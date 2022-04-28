@@ -10,7 +10,7 @@ const Status = (props) => {
     let statusBlockRef = React.useRef();
 
     const activateEditMode = () => {
-        if (!props.requestInProgress) {
+        if (!props.requestInProgress && props.isOwner) {
             setIsEditMode(true);
             document.addEventListener("mousedown", handleClick);
         }
@@ -34,11 +34,13 @@ const Status = (props) => {
         }
     };
 
+    const statusClassName = props.isOwner ? styles.text + ' ' + styles.text_editable : styles.text;
+
     return (
         <div className={styles.wrap}>
             <div ref={statusBlockRef} className={styles.wrap}>
-                <span onClick={activateEditMode} className={styles.text}>
-                    {props.status ? props.status : "type something here..."}
+                <span onClick={activateEditMode} className={statusClassName}>
+                    {props.status ? props.status : props.isOwner ? "type something here..." : ""}
                 </span>
                 {props.requestInProgress && <Preloader />}
                 {isEditMode && <ReduxStatusForm value={props.status} onSubmit={saveStatus} />}

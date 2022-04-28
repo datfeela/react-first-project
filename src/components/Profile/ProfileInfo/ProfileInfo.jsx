@@ -6,7 +6,7 @@ const ProfileInfo = (props) => {
         <div className={styles.wrap + " wrap"}>
             <div className={styles.top}>
                 <h1 className={styles.name}>{props.profileInfo.fullName}</h1>
-                <Status userId={props.userId} status={props.status} updateStatus={props.updateStatus} requestInProgress={false} />
+                <Status isOwner={props.isOwner} userId={props.userId} status={props.status} updateStatus={props.updateStatus} requestInProgress={false} />
             </div>
             <div className={styles.row}>
                 <h3 className={styles.label}>Looking for a Job:</h3>

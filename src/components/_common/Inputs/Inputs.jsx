@@ -143,6 +143,12 @@ export const RenderTextareaFormik = ({ form, field, ...props }) => {
                 form.handleChange(e);
                 changeHeight(e);
             }}
+            onFocus={() => {
+                props.onFocus && props.onFocus()
+            }}
+            onBlur={() => {
+                props.onBlur && props.onBlur();
+            }}
             value={field.value}
             className={inputClassName}
             placeholder={props.placeholder}

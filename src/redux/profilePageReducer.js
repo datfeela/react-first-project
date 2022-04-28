@@ -15,10 +15,12 @@ let initialState = {
                 authorId: 22988,
                 author: 'datfeela',
                 date: '15.01.2022',
+                id: 2,
                 text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Deserunt, incidunt ex laboriosam totam ipsa, nobis et sint dicta atque a harum amet maxime esse expedita saepe doloribus quo tempore quos quidem exercitationem modi architecto accusantium? Porro facere pariatur architecto suscipit ducimus perferendis, in voluptas veniam perspiciatis dolore accusamus sint quibusdam!'
             }, {
-                authorId: 3,
-                author: 'test',
+                authorId: 23506,
+                author: 'datfeelaTest',
+                id: 1,
                 date: '01.05.2021',
                 text: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nesciunt, rem odit. Animi magni provident rerum veritatis nam iste illum dolor, neque blanditiis consectetur. Ducimus dicta facilis maxime esse incidunt, ut, excepturi ipsum sunt reiciendis similique ad sapiente exercitationem optio unde nulla sit possimus inventore rem aliquid accusantium cupiditate quos laborum pariatur! Doloribus esse facere perspiciatis veniam neque pariatur vitae iste eius fugiat nihil eos natus provident rerum, ducimus cum rem soluta quisquam aspernatur animi saepe non nisi culpa? Laudantium eius doloribus numquam repudiandae at aspernatur id distinctio vero voluptate reprehenderit deleniti, aliquid accusantium fugit dolorem! Maxime excepturi adipisci in. Odit.'
             },
@@ -39,7 +41,8 @@ const profileReducer = (state = initialState, action) => {
                 authorId: action.author.id,
                 author: action.author.name,
                 date: action.date,
-                text: action.text
+                text: action.text,
+                id: state.posts[action.targetUserId] ? state.posts[action.targetUserId].length + 1 : 1
             }
             //Добавляю для целевого пользователя пустой массив, в который будут добавляться посты, если у пользователя еще нет постов
             if (!state.posts[action.targetUserId]) {

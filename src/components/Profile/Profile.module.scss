@@ -6,7 +6,7 @@
     width: 100px;
 }
 
-.columns_wrap{
+.columns_wrap {
     display: grid;
     grid-template-columns: 280px 1fr;
     grid-column-gap: $blocksMargin;
@@ -17,4 +17,19 @@
 
 .column_main {
     width: $centerAreaWidth;
+}
+
+.editModeButton {
+    display: block;
+    margin-top: 10px;
+    font-size: 15px;
+    width: 100%;
+    padding: 8px 12px;
+    border-radius: 5px;
+    background-color: $lightBlueColor01;
+    color: $greyBlueColor08;
+
+    &:hover {
+        background-color: $lightBlueColor02
+    }
 }

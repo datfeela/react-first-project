@@ -227,8 +227,9 @@ export const initializeChat = (userId) => async (dispatch, getState) => {
     let recipientInfoPromise = dispatch(setUserInfo(userId, 'recipient'))
     let userInfoPromise = dispatch(setUserInfo(getState().auth.id, 'user'));
     let getDialogPromise = dispatch(getDialog(userId));
+    let startChatPromise = dispatch(startChat(userId));
 
-    await Promise.all([recipientInfoPromise, userInfoPromise, getDialogPromise])
+    await Promise.all([recipientInfoPromise, userInfoPromise, getDialogPromise, startChatPromise])
     dispatch(setChatIsInit(true));
 }
 
@@ -242,7 +243,8 @@ const setUserInfo = (userId, target) => async (dispatch) => {
 
 export const startChat = (userId) => async () => {
     let response = await chatAPI.startChat(userId);
-    response.resultCode === 0 ? console.log('peevo') : console.log(response)
+    response.resultCode === 0 || console.log(response)
+    return response;
 }
 
 export const getDialogs = () => async (dispatch) => {

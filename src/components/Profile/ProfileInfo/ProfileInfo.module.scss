@@ -1,7 +1,7 @@
 @import "variables.scss";
 
 .wrap {
-    padding: 15px 25px;
+    padding: $blocksMargin;
 }
 
 .top {
@@ -10,14 +10,16 @@
 }
 
 .name {
+    padding-left: 7px;
     font-size: 22px;
     font-weight: 600;
     line-height: 125%;
+    margin-bottom: 2px;
 }
 
 .header {
     font-weight: 600;
-    padding: 10px 0px;
+    padding: 10px 7px;
     position: relative;
 
     &::after {
@@ -33,7 +35,7 @@
 }
 
 .row {
-    padding-top: 5px;
+    padding: 5px 7px 0px 7px;
 }
 
 .label {
@@ -46,5 +48,5 @@
 }
 
 .personal_info {
-    // padding-top: 5px;
+    padding: 0px 7px;
 }

@@ -7,23 +7,26 @@
     display: grid;
     grid-template-columns: 50px 1fr;
     grid-gap: 15px;
-    border-bottom: 1px solid rgba($color: $greyColor, $alpha: 0.1);
+    border-bottom: 1px solid $greyColor01;
 
     &:hover {
-        background-color: rgba($color: $lightGreyColor, $alpha: 0.4);
+        background-color: $lightGreyColor08;
+        border: 1px solid $greyColor01;
+        border-top: none;
+        padding: 10px 19px;
     }
 
     &:first-child:hover {
         padding-top: 9px;
-        border-top: 1px solid rgba($color: $greyColor, $alpha: 0.1);
+        border-top: 1px solid $greyColor01;
     }
 
     &_newMessage {
-        background-color: rgba($color: $lightGreyColor, $alpha: 0.4);
+        background-color: $lightBlueColor01;
 
         &:first-child {
             padding-top: 9px;
-            border-top: 1px solid rgba($color: $greyColor, $alpha: 0.1);
+            border-top: 1px solid $greyColor01;
         }
     }
 }

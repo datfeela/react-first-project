@@ -16,6 +16,16 @@
     display: block;
     width: 100%;
     word-wrap: break-word;
+    border-radius: 3px;
+    padding: 3px 7px;
+    margin: -3px 0px;
+
+    &_editable:hover {
+        // margin: -3px -7px;
+        // padding: 3px 7px;
+        background-color: $greyColor01;
+        cursor: pointer;
+    }
 }
 
 .edit_mode_block {

@@ -3,6 +3,7 @@ import styles from "./Input.module.scss";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { maxLength, isRequiredNoError } from "../../../../utils/formValidation";
 import { RenderTextareaFormik } from "../../../_common/Inputs/Inputs";
+import { useState } from "react";
 
 //validation
 const maxLength500 = maxLength(500);
@@ -18,7 +19,16 @@ const NewPostForm = (props) => {
         props.addPost(values.newPostText, props.currentUserId);
         actions.setSubmitting(false);
         actions.resetForm();
+        setIsFormActive(false);
     };
+
+    const [isFormActive, setIsFormActive] = useState(false);
+    const inputDefaultHeight = isFormActive ? 62 : 40;
+
+    const handleFocus = () => {
+        setIsFormActive(true)
+    }
+
     return (
         <Formik initialValues={{ newPostText: "" }} onSubmit={submit}>
             {({ isSubmitting }) => (
@@ -29,13 +39,17 @@ const NewPostForm = (props) => {
                         component={RenderTextareaFormik}
                         validate={validateNewPostField}
                         placeholder={"What's new?"}
-                        defaultHeight={62}
-                        maxHeight={'240px'}
+                        defaultHeight={inputDefaultHeight}
+                        maxHeight={"240px"}
+                        onFocus={handleFocus}
+                        // onBlur={handleBlur}
                     />
                     <ErrorMessage name="newPostText" component={ErrorComponent} />
-                    <button className={styles.button} type="submit" disabled={isSubmitting}>
-                        Publish
-                    </button>
+                    {isFormActive && (
+                        <button className={styles.button} type="submit" disabled={isSubmitting}>
+                            Publish
+                        </button>
+                    )}
                 </Form>
             )}
         </Formik>

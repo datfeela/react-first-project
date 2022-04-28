@@ -4,18 +4,18 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import Posts from "./Posts/Posts";
 import Preloader from "../_common/Preloader/Preloader";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Navigate, useParams} from "react-router-dom";
+import EditMode from "./EditMode/EditMode";
 
 const Profile = (props) => {
-    //      !react router hooks testing
     const params = useParams();
-
     const initializeProfile = (id) => {
         props.initializeProfile(id);
     };
 
-    let currentUserId = params.userId ? params.userId : props.authUserId;
+    const currentUserId = params.userId ? params.userId : props.authUserId;
+    const isOwner = (params.userId === props.authUserId || !params.userId) ? true : false
 
     useEffect(() => {
         if (!props.profileInfo || props.profileInfo.userId !== currentUserId) {
@@ -23,7 +23,15 @@ const Profile = (props) => {
         }
     }, [currentUserId]);
 
-    //      !-------------------------//
+    const [isEditModeActive, setIsEditModeActive] = useState(false);
+
+    const activateEditMode = () => {
+        setIsEditModeActive(true)
+    }
+
+    const deactivateEditMode = () => {
+        setIsEditModeActive(false);
+    };
 
     if (!currentUserId && !props.isAuth) {
         return (
@@ -41,9 +49,14 @@ const Profile = (props) => {
         
     return (
         <div className={styles.wrap}>
+            {isEditModeActive && <EditMode deactivateEditMode={deactivateEditMode}/>}
             <div className={styles.columns_wrap}>
                 <div className={styles.column_side}>
-                    <Avatar photo={props.profileInfo.photos.large} />
+                    <div className="wrap">
+                        <Avatar photo={props.profileInfo.photos.large} />
+                        {isOwner && <button className={styles.editModeButton + " button"} onClick={activateEditMode}>Edit profile info</button>}
+                        {!isOwner && <div>delete friend etc</div>}
+                    </div>
                 </div>
                 <div className={styles.column_main}>
                     <ProfileInfo
@@ -51,6 +64,7 @@ const Profile = (props) => {
                         profileInfo={props.profileInfo}
                         status={props.profileStatus}
                         updateStatus={props.updateStatus}
+                        isOwner={isOwner}
                     />
                     <Posts posts={props.posts} addPost={props.addPost} currentUserId={currentUserId} />
                 </div>

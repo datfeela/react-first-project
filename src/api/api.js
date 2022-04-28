@@ -62,7 +62,6 @@ export const authAPI = {
 export const chatAPI = {
     async startChat(userId) {
         let response = await instance.put(`dialogs/${userId}`)
-        debugger;
         return response.data;
     },
     async getDialogs() {

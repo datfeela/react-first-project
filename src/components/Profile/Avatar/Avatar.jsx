@@ -2,7 +2,7 @@ import styles from "./Avatar.module.scss";
 
 const Avatar = (props) => {
     return (
-        <div className={"wrap"}>
+        <div>
             <img className={styles.avatar} src={props.photo ? props.photo : "https://via.placeholder.com/250x250"} alt="profileimg" />
         </div>
     );
