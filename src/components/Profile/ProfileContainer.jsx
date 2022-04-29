@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { selectAuthUserId, selectIsAuth } from "../../redux/authSelectors";
 import { selectCurrentUserPosts, selectProfileInfo, selectStatus} from "../../redux/profilePageSelectors";
-import { initializeProfile, updateStatus, addPost } from "../../redux/profilePageReducer";
+import { initializeProfile, changeProfileInfo, updateStatus, addPost } from "../../redux/profilePageReducer";
 import Profile from "./Profile";
 
 let mapStateToProps = (state) => {
@@ -16,6 +16,7 @@ let mapStateToProps = (state) => {
 
 let dispatchObj = {
     initializeProfile,
+    changeProfileInfo,
     updateStatus,
     addPost,
 };

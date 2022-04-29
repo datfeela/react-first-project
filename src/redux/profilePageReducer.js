@@ -95,21 +95,20 @@ export const addPostAction = (text, author, date, targetUserId) => ({
 
 //TC
 
-export const addPost = (text, targetUserId) => (dispatch, getState) => {
+export const addPost = (text, targetUserId) => async (dispatch, getState) => {
     //костыль для создания автора и даты поста без серверного api
     const date = `${new Date().toLocaleDateString()}`;
     const authorId = getState().auth.id;
 
-    profileAPI.getProfileInfo(authorId).then((response) => {
-        let author = {
-            id: response.userId,
-            name: response.fullName
-        }
-        dispatch(addPostAction(text, author, date, targetUserId));
-    });
+    let response = await profileAPI.getProfileInfo(authorId);
+    let author = {
+        id: response.userId,
+        name: response.fullName
+    }
+    dispatch(addPostAction(text, author, date, targetUserId));
 }
 
-export const initializeProfile = (userId) => (dispatch) => {
+export const initializeProfile = (userId) => async (dispatch) => {
     const profileInfoPromise = dispatch(getProfileInfo(userId));
     const statusPromise = dispatch(getStatus(userId));
     Promise.all([profileInfoPromise, statusPromise])
@@ -118,22 +117,28 @@ export const initializeProfile = (userId) => (dispatch) => {
         })
 }
 
-export const getProfileInfo = (userId) => (dispatch) => {
-    return profileAPI.getProfileInfo(userId).then((response) => {
-        dispatch(setProfileInfo(response))
-    });
+export const getProfileInfo = (userId) => async (dispatch) => {
+    debugger;
+    const response = await profileAPI.getProfileInfo(userId)
+    dispatch(setProfileInfo(response))
+    return response;
 }
 
-export const getStatus = (userId) => (dispatch) => {
-    return profileAPI.getStatus(userId).then((response) => {
-        dispatch(setStatus(response))
-    });
+export const changeProfileInfo = (userId, fullName, lookingForAJob, lookingForAJobDescription, contacts) => async (dispatch) => {
+    let response = await profileAPI.setProfileInfo(userId, fullName, lookingForAJob, lookingForAJobDescription, contacts)
+    debugger;
+    response.resultCode === 0 ? dispatch(getProfileInfo(userId)) : console.log(response);
 }
 
-export const updateStatus = (status) => (dispatch) => {
+export const getStatus = (userId) => async (dispatch) => {
+    let response = await profileAPI.getStatus(userId)
+    dispatch(setStatus(response))
+    return response
+}
+
+export const updateStatus = (status) => async (dispatch) => {
     //updating
-    profileAPI.updateStatus(status).then((response) => {
-        response.resultCode === 0 ? dispatch(setStatus(status)) : console.log(response);
-        //update finished
-    });
+    let response = await profileAPI.updateStatus(status)
+    response.resultCode === 0 ? dispatch(setStatus(status)) : console.log(response);
+    //update finished
 }

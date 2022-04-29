@@ -8,17 +8,17 @@ import { useEffect, useState } from "react";
 import { Navigate, useParams} from "react-router-dom";
 import EditMode from "./EditMode/EditMode";
 
-const Profile = (props) => {
+const Profile = ({profileInfo, changeProfileInfo, authUserId, isAuth, profileStatus, updateStatus, posts, addPost, ...props}) => {
     const params = useParams();
     const initializeProfile = (id) => {
         props.initializeProfile(id);
     };
 
-    const currentUserId = params.userId ? params.userId : props.authUserId;
-    const isOwner = (params.userId === props.authUserId || !params.userId) ? true : false
+    const currentUserId = params.userId ? params.userId : authUserId;
+    const isOwner = (params.userId === authUserId || !params.userId) ? true : false
 
     useEffect(() => {
-        if (!props.profileInfo || props.profileInfo.userId !== currentUserId) {
+        if (!profileInfo || profileInfo.userId !== currentUserId) {
             currentUserId && initializeProfile(currentUserId);
         }
     }, [currentUserId]);
@@ -33,13 +33,13 @@ const Profile = (props) => {
         setIsEditModeActive(false);
     };
 
-    if (!currentUserId && !props.isAuth) {
+    if (!currentUserId && !isAuth) {
         return (
             <Navigate to={'../login'}/>
         )
     }
 
-    if (!props.profileInfo) {
+    if (!profileInfo) {
         return (
             <div className={styles.preloaderWrap}>
                 <Preloader />
@@ -49,24 +49,35 @@ const Profile = (props) => {
         
     return (
         <div className={styles.wrap}>
-            {isEditModeActive && <EditMode deactivateEditMode={deactivateEditMode}/>}
+            {isEditModeActive && (
+                <EditMode
+                    authUserId={authUserId}
+                    profileInfo={profileInfo}
+                    changeProfileInfo={changeProfileInfo}
+                    deactivateEditMode={deactivateEditMode}
+                />
+            )}
             <div className={styles.columns_wrap}>
                 <div className={styles.column_side}>
                     <div className="wrap">
-                        <Avatar photo={props.profileInfo.photos.large} />
-                        {isOwner && <button className={styles.editModeButton + " button"} onClick={activateEditMode}>Edit profile info</button>}
+                        <Avatar photo={profileInfo.photos.large} />
+                        {isOwner && (
+                            <button className={styles.editModeButton + " button"} onClick={activateEditMode}>
+                                Edit profile info
+                            </button>
+                        )}
                         {!isOwner && <div>delete friend etc</div>}
                     </div>
                 </div>
                 <div className={styles.column_main}>
                     <ProfileInfo
                         userId={currentUserId}
-                        profileInfo={props.profileInfo}
-                        status={props.profileStatus}
-                        updateStatus={props.updateStatus}
+                        profileInfo={profileInfo}
+                        status={profileStatus}
+                        updateStatus={updateStatus}
                         isOwner={isOwner}
                     />
-                    <Posts posts={props.posts} addPost={props.addPost} currentUserId={currentUserId} />
+                    <Posts posts={posts} addPost={addPost} currentUserId={currentUserId} />
                 </div>
             </div>
         </div>

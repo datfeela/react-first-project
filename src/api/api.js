@@ -34,6 +34,12 @@ export const profileAPI = {
         let response = await instance.get(`profile/${userId}`)
         return response.data;
     },
+    async setProfileInfo(userId, fullName, lookingForAJob, lookingForAJobDescription, contacts) {
+        let response = await instance.put(`profile`, {
+            aboutMe: 'blabla', userId, lookingForAJob, lookingForAJobDescription, fullName, contacts
+        })
+        return response.data;
+    },
     async getStatus(userId) {
         let response = await instance.get(`profile/status/${userId}`)
         return response.data;
@@ -67,7 +73,7 @@ export const chatAPI = {
     async getDialogs() {
         return await instance.get(`dialogs`)
     },
-    async getDialog(userId, page, count=10) {
+    async getDialog(userId, page, count = 10) {
         let response = await instance.get(`dialogs/${userId}/messages?page=${page}&count=${count}`)
         return response;
     },

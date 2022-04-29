@@ -60,7 +60,6 @@
 .checkboxWrap {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
 }
 
 .checkbox {
@@ -69,7 +68,7 @@
     margin-right: 10px;
     border: 1px solid rgba($color: $greyColor, $alpha: 0.15);
 
-    &__text{
+    &__label{
         color: rgba($color: $greyColor, $alpha: 0.9);
     }
 }

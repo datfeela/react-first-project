@@ -28,21 +28,33 @@ import { SvgSelector } from "../SvgSelector/SvgSelector";
 // };
 
 export const RenderInputFormik = ({ form, field, options, ...props }) => {
-    const inputClassSwitch = (inputType) => {
-        switch (inputType) {
-            // case "loginInput":
-            //     return styles.input + " " + styles.input_login;
-            default:
-                return styles.input;
-        }
-    };
+    // const inputClassSwitch = (inputType) => {
+    //     switch (inputType) {
+    //         // case "loginInput":
+    //         //     return styles.input + " " + styles.input_login;
+    //         default:
+    //             return styles.input;
+    //     }
+    // };
 
     useEffect(() => {
         props.onValueChange && props.onValueChange(field.value);
     }, [field.value]);
 
-    const wrapClassName = options.icon ? styles.inputWrap + " " + styles.inputWrap_withIcon : styles.inputWrap;
-    const inputClassName = inputClassSwitch(props.inputType);
+    let wrapClassName, inputClassName;
+
+    switch (props.type) {
+        case "text":
+            wrapClassName = options && options.icon ? styles.inputWrap + " " + styles.inputWrap_withIcon : styles.inputWrap;
+            inputClassName = options && options.showErrors && form.errors[field.name] ? styles.input + " " + styles.input_error : styles.input;
+            break
+        case "checkbox":
+            wrapClassName = styles.checkboxWrap;
+            inputClassName = styles.checkbox;
+            break
+    }
+     
+    // const inputClassName = inputClassSwitch(props.inputType);
 
     return (
         <div className={wrapClassName}>
@@ -57,8 +69,10 @@ export const RenderInputFormik = ({ form, field, options, ...props }) => {
                 onChange={form.handleChange}
                 className={inputClassName}
                 placeholder={props.placeholder}
+                checked={field.checked}
             />
-            {options.icon && <SvgSelector className={styles.icon} id={options.icon} />}
+            {options && options.icon && <SvgSelector className={styles.icon} id={options.icon} />}
+            {props.label && <span className={styles.checkbox__label}>{props.label}</span>}
         </div>
     );
 };
