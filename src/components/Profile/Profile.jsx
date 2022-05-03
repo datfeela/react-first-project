@@ -5,8 +5,10 @@ import Posts from "./Posts/Posts";
 import Preloader from "../_common/Preloader/Preloader";
 
 import { useEffect, useState } from "react";
-import { Navigate, useParams} from "react-router-dom";
-import EditMode from "./EditMode/EditMode";
+import { Navigate, useParams } from "react-router-dom";
+import EditMode from "../_common/EditMode/EditMode";
+import EditProfileForm from "./EditProfileForm/EditProfileForm";
+
 
 const Profile = ({profileInfo, changeProfileInfo, authUserId, isAuth, profileStatus, updateStatus, posts, addPost, ...props}) => {
     const params = useParams();
@@ -51,6 +53,7 @@ const Profile = ({profileInfo, changeProfileInfo, authUserId, isAuth, profileSta
         <div className={styles.wrap}>
             {isEditModeActive && (
                 <EditMode
+                    ChildComponent={EditProfileForm}
                     authUserId={authUserId}
                     profileInfo={profileInfo}
                     changeProfileInfo={changeProfileInfo}
@@ -60,7 +63,7 @@ const Profile = ({profileInfo, changeProfileInfo, authUserId, isAuth, profileSta
             <div className={styles.columns_wrap}>
                 <div className={styles.column_side}>
                     <div className="wrap">
-                        <Avatar photo={profileInfo.photos.large} />
+                        <Avatar isOwner={isOwner} photo={profileInfo.photos.large} />
                         {isOwner && (
                             <button className={styles.editModeButton + " button"} onClick={activateEditMode}>
                                 Edit profile info

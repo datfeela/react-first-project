@@ -21,3 +21,12 @@ export const validateEmail = (value) => {
     }
     return error;
 };
+
+export const validateUrl = (value) => {
+    let error;
+    if (value.length === 0) { return error }
+    if (!/^[A-Z0-9._%+-]+\.[A-Z0-9/._-]{2,1000}$/i.test(value)) {
+        error = "Invalid url";
+    }
+    return error;
+}

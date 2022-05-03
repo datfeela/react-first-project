@@ -1,0 +1,39 @@
+@import "variables.scss";
+
+.title {
+    text-align: center;
+    font-size: 20px;
+    font-weight: 500;
+    padding-bottom: 18px;
+    margin-bottom: 12px;
+    border-bottom: 1px solid $greyColor02;
+}
+
+.input{
+    position: absolute;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.button {
+    width: 40%;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon {
+    height: 18px;
+    width: 18px;
+    margin: 0px 7px 3px -9px;
+    fill: $lightGreyColor08;
+}
+
+.footer {
+    font-size: 13px;
+    padding-top: 18px;
+    margin-top: 12px;
+    border-top: 1px solid $greyColor02;
+    text-align: center;
+}

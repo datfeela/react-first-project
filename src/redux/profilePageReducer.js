@@ -1,9 +1,10 @@
 import { authAPI, profileAPI } from "../api/api";
 
-const ADD_POST = 'ADD-POST',
-    SET_PROFILE_INFO = 'GET_PROFILE_INFO',
-    SET_STATUS = 'SET_STATUS',
-    INITIALIZE_SUCCESS = 'INITIALIZE_SUCCESS'
+const ADD_POST = 'profile/ADD-POST',
+    SET_PROFILE_INFO = 'profile/GET_PROFILE_INFO',
+    SET_PROFILE_PHOTOS = 'profile/SET_PROFILE_PHOTOS',
+    SET_STATUS = 'profile/SET_STATUS',
+    INITIALIZE_SUCCESS = 'profile/INITIALIZE_SUCCESS'
 
 let initialState = {
     isInitialized: false,
@@ -57,6 +58,11 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 profileInfo: action.profileInfo
             }
+        case SET_PROFILE_PHOTOS:
+            return {
+                ...state,
+                profileInfo: { ...state.profileInfo, photos: action.photos }
+            }
         case SET_STATUS:
             return {
                 ...state,
@@ -78,6 +84,11 @@ const setInitializeSuccess = () => ({
 export const setProfileInfo = (profileInfo) => ({
     type: SET_PROFILE_INFO,
     profileInfo
+})
+
+export const savePhotoSuccess = (photos) => ({
+    type: SET_PROFILE_PHOTOS,
+    photos
 })
 
 export const setStatus = (status) => ({
@@ -118,16 +129,16 @@ export const initializeProfile = (userId) => async (dispatch) => {
 }
 
 export const getProfileInfo = (userId) => async (dispatch) => {
-    debugger;
     const response = await profileAPI.getProfileInfo(userId)
     dispatch(setProfileInfo(response))
     return response;
 }
 
-export const changeProfileInfo = (userId, fullName, lookingForAJob, lookingForAJobDescription, contacts) => async (dispatch) => {
-    let response = await profileAPI.setProfileInfo(userId, fullName, lookingForAJob, lookingForAJobDescription, contacts)
+export const changeProfileInfo = (userId, fullName, aboutMe, lookingForAJob, lookingForAJobDescription, contacts) => async (dispatch) => {
+    let response = await profileAPI.setProfileInfo(userId, fullName, aboutMe, lookingForAJob, lookingForAJobDescription, contacts)
     debugger;
     response.resultCode === 0 ? dispatch(getProfileInfo(userId)) : console.log(response);
+    return response;
 }
 
 export const getStatus = (userId) => async (dispatch) => {
@@ -141,4 +152,10 @@ export const updateStatus = (status) => async (dispatch) => {
     let response = await profileAPI.updateStatus(status)
     response.resultCode === 0 ? dispatch(setStatus(status)) : console.log(response);
     //update finished
+}
+
+export const savePhoto = (photo) => async (dispatch) => {
+    let response = await profileAPI.setPhoto(photo)
+    response.resultCode === 0 ? dispatch(savePhotoSuccess(response.data.photos)) : console.log(response);
+    return response;
 }

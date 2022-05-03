@@ -1,7 +1,47 @@
-.wrap{
+@import "variables.scss";
+
+.wrap {
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+
+    &_editable:hover {
+        .popup {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+    }
 }
 
-.avatar{
+.avatar {
     width: 250px;
+    height: 250px;
+    margin: -1px 0px 0px -1px;
 }
 
+.popup {
+    position: absolute;
+    transform: translateY(50px);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease-out 0s;
+    width: 100%;
+    bottom: 0;
+    background-color: $greyColor08;
+
+    &_action {
+        display: flex;
+        align-items: center;
+        padding: 5px 0px 5px 15px;
+        color: $lightGreyColor08;
+    }
+
+    &_icon {
+        height: 18px;
+        width: 18px;
+        margin-right: 7px;
+        margin-bottom: 3px;
+        fill: $lightGreyColor08;
+    }
+}

@@ -34,9 +34,19 @@ export const profileAPI = {
         let response = await instance.get(`profile/${userId}`)
         return response.data;
     },
-    async setProfileInfo(userId, fullName, lookingForAJob, lookingForAJobDescription, contacts) {
+    async setProfileInfo(userId, fullName, aboutMe, lookingForAJob, lookingForAJobDescription, contacts) {
         let response = await instance.put(`profile`, {
-            aboutMe: 'blabla', userId, lookingForAJob, lookingForAJobDescription, fullName, contacts
+            aboutMe, userId, lookingForAJob, lookingForAJobDescription, fullName, contacts
+        })
+        return response.data;
+    },
+    async setPhoto(photo) {
+        let formData = new FormData();
+        formData.append("image", photo);
+        let response = await instance.put(`profile/photo`, formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
         })
         return response.data;
     },
