@@ -8,16 +8,16 @@ import { useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import EditMode from "../_common/EditMode/EditMode";
 import EditProfileForm from "./EditProfileForm/EditProfileForm";
+import ProfileFriends from "./ProfileFriends/ProfileFriends";
 
-
-const Profile = ({profileInfo, changeProfileInfo, authUserId, isAuth, profileStatus, updateStatus, posts, addPost, ...props}) => {
+const Profile = ({ isInit, profileInfo, changeProfileInfo, authUserId, isAuth, profileStatus, updateStatus, posts, addPost, ...props }) => {
     const params = useParams();
     const initializeProfile = (id) => {
         props.initializeProfile(id);
     };
 
     const currentUserId = params.userId ? params.userId : authUserId;
-    const isOwner = (params.userId === authUserId || !params.userId) ? true : false
+    const isOwner = params.userId == authUserId || !params.userId ? true : false;
 
     useEffect(() => {
         if (!profileInfo || profileInfo.userId !== currentUserId) {
@@ -28,63 +28,68 @@ const Profile = ({profileInfo, changeProfileInfo, authUserId, isAuth, profileSta
     const [isEditModeActive, setIsEditModeActive] = useState(false);
 
     const activateEditMode = () => {
-        setIsEditModeActive(true)
-    }
+        setIsEditModeActive(true);
+    };
 
     const deactivateEditMode = () => {
         setIsEditModeActive(false);
     };
 
     if (!currentUserId && !isAuth) {
-        return (
-            <Navigate to={'../login'}/>
-        )
+        return <Navigate to={"../login"} />;
     }
 
-    if (!profileInfo) {
+    if (!isInit) {
         return (
             <div className={styles.preloaderWrap}>
                 <Preloader />
             </div>
         );
     }
-        
-    return (
-        <div className={styles.wrap}>
-            {isEditModeActive && (
-                <EditMode
-                    ChildComponent={EditProfileForm}
-                    authUserId={authUserId}
-                    profileInfo={profileInfo}
-                    changeProfileInfo={changeProfileInfo}
-                    deactivateEditMode={deactivateEditMode}
-                />
-            )}
-            <div className={styles.columns_wrap}>
-                <div className={styles.column_side}>
-                    <div className="wrap">
-                        <Avatar isOwner={isOwner} photo={profileInfo.photos.large} />
+
+    if (isInit) {
+        return (
+            <div className={styles.wrap}>
+                {isEditModeActive && (
+                    <EditMode
+                        ChildComponent={EditProfileForm}
+                        authUserId={authUserId}
+                        profileInfo={profileInfo}
+                        changeProfileInfo={changeProfileInfo}
+                        deactivateEditMode={deactivateEditMode}
+                    />
+                )}
+                <div className={styles.columns_wrap}>
+                    <div className={styles.column_side}>
+                        <div className={styles.wrap_side + " wrap"}>
+                            <Avatar isOwner={isOwner} photo={profileInfo.photos.large} />
+                            {isOwner && (
+                                <button className={styles.editModeButton + " button"} onClick={activateEditMode}>
+                                    Edit profile info
+                                </button>
+                            )}
+                            {!isOwner && <div>delete friend etc</div>}
+                        </div>
                         {isOwner && (
-                            <button className={styles.editModeButton + " button"} onClick={activateEditMode}>
-                                Edit profile info
-                            </button>
+                            <div className={styles.wrap_side + " wrap"}>
+                                <ProfileFriends currentUserId={currentUserId} />
+                            </div>
                         )}
-                        {!isOwner && <div>delete friend etc</div>}
+                    </div>
+                    <div className={styles.column_main}>
+                        <ProfileInfo
+                            userId={currentUserId}
+                            profileInfo={profileInfo}
+                            status={profileStatus}
+                            updateStatus={updateStatus}
+                            isOwner={isOwner}
+                        />
+                        <Posts posts={posts} addPost={addPost} currentUserId={currentUserId} />
                     </div>
                 </div>
-                <div className={styles.column_main}>
-                    <ProfileInfo
-                        userId={currentUserId}
-                        profileInfo={profileInfo}
-                        status={profileStatus}
-                        updateStatus={updateStatus}
-                        isOwner={isOwner}
-                    />
-                    <Posts posts={posts} addPost={addPost} currentUserId={currentUserId} />
-                </div>
             </div>
-        </div>
-    );
+        );
+    }
 };
 
 export default Profile;

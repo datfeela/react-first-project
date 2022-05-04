@@ -41,25 +41,6 @@ const Sidebar = (props) => {
                             </div>
                         </NavLink>
                     </li>
-                    <li className={styles.item}>
-                        <NavLink to="/settings" className={linkClassName}>
-                            <div className={styles.linkWrap}>
-                                <SvgSelector className={styles.icon} id="settings" />
-                                <span>Settings</span>
-                            </div>
-                        </NavLink>
-                    </li>
-                    {/* <li className={styles.item}>
-                    <NavLink to="/audio" className={linkClassName}>
-                        Music
-                    </NavLink>
-                </li>
-                 */}
-                    {/* <li className={styles.item}>
-                    <NavLink to="/feed" className={linkClassName}>
-                        Feed
-                    </NavLink>
-                </li> */}
                 </ul>
             </nav>
         );

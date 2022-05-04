@@ -1,11 +1,12 @@
 import { connect } from "react-redux";
 import { selectAuthUserId, selectIsAuth } from "../../redux/authSelectors";
-import { selectCurrentUserPosts, selectProfileInfo, selectStatus} from "../../redux/profilePageSelectors";
+import { selectCurrentUserPosts, selectIsInitialized, selectProfileInfo, selectStatus} from "../../redux/profilePageSelectors";
 import { initializeProfile, changeProfileInfo, updateStatus, addPost } from "../../redux/profilePageReducer";
 import Profile from "./Profile";
 
 let mapStateToProps = (state) => {
     return {
+        isInit: selectIsInitialized(state),
         profileInfo: selectProfileInfo(state),
         profileStatus: selectStatus(state),
         posts: selectCurrentUserPosts(state),

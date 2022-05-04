@@ -11,7 +11,7 @@ body {
 }
 
 .App__wrap {
-    max-width: 1200px;
+    max-width: 1185px;
     padding: 0px 20px;
     margin: 0 auto;
     display: grid;
@@ -26,7 +26,7 @@ body {
 .main {
     min-height: calc(99vh - #{$headerHeight} - #{$blocksMargin});
     grid-area: main;
-    margin: $blocksMargin 0px 0px $blocksMargin;
+    margin: calc(#{$blocksMargin} + #{$headerHeight}) 0px 0px $blocksMargin;
 }
 
 .preloader-wrap{

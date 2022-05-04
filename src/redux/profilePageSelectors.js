@@ -1,5 +1,9 @@
 import { createSelector } from "reselect"
 
+export const selectIsInitialized = (state) => {
+    return state.profilePage.isInitialized
+}
+
 export const selectProfile = (state) => {
     return state.profilePage
 }
@@ -10,6 +14,14 @@ export const selectImgPlaceholderSmall = () => {
 
 export const selectProfileInfo = (state) => {
     return state.profilePage.profileInfo
+}
+
+export const selectFriends = (state) => {
+    return state.profilePage.friends
+}
+
+export const selectFriendsCount = (state) => {
+    return state.profilePage.friendsCount
 }
 
 export const selectCurrentUserId = (state) => {

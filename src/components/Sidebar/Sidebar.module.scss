@@ -1,7 +1,7 @@
 @import "variables.scss";
 
 .sidebar {
-    margin-top: $blocksMargin;
+    margin-top: calc(#{$blocksMargin} + #{$headerHeight});
 }
 
 .list {

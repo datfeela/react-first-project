@@ -17,21 +17,23 @@
     margin-bottom: 2px;
 }
 
+.headerWrap {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+}
+
 .header {
     font-weight: 600;
     padding: 10px 7px;
-    position: relative;
+}
 
-    &::after {
-        content: " ";
-        display: block;
-        height: 1px;
-        width: calc(100% - 100px);
-        border-bottom: 1px solid rgba($color: $mainFontColor, $alpha: 0.1);
-        position: absolute;
-        right: 0;
-        top: 50%;
-    }
+.headerLine {
+    display: block;
+    height: 1px;
+    border-bottom: 1px solid rgba($color: $mainFontColor, $alpha: 0.1);
+    margin-left: 10px;
 }
 
 .row {
@@ -44,7 +46,6 @@
 }
 
 .text_labeled {
-    
 }
 
 .link_labeled {

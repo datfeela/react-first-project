@@ -1,0 +1,56 @@
+@import "variables.scss";
+
+.wrap {
+    min-width: 250px;
+    background-color: #fff;
+    padding: 10px 0px;
+    border-radius: 0px 0px 3px 3px;
+    box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.15);
+    border: 1px solid $lightGreyColor;
+}
+
+.item{
+    user-select: none;
+    padding: 7px 15px;
+    display: flex;
+    align-items: center;
+
+    &:hover{
+        background-color: $greyColor01;
+    }
+
+    &_active {
+        cursor: pointer;
+    }
+
+    &__title {
+        margin-right: 10px;
+    }
+
+    &__selector {
+        cursor: pointer;
+        color: $darkBlueColor;
+    }
+}
+
+.icon {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+    fill: $darkBlueColor;
+
+    &_theme{
+        height: 21px;
+        width: 21px;
+    }
+
+    &_language{
+        stroke: $darkBlueColor;
+        fill: #fff;
+    }
+
+    &_logout {
+        margin-left: -3px;
+        margin-right: 13px;
+    }
+}

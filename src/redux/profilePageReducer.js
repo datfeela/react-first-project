@@ -1,15 +1,18 @@
-import { authAPI, profileAPI } from "../api/api";
+import { profileAPI, usersAPI } from "../api/api";
 
 const ADD_POST = 'profile/ADD-POST',
     SET_PROFILE_INFO = 'profile/GET_PROFILE_INFO',
     SET_PROFILE_PHOTOS = 'profile/SET_PROFILE_PHOTOS',
     SET_STATUS = 'profile/SET_STATUS',
-    INITIALIZE_SUCCESS = 'profile/INITIALIZE_SUCCESS'
+    INITIALIZE_SUCCESS = 'profile/INITIALIZE_SUCCESS',
+    SET_FRIENDS = 'profile/SET_FRIENDS'
 
 let initialState = {
     isInitialized: false,
     profileInfo: null,
     profileStatus: null,
+    friends: [],
+    friendsCount: null,
     posts: {
         22988: [
             {
@@ -68,6 +71,12 @@ const profileReducer = (state = initialState, action) => {
                 ...state,
                 profileStatus: action.status
             }
+        case SET_FRIENDS:
+            return {
+                ...state,
+                friends: action.friends,
+                friendsCount: action.friendsCount
+            }
         default:
             return state;
     }
@@ -96,12 +105,18 @@ export const setStatus = (status) => ({
     status
 })
 
-export const addPostAction = (text, author, date, targetUserId) => ({
+export const addPostSuccess = (text, author, date, targetUserId) => ({
     type: ADD_POST,
     text,
     author,
     date,
     targetUserId
+})
+
+const getFriendsSuccess = (friends, friendsCount) => ({
+    type: SET_FRIENDS,
+    friends,
+    friendsCount
 })
 
 //TC
@@ -116,13 +131,14 @@ export const addPost = (text, targetUserId) => async (dispatch, getState) => {
         id: response.userId,
         name: response.fullName
     }
-    dispatch(addPostAction(text, author, date, targetUserId));
+    dispatch(addPostSuccess(text, author, date, targetUserId));
 }
 
 export const initializeProfile = (userId) => async (dispatch) => {
     const profileInfoPromise = dispatch(getProfileInfo(userId));
     const statusPromise = dispatch(getStatus(userId));
-    Promise.all([profileInfoPromise, statusPromise])
+    const getFriendsPromise = dispatch(getFriends());
+    Promise.all([profileInfoPromise, statusPromise, getFriendsPromise])
         .then(() => {
             dispatch(setInitializeSuccess())
         })
@@ -131,6 +147,12 @@ export const initializeProfile = (userId) => async (dispatch) => {
 export const getProfileInfo = (userId) => async (dispatch) => {
     const response = await profileAPI.getProfileInfo(userId)
     dispatch(setProfileInfo(response))
+    return response;
+}
+
+export const getFriends = () => async (dispatch) => {
+    let response = await usersAPI.getUsers(6, 1, true, "")
+    dispatch(getFriendsSuccess(response.items, response.totalCount))
     return response;
 }
 

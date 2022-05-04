@@ -8,11 +8,15 @@
 
 .columns_wrap {
     display: grid;
-    grid-template-columns: 280px 1fr;
+    grid-template-columns: $sideAreaWidth 1fr;
     grid-column-gap: $blocksMargin;
 }
 
 .column_side {
+}
+
+.wrap_side {
+    margin-bottom: $blocksMargin;
 }
 
 .column_main {

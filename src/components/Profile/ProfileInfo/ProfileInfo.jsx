@@ -15,29 +15,34 @@ const ProfileInfo = (props) => {
                     requestInProgress={false}
                 />
             </div>
-            <div className={styles.row}>
-                <h3 className={styles.label}>Looking for a Job:</h3>
-                <a className={styles.text_labeled}>{props.profileInfo.lookingForAJob ? "yes" : "no"}</a>
+            <div className={styles.headerWrap}>
+                <h2 className={styles.header + " " + styles.header_lfaj}>
+                    Looking for a job: {props.profileInfo.lookingForAJob ? <span> &#9989; </span> : <span> &#10060; </span>}
+                </h2>
             </div>
-            {props.profileInfo.lookingForAJobDescription && (
-                <div className={styles.row}>
-                    <h3 className={styles.label}>LFAJ Desc:</h3>
-                    <a className={styles.text_labeled}>{props.profileInfo.lookingForAJobDescription}</a>
-                </div>
-            )}
+
+            {props.profileInfo.lookingForAJobDescription && <div className={styles.personal_info}>{props.profileInfo.lookingForAJobDescription}</div>}
             {props.profileInfo.aboutMe && (
                 <div>
-                    <h2 className={styles.header}>About Me</h2>
+                    <div className={styles.headerWrap}>
+                        <h2 className={styles.header}>About Me</h2>
+                        <span className={styles.headerLine}></span>
+                    </div>
                     <div className={styles.personal_info}>{props.profileInfo.aboutMe}</div>
                 </div>
             )}
 
-            {isAnyValuesInObj(props.profileInfo.contacts) && <h2 className={styles.header}>Contacts:</h2>}
+            {isAnyValuesInObj(props.profileInfo.contacts) && (
+                <div className={styles.headerWrap}>
+                    <h2 className={styles.header}>Contacts:</h2>
+                    <span className={styles.headerLine}></span>
+                </div>
+            )}
             <div>
                 {props.profileInfo.contacts.vk && (
                     <div className={styles.row}>
                         <h3 className={styles.label}>vk:</h3>
-                        <a href = { addProtocol(props.profileInfo.contacts.vk)} className={styles.link_labeled}>
+                        <a href={addProtocol(props.profileInfo.contacts.vk)} className={styles.link_labeled}>
                             {props.profileInfo.contacts.vk}
                         </a>
                     </div>
@@ -45,7 +50,7 @@ const ProfileInfo = (props) => {
                 {props.profileInfo.contacts.facebook && (
                     <div className={styles.row}>
                         <h3 className={styles.label}>facebook:</h3>
-                        <a href = { addProtocol(props.profileInfo.contacts.facebook)} className={styles.link_labeled}>
+                        <a href={addProtocol(props.profileInfo.contacts.facebook)} className={styles.link_labeled}>
                             {props.profileInfo.contacts.facebook}
                         </a>
                     </div>
@@ -53,7 +58,7 @@ const ProfileInfo = (props) => {
                 {props.profileInfo.contacts.twitter && (
                     <div className={styles.row}>
                         <h3 className={styles.label}>twitter:</h3>
-                        <a href = { addProtocol(props.profileInfo.contacts.twitter)} className={styles.link_labeled}>
+                        <a href={addProtocol(props.profileInfo.contacts.twitter)} className={styles.link_labeled}>
                             {props.profileInfo.contacts.twitter}
                         </a>
                     </div>
@@ -61,7 +66,7 @@ const ProfileInfo = (props) => {
                 {props.profileInfo.contacts.instagram && (
                     <div className={styles.row}>
                         <h3 className={styles.label}>instagram:</h3>
-                        <a href = { addProtocol(props.profileInfo.contacts.instagram)} className={styles.link_labeled}>
+                        <a href={addProtocol(props.profileInfo.contacts.instagram)} className={styles.link_labeled}>
                             {props.profileInfo.contacts.instagram}
                         </a>
                     </div>
@@ -69,7 +74,7 @@ const ProfileInfo = (props) => {
                 {props.profileInfo.contacts.youtube && (
                     <div className={styles.row}>
                         <h3 className={styles.label}>youtube:</h3>
-                        <a href = { addProtocol(props.profileInfo.contacts.youtube)} className={styles.link_labeled}>
+                        <a href={addProtocol(props.profileInfo.contacts.youtube)} className={styles.link_labeled}>
                             {props.profileInfo.contacts.youtube}
                         </a>
                     </div>
@@ -77,7 +82,7 @@ const ProfileInfo = (props) => {
                 {props.profileInfo.contacts.github && (
                     <div className={styles.row}>
                         <h3 className={styles.label}>github:</h3>
-                        <a href = { addProtocol(props.profileInfo.contacts.github)} className={styles.link_labeled}>
+                        <a href={addProtocol(props.profileInfo.contacts.github)} className={styles.link_labeled}>
                             {props.profileInfo.contacts.github}
                         </a>
                     </div>
@@ -88,8 +93,8 @@ const ProfileInfo = (props) => {
 };
 
 const addProtocol = (link) => {
-    if (link.includes('http')) return link
-    else return `https://${link}`
-}
+    if (link.includes("http")) return link;
+    else return `https://${link}`;
+};
 
 export default ProfileInfo;

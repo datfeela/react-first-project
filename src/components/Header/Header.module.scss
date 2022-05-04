@@ -1,15 +1,16 @@
 @import "variables.scss";
 
 .wrap {
-    // position: fixed;
-    // width: 100%;
+    position: fixed;
+    z-index: 100;
+    width: 100%;
     background-color: #fff;
     border-bottom: 1px solid rgb(226, 226, 226);
 }
 
 .content {
     height: $headerHeight;
-    max-width: 1200px;
+    max-width: 1195px;
     margin: 0 auto;
     padding: 0px 20px;
     display: flex;
@@ -17,13 +18,63 @@
     align-items: center;
 }
 
-.logo {
-    font-size: 40px;
-    font-weight: 600;
-    line-height: 150%;
-    color: #000;
+.link {
+    display: flex;
+    align-items: center;
 }
 
-.deleteThis{
+.logo {
+    margin: 1px 8px 0px 0px;
+    height: 25px;
+    fill: $lightBlueColor;
+}
+
+.logoText {
+    font-size: 19px;
+    font-weight: 600;
+    line-height: 150%;
+    color: $mainFontColor;
+}
+
+.wrapRight {
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
     margin-left: auto;
+}
+
+.iconWrap {
+    padding: 13px 15px;
+    cursor: pointer;
+    height: 100%;
+
+    &:hover {
+        background-color: $greyColor01;
+    }
+
+    &_active {
+        background-color: $greyColor01;
+    }
+}
+
+.settingsIcon {
+    height: 24px;
+    margin-top: 2px;
+}
+
+.popup {
+    position: absolute;
+    top: $headerHeight;
+    right: 0;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(5px);
+    transition: all 0.1s ease-in 0s;
+
+    &_active {
+        opacity: 1;
+        visibility: visible;
+        transform: translateY(0px);
+    }
 }
