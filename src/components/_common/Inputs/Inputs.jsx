@@ -102,6 +102,7 @@ export const renderInput = ({ input, type, meta, ...props }) => {
                 className={hasError || hasWarning ? inputClassName + " " + styles.input_error : inputClassName}
                 placeholder={props.placeholder}
                 type={type}
+                autoComplete={props.autoComplete && props.autoComplete}
             />
             {hasError && (
                 <div className={styles.warningWrap}>

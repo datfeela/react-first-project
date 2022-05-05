@@ -11,8 +11,10 @@ import DialogsList from "./DialogsList/DialogsList";
 import DialogsSearch from "./DialogsSearch/DialogsSearch";
 
 const Dialogs = ({ isInit, initializeDialogs }) => {
+
     useEffect(() => {
         initializeDialogs();
+        document.title = `Dialogs | Feelanet`;
     }, []);
 
     if (!isInit)

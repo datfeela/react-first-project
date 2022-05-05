@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 const Chat = ({ isInit, initializeChat, cleanUpChat, setIsNewMessage, messages, sendMessage, ...props }) => {
     useEffect(() => {
         initializeChat(dialogId);
+        document.title = `Dialogs | Feelanet`;
         return () => {
             cleanUpChat();
         };

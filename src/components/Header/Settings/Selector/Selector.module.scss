@@ -1,0 +1,56 @@
+@import "variables.scss";
+
+$itemHeight: 30px;
+$itemWidth: 100px;
+
+.selector {
+    position: relative;
+    justify-self: flex-end;
+    cursor: pointer;
+    color: $darkBlueColor;
+    height: $itemHeight;
+    width: $itemWidth;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &_active {
+        background-color: $greyColor01;
+        box-shadow: 0 3px 3px rgba(0, 0, 0, 0.22);
+        z-index: 5;
+
+        .dropdown {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+}
+
+// .title {
+//     width: 100%;
+//     text-align: center;
+// }
+
+.dropdown {
+    position: absolute;
+    z-index: 5;
+    top: $itemHeight;
+    left: 0px;
+    opacity: 0;
+    visibility: hidden;
+    width: $itemWidth;
+    background-color: #fff;
+    box-shadow: 0 3px 3px rgba(0, 0, 0, 0.22);
+
+    &_item {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: $itemHeight;
+        padding: 0px 8px;
+
+        &:hover{
+            background-color: $greyColor01;
+        }
+    }
+}

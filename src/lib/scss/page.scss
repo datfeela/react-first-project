@@ -1,13 +1,14 @@
 @import 'variables.scss';
 
-body {
-    background-color: $lightGreyColor;
-}
-
 .App {
+    background-color: $lightGreyColor;
     font-size: 15px;
     line-height: 140%;
     color: $mainFontColor;
+
+    &_dark{
+        background-color: $blackColor;
+    }
 }
 
 .App__wrap {

@@ -1,15 +1,18 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 import styles from "./Users.module.scss";
 import UsersHeader from "./UsersHeader/UsersHeader";
 import UsersListContainer from "./UsersList/UsersListContainer";
-import UsersSearch from "./UsersSearch/UsersSearch";
 
 const Users = (props) => {
+    useEffect(() => {
+        document.title = `Search | Feelanet`;
+    }, []);
+
     return (
         <div className={styles.wrap}>
             <UsersHeader />
-            <UsersListContainer/>
+            <UsersListContainer />
         </div>
     );
 };

@@ -22,6 +22,7 @@ const LoginForm = (props) => {
             />
             <Field
                 name="password"
+                autoComplete="current-password"
                 placeholder="Password"
                 component={renderInput}
                 validate={[isRequired]}

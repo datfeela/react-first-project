@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { connect } from "react-redux";
 import { Navigate } from "react-router-dom";
 import { logIn } from "../../redux/authReducer";
@@ -6,6 +7,10 @@ import styles from "./Login.module.scss";
 import LoginForm from "./LoginForm/LoginForm";
 
 const Login = (props) => {
+    useEffect(() => {
+        document.title = `Login | Feelanet`;
+    }, []);
+
     const handleSubmit = (formData) => {
         props.logIn(formData)
     };

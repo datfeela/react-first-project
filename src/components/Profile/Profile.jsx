@@ -4,13 +4,21 @@ import ProfileInfo from "./ProfileInfo/ProfileInfo";
 import Posts from "./Posts/Posts";
 import Preloader from "../_common/Preloader/Preloader";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import EditMode from "../_common/EditMode/EditMode";
 import EditProfileForm from "./EditProfileForm/EditProfileForm";
 import ProfileFriends from "./ProfileFriends/ProfileFriends";
+import { AppContext } from "../../App";
 
 const Profile = ({ isInit, profileInfo, changeProfileInfo, authUserId, isAuth, profileStatus, updateStatus, posts, addPost, ...props }) => {
+    const appContext = useContext(AppContext);
+    console.log(appContext);
+
+    useEffect(() => {
+        if (isInit) document.title = `${profileInfo.fullName} | Feelanet`;
+    }, [profileInfo]);
+
     const params = useParams();
     const initializeProfile = (id) => {
         props.initializeProfile(id);

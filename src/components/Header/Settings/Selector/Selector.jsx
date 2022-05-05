@@ -1,0 +1,82 @@
+import styles from "./Selector.module.scss";
+import { useEffect, useRef, useState } from "react";
+
+const Selector = ({ selectorType, ...props }) => {
+    let initialSelectorValue, dropdownItems, selectorClassName;
+    const selectorRef = useRef();
+    const [isSelectorActive, setIsSelectorActive] = useState(false);
+    selectorClassName = isSelectorActive ? styles.selector + " " + styles.selector_active : styles.selector;
+
+    const togglePopup = (e) => {
+        isSelectorActive ? deactivatePopup() : activatePopup();
+    };
+
+    const deactivatePopup = () => {
+        setIsSelectorActive(false);
+        document.removeEventListener("mousedown", handleClick);
+    };
+
+    const activatePopup = () => {
+        setIsSelectorActive(true);
+        document.addEventListener("mousedown", handleClick);
+    };
+
+    const handleClick = (e) => {
+        if (!selectorRef.current) document.removeEventListener("mousedown", handleClick);
+        if (!selectorRef.current.contains(e.target)) {
+            deactivatePopup();
+        }
+    };
+
+    const setLanguage = (lang) => {
+        props.setLanguage(lang);
+        localStorage.setItem("lang", lang);
+    };
+
+    const setTheme = (theme) => {
+        props.setTheme(theme);
+        localStorage.setItem("theme", theme);
+    };
+
+    const changeSelectorValue = (e) => {
+        if (selectorType === "lang" && props.lang !== e.target.id) setLanguage(e.target.id);
+        if (selectorType === "theme" && props.theme !== e.target.id) setTheme(e.target.id);
+    };
+
+    if (selectorType === "theme") {
+        props.theme === "light" && (initialSelectorValue = "Light");
+        props.theme === "dark" && (initialSelectorValue = "Dark");
+        dropdownItems = (
+            <div className={styles.dropdown}>
+                <div onClick={changeSelectorValue} className={styles.dropdown_item} id="light">
+                    Light
+                </div>
+                <div onClick={changeSelectorValue} className={styles.dropdown_item} id="dark">
+                    Dark
+                </div>
+            </div>
+        );
+    }
+    if (selectorType === "lang") {
+        props.lang === "eng" && (initialSelectorValue = "English");
+        props.lang === "ru" && (initialSelectorValue = "Русский");
+        dropdownItems = (
+            <div className={styles.dropdown}>
+                <div onClick={changeSelectorValue} className={styles.dropdown_item} id="eng">
+                    English
+                </div>
+                <div onClick={changeSelectorValue} className={styles.dropdown_item} id="ru">
+                    Русский
+                </div>
+            </div>
+        );
+    }
+    return (
+        <div onClick={togglePopup} ref={selectorRef} className={selectorClassName}>
+            <span className={styles.title}>{initialSelectorValue}</span>
+            {dropdownItems}
+        </div>
+    );
+};
+
+export default Selector;

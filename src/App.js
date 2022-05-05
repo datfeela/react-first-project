@@ -1,12 +1,13 @@
-import React, { lazy, Suspense } from "react";
+import React, { createContext, lazy, Suspense, useEffect } from "react";
 import './App.scss';
 import { Route, Routes } from 'react-router-dom';
 import { connect } from "react-redux";
-import { initialize } from './redux/appReducer'
+import { initialize, setLanguage, setTheme } from './redux/appReducer'
 
 import HeaderContainer from './components/Header/HeaderContainer';
 import SidebarContainer from './components/Sidebar/SidebarContainer';
 import Preloader from "./components/_common/Preloader/Preloader";
+import { selectAppIsInit, selectCurrentLanguage, selectCurrentTheme } from "./redux/appSelectors";
 
 //! import Settings from './components/Settings/Settings';
 
@@ -17,16 +18,18 @@ const ChatContainer = lazy(() => import('./components/Chat/ChatContainer'))
 const Friends = lazy(() => import('./components/Friends/Friends'))
 const Users = lazy(() => import('./components/Users/Users'))
 
+export const AppContext = createContext();
 
-class App extends React.Component {
-  componentDidMount = () => {
-    this.props.initialize();
-  };
+const App = ({ isInitialized, initialize, currentLanguage, currentTheme }) => {
 
-  render = () => {
-    if (this.props.isInitialized) {
-      return (
-        <div className="App">
+  useEffect(() => {
+    initialize();
+  })
+
+  if (isInitialized) {
+    return (
+      <AppContext.Provider value={{ currentLanguage, currentTheme }}>
+        <div className={"App" + (currentTheme === 'dark' ? ' App_dark' : '')}>
           <HeaderContainer />
           <div className="App__wrap">
             <main className="main">
@@ -51,25 +54,29 @@ class App extends React.Component {
             <SidebarContainer />
           </div>
         </div >
-      );
-    }
-    return (
-      <div className="App">
-        {/*big preloader */}
-      </div>
+      </AppContext.Provider>
+    );
+  }
+  return (
+    <div className="App">
+      {/*big preloader */}
+    </div>
 
-    )
-  };
+  )
 }
 
 const mapStateToProps = (state) => {
   return {
-    isInitialized: state.app.isInitialized
+    isInitialized: selectAppIsInit(state),
+    currentTheme: selectCurrentTheme(state),
+    currentLanguage: selectCurrentLanguage(state)
   }
 }
 
 const dispatchObj = {
-  initialize
+  initialize,
+  setTheme,
+  setLanguage
 }
 
 export default connect(mapStateToProps, dispatchObj)(App)

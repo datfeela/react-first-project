@@ -4,7 +4,7 @@ import Settings from "./Settings/Settings";
 import styles from "./Header.module.scss";
 import { useRef, useState } from "react";
 
-const Header = ({ isAuth, ...props }) => {
+const Header = ({ isAuth }) => {
     const [isPopupActive, setIsPopupActive] = useState(false);
     const wrapRef = useRef();
 
@@ -45,7 +45,7 @@ const Header = ({ isAuth, ...props }) => {
                             <SvgSelector className={styles.settingsIcon} id="settings" />
                         </div>
                         <div className={popupClassName}>
-                            <Settings />
+                            <Settings/>
                         </div>
                     </div>
                 ) : (

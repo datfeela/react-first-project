@@ -9,27 +9,24 @@
     border: 1px solid $lightGreyColor;
 }
 
-.item{
+.item {
+    height: 34px;
     user-select: none;
-    padding: 7px 15px;
-    display: flex;
+    padding: 0px 15px;
+    display: grid;
+    grid-template-columns: auto auto 1fr;
     align-items: center;
-
-    &:hover{
-        background-color: $greyColor01;
-    }
 
     &_active {
         cursor: pointer;
+
+        &:hover {
+            background-color: $greyColor01;
+        }
     }
 
     &__title {
         margin-right: 10px;
-    }
-
-    &__selector {
-        cursor: pointer;
-        color: $darkBlueColor;
     }
 }
 
@@ -39,12 +36,12 @@
     margin-right: 10px;
     fill: $darkBlueColor;
 
-    &_theme{
+    &_theme {
         height: 21px;
         width: 21px;
     }
 
-    &_language{
+    &_language {
         stroke: $darkBlueColor;
         fill: #fff;
     }

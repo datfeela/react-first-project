@@ -1,21 +1,19 @@
 import React from "react";
 import Header from "./Header";
-import { getUserData, logOut } from "../../redux/authReducer";
 import { connect } from "react-redux";
+import { selectIsAuth } from "../../redux/authSelectors";
 
 const HeaderContainer = (props) => {
-    return <Header isAuth={props.isAuth} login={props.login} logOut={props.logOut} />;
+    return <Header {...props} />;
 };
 
 let mapStateToProps = (state) => {
     return {
-        login: state.auth.login,
-        isAuth: state.auth.isAuth,
+        isAuth: selectIsAuth(state),
     };
 };
 
 let dispatchObj = {
-    logOut
 };
 
 export default connect(mapStateToProps, dispatchObj)(HeaderContainer);
