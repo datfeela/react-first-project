@@ -2,9 +2,9 @@ import { Field, reduxForm } from "redux-form";
 import styles from "./LoginForm.module.scss";
 
 import { isRequired, maxLength, minLength } from "../../../utils/formValidation";
-import { renderCheckbox, renderInput } from "../../_common/Inputs/Inputs";
+import { renderCheckbox, RenderInput } from "../../_common/Inputs/Inputs";
 
-//!ЗАРЕФАКТОРИТЬ В ПЕРВУЮ ОЧЕРЕДЬ, ПОТОМ 77 ВИДОС 44:20
+//!ЗАРЕФАКТОРИТЬ
 //validation
 
 const maxLength20 = maxLength(20);
@@ -16,7 +16,7 @@ const LoginForm = (props) => {
             <Field
                 name="login"
                 placeholder="Login"
-                component={renderInput}
+                component={RenderInput}
                 validate={[isRequired, maxLength20, minLength3]}
                 inputType={"loginInput"}
             />
@@ -24,14 +24,14 @@ const LoginForm = (props) => {
                 name="password"
                 autoComplete="current-password"
                 placeholder="Password"
-                component={renderInput}
+                component={RenderInput}
                 validate={[isRequired]}
                 type={"password"}
                 inputType={"loginInput"}
             />
             <Field name="rememberMe" component={renderCheckbox} text="Remember me" />
             {props.generalError && <div className={styles.generalError}>{props.generalError}</div>}
-            <button className={styles.button}>Log In</button>
+            <button className={styles.button + " button"}>Log In</button>
         </form>
     );
 };

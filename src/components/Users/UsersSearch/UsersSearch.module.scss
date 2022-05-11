@@ -4,4 +4,8 @@
     width: $centerAreaWidth;
     border-radius: 0px 0px 0px 0px;
     padding: 10px 20px;
+
+    &_dark{
+        background-color: $semiDarkBGColor !important;
+    }
 }

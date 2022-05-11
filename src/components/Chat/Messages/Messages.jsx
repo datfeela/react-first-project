@@ -1,9 +1,12 @@
 import styles from "./Messages.module.scss";
 import Message from "./Message/Message";
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { infiniteScrollObserver } from "../../../utils/intersectionObserver";
+import { AppContext } from "../../../App";
 
 const Messages = ({ currentPage, setIsNewMessage, inputHeight, dialogId, getDialog, observerRef, setObserverRef, ...props }) => {
+    const appContext = useContext(AppContext);
+
     //скролл вниз при вмонтировании компонента и новом сообщении
     useEffect(() => {
         if (props.messages.isNewMessage === true) {
@@ -21,7 +24,7 @@ const Messages = ({ currentPage, setIsNewMessage, inputHeight, dialogId, getDial
         if (messages && messages[1]) {
             //если пришло новое сообщение, а не порция старых из-за скролла, нужно снять старый обсервер и после этого ставить новый
             if (props.messages.isNewMessage && observerRef.observer !== null) {
-                observerRef.observer.unobserve(observerRef.target)
+                observerRef.observer.unobserve(observerRef.target);
             }
 
             let target = document.querySelector(`[id="${messages[1].key}"]`);
@@ -40,7 +43,7 @@ const Messages = ({ currentPage, setIsNewMessage, inputHeight, dialogId, getDial
     };
 
     //----//
-    
+
     let wrapRef = useRef();
     let messages = props.messages.data.map((el) => <Message key={el.id} {...el} userImage={props.userImage} recipientImage={props.recipientImage} />);
 
@@ -52,7 +55,11 @@ const Messages = ({ currentPage, setIsNewMessage, inputHeight, dialogId, getDial
     };
 
     return (
-        <div ref={wrapRef} className={styles.wrap} style={{ marginBottom: inputHeight }}>
+        <div
+            ref={wrapRef}
+            className={appContext.currentTheme === "dark" ? styles.wrap + " " + styles.wrap_dark : styles.wrap}
+            style={{ marginBottom: inputHeight }}
+        >
             {messages}
         </div>
     );

@@ -1,9 +1,11 @@
-import { useRef } from "react";
+import { useContext, useRef } from "react";
+import { AppContext } from "../../../App";
 import { SvgSelector } from "../SvgSelector/SvgSelector";
 import styles from "./EditMode.module.scss";
 
 
 const EditMode = ({ deactivateEditMode, ChildComponent, ...props }) => {
+    const appContext = useContext(AppContext);
     const innerWrapRef = useRef();
     const closeButtonRef = useRef();
 
@@ -13,7 +15,7 @@ const EditMode = ({ deactivateEditMode, ChildComponent, ...props }) => {
     };
 
     return (
-        <div onClick={handleClick} className={styles.wrap}>
+        <div onClick={handleClick} className={appContext.currentTheme === "dark" ? styles.wrap + " " + styles.wrap_dark : styles.wrap}>
             <div className={styles.wrapInner} ref={innerWrapRef}>
                 <div className={styles.closeButtonWrap} ref={closeButtonRef}>
                     <SvgSelector id="close" className={styles.closeButton} />

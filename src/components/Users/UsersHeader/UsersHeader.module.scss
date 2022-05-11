@@ -4,6 +4,22 @@
     width: $centerAreaWidth;
     border-radius: 5px 5px 0px 0px;
     border-bottom: 1px solid $greyColor02;
+
+    &_dark {
+        border-bottom: 1px solid $greyColor;
+
+        .innerWrap {
+            border-bottom: 1px solid $greyColor;
+        }
+
+        .title {
+            color: #fff;
+        }
+
+        .count {
+            color: $semiLightGreyColor;
+        }
+    }
 }
 
 .innerWrap {
@@ -17,6 +33,6 @@
     font-weight: 500;
 }
 
-.count{
+.count {
     font-weight: 400;
 }

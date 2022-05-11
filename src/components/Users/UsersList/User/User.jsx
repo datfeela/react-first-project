@@ -1,7 +1,11 @@
 import styles from "./User.module.scss";
 import { NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../../../../App";
 
-const User = ({user, subscribe}) => {
+const User = ({ user, subscribe }) => {
+    const appContext = useContext(AppContext);
+
     let subscribeText = user.followed ? "Unsubscribe" : "Subscribe";
     let imgSrc = user.photos.small != null ? user.photos.small : "https://via.placeholder.com/160x160?text=Pic";
 
@@ -12,7 +16,7 @@ const User = ({user, subscribe}) => {
     };
 
     return (
-        <div className={styles.wrap} id={user.id}>
+        <div className={appContext.currentTheme === "dark" ? styles.wrap + " " + styles.wrap_dark : styles.wrap} id={user.id}>
             <NavLink to={`/profile/${user.id}`}>
                 <img src={imgSrc} alt="avatar" className={styles.avatar} />
             </NavLink>

@@ -4,8 +4,12 @@ import { RenderInputFormik } from "../../_common/Inputs/Inputs";
 import { setSearchTerm } from "../../../redux/usersPageReducer";
 import { connect } from "react-redux";
 import { selectSearchTerm } from "../../../redux/usersPageSelectors";
+import { useContext } from "react";
+import { AppContext } from "../../../App";
 
 const UsersSearch = (props) => {
+    const appContext = useContext(AppContext);
+
     const submit = (values, actions) => {
         actions.setSubmitting(false);
     };
@@ -15,7 +19,7 @@ const UsersSearch = (props) => {
     };
 
     return (
-        <div className={styles.wrap + " wrapNoPadding"}>
+        <div className={appContext.currentTheme === "dark" ? styles.wrap + " wrapNoPadding  " + styles.wrap_dark : styles.wrap + " wrapNoPadding"}>
             <Formik initialValues={{ usersSearchInput: "" }} onSubmit={submit}>
                 {() => (
                     <Form>
@@ -25,10 +29,11 @@ const UsersSearch = (props) => {
                             component={RenderInputFormik}
                             placeholder={"Search"}
                             onValueChange={setSearchTerm}
+                            autoComplete='off'
                             options={{
-                                border: 'none',
-                                icon: 'search',
-                                padding: '0px'
+                                border: "none",
+                                icon: "search",
+                                padding: "0px",
                             }}
                         />
                     </Form>

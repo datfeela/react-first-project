@@ -1,10 +1,14 @@
 import styles from "./ProfileInfo.module.scss";
 import Status from "./Status/Status";
 import { isAnyValuesInObj } from "../../../utils/objectHelper";
+import { useContext } from "react";
+import { AppContext } from "../../../App";
 
 const ProfileInfo = (props) => {
+    const appContext = useContext(AppContext);
+
     return (
-        <div className={styles.wrap + " wrap"}>
+        <div className={appContext.currentTheme === "dark" ? styles.wrap + " wrap " + styles.wrap_dark : styles.wrap + ' wrap'}>
             <div className={styles.top}>
                 <h1 className={styles.name}>{props.profileInfo.fullName}</h1>
                 <Status

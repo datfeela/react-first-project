@@ -2,6 +2,27 @@
 
 .sidebar {
     margin-top: calc(#{$blocksMargin} + #{$headerHeight});
+
+    &_dark {
+        .item {
+        }
+
+        .link {
+            color: rgba($color: $semiSemiLightGreyColor, $alpha: 0.8);
+
+            &_active {
+                color: #fff;
+
+                .icon {
+                    fill: $azureColor;
+                }
+            }
+        }
+
+        .icon {
+            fill: $azureColor;
+        }
+    }
 }
 
 .list {
@@ -11,7 +32,7 @@
     padding: 6px 0px 6px 5px;
     border-radius: 3px;
 
-    &:hover{
+    &:hover {
         background-color: $greyColor01;
     }
 }

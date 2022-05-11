@@ -30,14 +30,22 @@
     bottom: 0;
     background-color: $greyColor08;
 
-    &_action {
+    &__action {
         display: flex;
         align-items: center;
         padding: 5px 0px 5px 15px;
         color: $lightGreyColor08;
+
+        &:hover {
+            color: #fff;
+
+            .popup__icon{
+                fill: #fff;
+            }
+        }
     }
 
-    &_icon {
+    &__icon {
         height: 18px;
         width: 18px;
         margin-right: 7px;

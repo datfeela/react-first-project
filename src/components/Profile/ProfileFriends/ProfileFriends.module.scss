@@ -1,12 +1,19 @@
 @import "variables.scss";
 
 $friendBlockWidth: calc((#{$sideAreaWidth} - #{$blocksMargin} * 2 - 20px) / 3);
-.wrap {
+.wrap_dark {
+    .header_link {
+        color: $lightGreyColor;
+    }
 }
 .header {
     margin-bottom: 20px;
     padding-bottom: 10px;
     border-bottom: 1px solid rgba(40, 40, 40, 0.1);
+
+    &_link {
+        color: $darkBlueColor;
+    }
 }
 .friendsCount {
     color: $semiLightGreyColor;
@@ -19,6 +26,13 @@ $friendBlockWidth: calc((#{$sideAreaWidth} - #{$blocksMargin} * 2 - 20px) / 3);
 }
 .friend {
     height: calc(1.75 * #{$friendBlockWidth});
+
+    &_dark {
+        .friend__name {
+            color: $lightGreyColor;
+        }
+    }
+
     &__link {
         display: block;
         width: 100%;

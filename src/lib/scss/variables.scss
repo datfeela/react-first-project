@@ -1,17 +1,23 @@
-$blackColor: #141414;
+$blackColor: rgb(20, 20, 20);
+$darkBGColor: rgb(34, 34, 34);
+$semiDarkBGColor: rgb(55, 55, 55);
 $mainFontColor: rgb(40, 40, 40);
+$darkContainerBGColor: rgb(46, 46, 46);
 $greyColor: rgb(99, 98, 98);
 $semiLightGreyColor: rgb(150, 150, 150);
-$semiLightGreyColor015: rgba(150, 150, 150, 0.15);
+$semiLightGreyColor01: rgba(150, 150, 150, 0.1);
 $greyColor01: rgba(99, 98, 98, 0.1);
 $greyColor02: rgba(99, 98, 98, 0.2);
+$greyColor035: rgba(99, 98, 98, 0.35);
 $greyColor08: rgba(99, 98, 98, 0.8);
 $greyBlueColor08: rgba(85, 103, 125, 0.8);
+$semiSemiLightGreyColor: rgb(203, 203, 203);
 $lightGreyColor: rgb(244, 244, 244);
 $lightGreyColor08: rgba(244, 244, 244, 0.8);
 $lightGreyColor01: rgba(244, 244, 244, 0.1);
 $darkBlueColor: #1d38b1;
 $lightBlueColor: #4e6dd4;
+$azureColor: #71aaeb;
 $lightBlueColor07: rgba(
     $color: #4e6dd4,
     $alpha: 0.7,
@@ -27,6 +33,7 @@ $lightBlueColor01: rgba(
 $redColor: #f02121;
 $lightGreenColor: #def0d3;
 $semiLightGreenColor: #8bc079;
+$darkGreenColor: #284228;
 
 $centerAreaWidth: 700px;
 $sideAreaWidth: 280px;

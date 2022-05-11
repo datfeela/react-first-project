@@ -13,6 +13,20 @@ $actionsWidth: 200px;
     &:last-child {
         border-bottom: none;
     }
+
+    &_dark {
+        .name {
+            color: $lightGreyColor;
+        }
+
+        .actions_item {
+            color: $azureColor;
+        }
+
+        .status {
+        color: $semiLightGreyColor;
+        }
+    }
 }
 
 .avatar {
@@ -55,7 +69,7 @@ $actionsWidth: 200px;
 }
 
 .actions_item {
-    color: rgba($color: $darkBlueColor, $alpha: 1.0);
+    color: $darkBlueColor;
 }
 
 .button_disabled {

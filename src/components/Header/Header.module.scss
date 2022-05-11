@@ -6,6 +6,29 @@
     width: 100%;
     background-color: #fff;
     border-bottom: 1px solid rgb(226, 226, 226);
+
+    &_dark {
+        background-color: $darkBGColor;
+        border-bottom: 1px solid $semiDarkBGColor;
+
+        .logoText {
+            color: #fff;
+        }
+
+        .iconWrap {
+            &:hover {
+                background-color: $greyColor035;
+            }
+
+            &_active {
+                background-color: $greyColor035;
+            }
+        }
+
+        .settingsIcon {
+            fill: #fff;
+        }
+    }
 }
 
 .content {

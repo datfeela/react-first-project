@@ -1,9 +1,14 @@
+import { useContext } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { AppContext } from "../../../../App";
 import styles from "./Dialog.module.scss";
 
 const Dialog = ({ id, userName, hasNewMessages, newMessagesCount, photos, ...props }) => {
-    let wrapClassName = hasNewMessages ? styles.wrap + " " + styles.wrap_newMessage : styles.wrap;
+    const appContext = useContext(AppContext);
+
+    let wrapClassName = appContext.currentTheme === "dark" ? styles.wrap + " " + styles.wrap_dark : styles.wrap;
+    wrapClassName = hasNewMessages ? wrapClassName + " " + styles.wrap_newMessage : wrapClassName;
 
     return (
         <NavLink to={`/dialog/${id}`} className={wrapClassName}>

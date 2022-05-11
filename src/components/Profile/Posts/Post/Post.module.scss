@@ -2,6 +2,16 @@
 
 .wrap {
     margin-top: 15px;
+
+    &_dark {
+        .author {
+            color: $azureColor;
+        }
+
+        .content__text {
+            color: $lightGreyColor;
+        }
+    }
 }
 
 .header {
@@ -22,22 +32,22 @@
     align-content: center;
 }
 
-.author{
+.author {
     font-size: 15px;
     font-weight: 600;
     color: $darkBlueColor;
 }
 
-.date{
+.date {
     font-size: 14px;
-    color: rgb(136, 136, 136);
+    color: $semiLightGreyColor;
 }
 
-.content{
+.content {
     padding: 10px 0px;
 }
 
-.content_text{
+.content__text {
     display: block;
     overflow-wrap: break-word;
 }

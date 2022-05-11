@@ -1,38 +1,51 @@
-@import 'variables.scss';
+@import "variables.scss";
 
 $avatarSize: 40px;
 $avatarMargin: 10px;
 
-.wrap{
+.wrap {
     overflow-wrap: break-word;
     padding: 10px 5px;
     display: grid;
 
-    &_notViewed{
+    &_notViewed {
         background-color: $lightBlueColor01;
     }
 
-    &_sentByUser{
-        grid-template-areas: 'cnt ava';
+    &_sentByUser {
+        grid-template-areas: "cnt ava";
         grid-template-columns: 1fr calc(#{$avatarSize} + 2 * #{$avatarMargin});
         padding-left: 20%;
         text-align: end;
     }
 
-    &_sentByRecipient{
-        grid-template-areas: 'ava cnt';
+    &_sentByRecipient {
+        grid-template-areas: "ava cnt";
         grid-template-columns: calc(#{$avatarSize} + 2 * #{$avatarMargin}) 1fr;
         padding-right: 20%;
         text-align: start;
     }
-}
 
+    &_dark {
+        &.wrap_notViewed {
+            background-color: $semiDarkBGColor;
+        }
+
+        .author {
+            color: $lightGreyColor;
+        }
+
+        .content {
+            color: $lightGreyColor;
+        }
+    }
+}
 
 .avatarWrap {
     grid-area: ava;
 }
 
-.avatar{
+.avatar {
     height: $avatarSize;
     border-radius: 50%;
     margin: 0px $avatarMargin;

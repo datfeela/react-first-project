@@ -1,13 +1,16 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { connect } from "react-redux";
 import { NavLink } from "react-router-dom";
+import { AppContext } from "../../../../App";
 import { dateToObj } from "../../../../utils/dateTransform";
 import styles from "./Message.module.scss";
 
 const Message = (props) => {
+    const appContext = useContext(AppContext);
+
     const wrapClassName = `${styles.wrap} ${props.authUserId === props.senderId ? styles.wrap_sentByUser : styles.wrap_sentByRecipient} ${
         props.viewed ? "" : styles.wrap_notViewed
-    }`;
+    } ${appContext.currentTheme === "dark" ? styles.wrap_dark : ""}`;
     const imgUrl = props.authUserId === props.senderId ? props.userImage : props.recipientImage;
 
     const date = dateToObj(props.addedAt);

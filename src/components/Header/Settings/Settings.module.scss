@@ -7,6 +7,31 @@
     border-radius: 0px 0px 3px 3px;
     box-shadow: 0 20px 40px 0 rgba(0, 0, 0, 0.15);
     border: 1px solid $lightGreyColor;
+
+    &_dark {
+        background-color: $mainFontColor;
+        box-shadow: none;
+        border: 1px solid $semiDarkBGColor;
+
+        .item {
+            &_active:hover {
+                background-color: $greyColor035;
+            }
+
+            &__title {
+                color: $lightGreyColor;
+            }
+        }
+
+        .icon {
+            fill: $azureColor;
+
+            &_language {
+                stroke: $azureColor;
+                fill: $mainFontColor;
+            }
+        }
+    }
 }
 
 .item {

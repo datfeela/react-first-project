@@ -6,6 +6,18 @@
     display: flex;
     align-items: center;
 
+    &_dark {
+        .text {
+            color: $lightGreyColor;
+        }
+
+        .edit_mode_block {
+            background-color: $darkContainerBGColor;
+            border: 1px solid $greyColor035;
+            box-shadow: 0px 3px 10px 0px rgba($color: $mainFontColor, $alpha: 0.1);
+        }
+    }
+
     & > img {
         max-height: 25px;
         margin-left: 10px;
@@ -39,14 +51,14 @@
     z-index: 10;
 }
 
-.input {
-    display: block;
-    width: 100%;
-    padding: 3px 8px;
-    border-radius: 3px;
-    border: 1px solid rgba($color: $mainFontColor, $alpha: 0.1);
-    font-size: 15px;
-}
+// .input {
+//     display: block;
+//     width: 100%;
+//     padding: 3px 8px;
+//     border-radius: 3px;
+//     border: 1px solid rgba($color: $mainFontColor, $alpha: 0.1);
+//     font-size: 15px;
+// }
 
 .save_button {
     display: block;

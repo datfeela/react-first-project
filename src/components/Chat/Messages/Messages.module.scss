@@ -2,7 +2,7 @@
 
 .wrap {
     width: $centerAreaWidth;
-    border: 1px solid rgba($color: $greyColor, $alpha: 0.2);
+    border: 1px solid $greyColor02;
     border-top: none;
     overflow-x: hidden;
 
@@ -10,11 +10,16 @@
         width: 8px;
     }
 
-    &::-webkit-scrollbar-button{
+    &::-webkit-scrollbar-button {
         display: none;
     }
 
-    &::-webkit-scrollbar-thumb{
+    &::-webkit-scrollbar-thumb {
         background-color: rgba($color: $semiLightGreyColor, $alpha: 0.5);
+    }
+
+    &_dark {
+        border: 1px solid $greyColor;
+        border-top: none;
     }
 }

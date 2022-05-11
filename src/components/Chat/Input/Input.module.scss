@@ -5,6 +5,10 @@
     background-color: #fff;
     position: absolute;
     bottom: 0;
+
+    &_dark{
+        background-color: $darkContainerBGColor;
+    }
 }
 
 .form {

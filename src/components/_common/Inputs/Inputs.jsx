@@ -1,59 +1,29 @@
 import WarningWithPopup from "../WarningWithPopup/WarningWithPopup";
 import styles from "./Inputs.module.scss";
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { SvgSelector } from "../SvgSelector/SvgSelector";
+import { AppContext } from "../../../App";
 
-// export const renderInputFormik = ({ form, field, ...props }) => {
-//         const InputClassSwitch = (inputType) => {
-//             switch (inputType) {
-//                 // case "loginInput":
-//                 //     return styles.input + " " + styles.input_login;
-//                 default:
-//                     return styles.input;
-//             }
-//         };
-
-//         const inputClassName = InputClassSwitch(props.inputType);
-
-//         return (
-//             <input
-//                 type={props.type}
-//                 name={field.name}
-//                 onChange={form.handleChange}
-//                 value={field.value}
-//                 className={inputClassName}
-//                 placeholder={props.placeholder}
-//             />
-//         );
-// };
-
-export const RenderInputFormik = ({ form, field, options, ...props }) => {
-    // const inputClassSwitch = (inputType) => {
-    //     switch (inputType) {
-    //         // case "loginInput":
-    //         //     return styles.input + " " + styles.input_login;
-    //         default:
-    //             return styles.input;
-    //     }
-    // };
+export const RenderInputFormik = ({ form, field, options, onValueChange, children, ...props }) => {
+    const appContext = useContext(AppContext);
 
     useEffect(() => {
-        props.onValueChange && props.onValueChange(field.value);
+        onValueChange && onValueChange(field.value);
     }, [field.value]);
 
-    let wrapClassName, inputClassName;
-
+    let wrapClassName = appContext.currentTheme === "dark" ? styles.inputWrap + " " + styles.inputWrap_dark : styles.inputWrap;
+    let inputClassName;
     switch (props.type) {
         case "text":
-            wrapClassName = options && options.icon ? styles.inputWrap + " " + styles.inputWrap_withIcon : styles.inputWrap;
+            wrapClassName = options && options.icon ? wrapClassName + " " + styles.inputWrap_withIcon : wrapClassName;
             inputClassName = options && options.showErrors && form.errors[field.name] ? styles.input + " " + styles.input_error : styles.input;
-            break
+            break;
         case "checkbox":
             wrapClassName = styles.checkboxWrap;
             inputClassName = styles.checkbox;
-            break
+            break;
     }
-     
+
     // const inputClassName = inputClassSwitch(props.inputType);
 
     return (
@@ -63,13 +33,12 @@ export const RenderInputFormik = ({ form, field, options, ...props }) => {
                     border: options && options.border,
                     padding: options && options.padding,
                 }}
-                type={props.type}
                 name={field.name}
                 value={field.value}
                 onChange={form.handleChange}
                 className={inputClassName}
-                placeholder={props.placeholder}
                 checked={field.checked}
+                {...props}
             />
             {options && options.icon && <SvgSelector className={styles.icon} id={options.icon} />}
             {props.label && <span className={styles.checkbox__label}>{props.label}</span>}
@@ -77,7 +46,8 @@ export const RenderInputFormik = ({ form, field, options, ...props }) => {
     );
 };
 
-export const renderInput = ({ input, type, meta, ...props }) => {
+export const RenderInput = ({ input, type, meta, ...props }) => {
+    const appContext = useContext(AppContext);
     const hasError = meta.touched && meta.error;
     const hasWarning = meta.touched && meta.warning;
 
@@ -96,7 +66,7 @@ export const renderInput = ({ input, type, meta, ...props }) => {
     const inputClassName = InputClassSwitch(props.inputType);
 
     return (
-        <div className={styles.inputWrap}>
+        <div className={appContext.currentTheme === "dark" ? styles.inputWrap + " " + styles.inputWrap_dark : styles.inputWrap}>
             <input
                 {...input}
                 className={hasError || hasWarning ? inputClassName + " " + styles.input_error : inputClassName}
@@ -119,12 +89,12 @@ export const renderInput = ({ input, type, meta, ...props }) => {
 };
 
 export const RenderTextareaFormik = ({ form, field, ...props }) => {
+    const appContext = useContext(AppContext);
+
     const InputClassSwitch = (inputType) => {
         switch (inputType) {
-            // case "loginInput":
-            //     return styles.input + " " + styles.input_login;
             default:
-                return styles.textarea;
+                return appContext.currentTheme === "dark" ? styles.textarea + " " + styles.textarea_dark : styles.textarea;
         }
     };
 
@@ -159,7 +129,7 @@ export const RenderTextareaFormik = ({ form, field, ...props }) => {
                 changeHeight(e);
             }}
             onFocus={() => {
-                props.onFocus && props.onFocus()
+                props.onFocus && props.onFocus();
             }}
             onBlur={() => {
                 props.onBlur && props.onBlur();

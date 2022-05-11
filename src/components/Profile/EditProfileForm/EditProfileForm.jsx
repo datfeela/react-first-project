@@ -3,20 +3,22 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import { isRequired, validateUrl } from "../../../utils/formValidation";
 import { RenderTextareaFormik, RenderInputFormik } from "../../_common/Inputs/Inputs";
 import WarningWithPopup from "../../_common/WarningWithPopup/WarningWithPopup";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { SvgSelector } from "../../_common/SvgSelector/SvgSelector";
+import { AppContext } from "../../../App";
 
 const EditProfileForm = ({ authUserId, profileInfo, changeProfileInfo }) => {
     const [changesSubmitted, setChangesSubmitted] = useState(false);
+    const appContext = useContext(AppContext);
 
     //validation
     const validatNameField = (value) => {
-        let error = isRequired(value);
+        let error = isRequired(value, appContext.currentLanguage);
         return error;
     };
 
     const validateContactField = (value) => {
-        let error = validateUrl(value);
+        let error = validateUrl(value, appContext.currentLanguage);
         return error;
     };
 
@@ -36,13 +38,26 @@ const EditProfileForm = ({ authUserId, profileInfo, changeProfileInfo }) => {
     };
 
     return (
-        <div>
-            <h2 className={styles.title}>Edit info</h2>
+        <div className={appContext.currentTheme === "dark" ? styles.wrap + " " + styles.wrap_dark : styles.wrap}>
+            <h2 className={styles.title}>
+                {appContext.currentLanguage === "eng" && "Edit info"}
+                {appContext.currentLanguage === "ru" && "Редактирование профиля"}
+            </h2>
             {changesSubmitted && (
                 <div className={styles.submitNotification}>
                     <SvgSelector className={styles.submitIcon} id="success" />
                     <span className={styles.submitText}>
-                        Your changes have been submited successfully. <br /> They will be displayed on your page
+                        {appContext.currentLanguage === "eng" && (
+                            <span>
+                                Your changes have been submited successfully. <br /> They will be displayed on your page.
+                            </span>
+                        )}
+                        {appContext.currentLanguage === "ru" && (
+                            <>
+                                <span className={styles.submitTitle}>Изменения сохранены. </span> <br />
+                                <span> Новые данные будут отражены на вашей странице.</span>
+                            </>
+                        )}
                     </span>
                 </div>
             )}
@@ -62,12 +77,18 @@ const EditProfileForm = ({ authUserId, profileInfo, changeProfileInfo }) => {
                 }}
                 onSubmit={submit}
             >
-                {({ isSubmitting, errors }) => (
+                {({ isSubmitting }) => (
                     <Form>
                         <div className={styles.inputGroup}>
-                            <h3 className={styles.subtitle}>About you</h3>
+                            <h3 className={styles.subtitle}>
+                                {appContext.currentLanguage === "eng" && "About you"}
+                                {appContext.currentLanguage === "ru" && "Основное"}
+                            </h3>
                             <div className={styles.inputWrap}>
-                                <span className={styles.label}>Full name: </span>
+                                <span className={styles.label}>
+                                    {appContext.currentLanguage === "eng" && "Full name:"}
+                                    {appContext.currentLanguage === "ru" && "Полное имя:"}
+                                </span>
                                 <Field
                                     type="text"
                                     name="fullName"
@@ -83,13 +104,25 @@ const EditProfileForm = ({ authUserId, profileInfo, changeProfileInfo }) => {
                                 </div>
                             </div>
                             <div className={styles.inputWrap}>
-                                <span className={styles.label}>Looking for a job: </span>
+                                <span className={styles.label}>
+                                    {appContext.currentLanguage === "eng" && "Looking for a job:"}
+                                    {appContext.currentLanguage === "ru" && "В поисках работы:"}
+                                </span>
                                 <Field type="checkbox" name="lookingForAJob" component={RenderInputFormik} />
                                 {/* label={"looking for a job"} */}
                             </div>
                             <div className={styles.inputWrap}>
                                 <span className={styles.label}>
-                                    Looking for a job <br /> description:
+                                    {appContext.currentLanguage === "eng" && (
+                                        <span>
+                                            Looking for a job <br /> description:
+                                        </span>
+                                    )}
+                                    {appContext.currentLanguage === "ru" && (
+                                        <span>
+                                            В поисках работы <br /> описание:
+                                        </span>
+                                    )}
                                 </span>
                                 <Field
                                     type="text"
@@ -101,13 +134,19 @@ const EditProfileForm = ({ authUserId, profileInfo, changeProfileInfo }) => {
                                 <ErrorMessage name="lookingForAJobDescription" component={ErrorComponent} />
                             </div>
                             <div className={styles.inputWrap}>
-                                <span className={styles.label}>About you: </span>
+                                <span className={styles.label}>
+                                    {appContext.currentLanguage === "eng" && "About you:"}
+                                    {appContext.currentLanguage === "ru" && "О себе"}
+                                </span>
                                 <Field type="text" name="aboutMe" component={RenderTextareaFormik} defaultHeight={40} maxHeight={"120px"} />
                                 <ErrorMessage name="aboutMe" component={ErrorComponent} />
                             </div>
                         </div>
                         <div className={styles.inputGroup}>
-                            <h3 className={styles.subtitle}>Your contacts</h3>
+                            <h3 className={styles.subtitle}>
+                                {appContext.currentLanguage === "eng" && "Your contacts:"}
+                                {appContext.currentLanguage === "ru" && "Контакты:"}
+                            </h3>
                             <div className={styles.inputWrap}>
                                 <span className={styles.label}>GitHub: </span>
                                 <Field
@@ -189,7 +228,10 @@ const EditProfileForm = ({ authUserId, profileInfo, changeProfileInfo }) => {
                                 </div>
                             </div>
                             <div className={styles.inputWrap}>
-                                <span className={styles.label}>Your website: </span>
+                                <span className={styles.label}>
+                                    {appContext.currentLanguage === "eng" && "Your website:"}
+                                    {appContext.currentLanguage === "ru" && "Свой сайт:"}
+                                </span>
                                 <Field
                                     type="text"
                                     name="website"
@@ -205,7 +247,10 @@ const EditProfileForm = ({ authUserId, profileInfo, changeProfileInfo }) => {
                                 </div>
                             </div>
                             <div className={styles.inputWrap}>
-                                <span className={styles.label}>Youtube channel: </span>
+                                <span className={styles.label}>
+                                    {appContext.currentLanguage === "eng" && "Youtube channel:"}
+                                    {appContext.currentLanguage === "ru" && "Youtube канал:"}
+                                </span>
                                 <Field
                                     type="text"
                                     name="youtube"
@@ -223,14 +268,15 @@ const EditProfileForm = ({ authUserId, profileInfo, changeProfileInfo }) => {
                         </div>
                         <button
                             className={
-                                Object.keys(errors).length
-                                    ? styles.submitButton + " " + styles.submitButton_disabled + " button"
-                                    : styles.submitButton + " button"
+                                // Object.keys(errors).length
+                                // ? styles.submitButton + " " + styles.submitButton_disabled + " button" :
+                                styles.submitButton + " button"
                             }
                             type="submit"
-                            disabled={isSubmitting || Object.keys(errors).length}
+                            disabled={isSubmitting}
                         >
-                            Submit
+                            {appContext.currentLanguage === "eng" && "Submit"}
+                            {appContext.currentLanguage === "ru" && "Сохранить"}
                         </button>
                     </Form>
                 )}

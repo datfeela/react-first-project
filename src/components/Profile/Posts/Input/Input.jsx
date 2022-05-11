@@ -46,7 +46,7 @@ const NewPostForm = (props) => {
                     />
                     <ErrorMessage name="newPostText" component={ErrorComponent} />
                     {isFormActive && (
-                        <button className={styles.button} type="submit" disabled={isSubmitting}>
+                        <button className={styles.button + ' button'} type="submit" disabled={isSubmitting}>
                             Publish
                         </button>
                     )}

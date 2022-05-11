@@ -13,7 +13,6 @@ import { AppContext } from "../../App";
 
 const Profile = ({ isInit, profileInfo, changeProfileInfo, authUserId, isAuth, profileStatus, updateStatus, posts, addPost, ...props }) => {
     const appContext = useContext(AppContext);
-    console.log(appContext);
 
     useEffect(() => {
         if (isInit) document.title = `${profileInfo.fullName} | Feelanet`;
@@ -73,7 +72,8 @@ const Profile = ({ isInit, profileInfo, changeProfileInfo, authUserId, isAuth, p
                             <Avatar isOwner={isOwner} photo={profileInfo.photos.large} />
                             {isOwner && (
                                 <button className={styles.editModeButton + " button"} onClick={activateEditMode}>
-                                    Edit profile info
+                                    {appContext.currentLanguage === "eng" && "Edit profile info"}
+                                    {appContext.currentLanguage === "ru" && "Редактировать профиль"}
                                 </button>
                             )}
                             {!isOwner && <div>delete friend etc</div>}

@@ -3,8 +3,12 @@ import { connect } from "react-redux";
 import UsersSearch from "../UsersSearch/UsersSearch";
 import { selectUsersFoundCount } from "../../../redux/usersPageSelectors";
 import { useLocation } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../../../App";
 
 const UsersHeader = ({ usersFound }) => {
+    const appContext = useContext(AppContext);
+
     const location = useLocation();
     let headerText, countText;
 
@@ -19,7 +23,7 @@ const UsersHeader = ({ usersFound }) => {
     }
 
     return (
-        <div className={styles.wrap + " wrapNoPadding"}>
+        <div className={appContext.currentTheme === "dark" ? styles.wrap + " wrapNoPadding " + styles.wrap_dark : styles.wrap + " wrapNoPadding"}>
             <div className={styles.innerWrap + " wrap"}>
                 <h1 className={styles.title}>
                     {headerText} <span className={styles.count}>{usersFound && countText}</span>

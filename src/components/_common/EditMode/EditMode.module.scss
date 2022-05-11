@@ -20,6 +20,24 @@
         background-color: rgba($color: $greyColor, $alpha: 0.7);
         z-index: 10;
     }
+
+    &_dark {
+        &::before {
+            background-color: rgba($color: #000, $alpha: 0.7);
+        }
+
+        .wrapInner {
+            background-color: $darkBGColor;
+        }
+
+        .closeButton {
+            fill: $semiLightGreyColor;
+
+            &:hover {
+                fill: $lightGreyColor;
+            }
+        }
+    }
 }
 
 .wrapInner {
@@ -44,4 +62,8 @@
     padding: 3px;
     cursor: pointer;
     fill: $greyColor;
+
+    &:hover {
+        fill: $darkContainerBGColor;
+    }
 }

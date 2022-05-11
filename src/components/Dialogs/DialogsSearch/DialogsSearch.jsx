@@ -4,8 +4,12 @@ import { RenderInputFormik } from "../../_common/Inputs/Inputs";
 import { setDialogsSearchTerm } from "../../../redux/chatReducer";
 import { selectDialogsSearchTerm } from "../../../redux/chatSelectors";
 import { connect } from "react-redux";
+import { useContext } from "react";
+import { AppContext } from "../../../App";
 
 const DialogsSearch = (props) => {
+    const appContext = useContext(AppContext);
+
     const submit = (values, actions) => {
         actions.setSubmitting(false);
     };
@@ -15,7 +19,7 @@ const DialogsSearch = (props) => {
     };
 
     return (
-        <div className={styles.wrap + " wrapNoPadding"}>
+        <div className={appContext.currentTheme === "dark" ? styles.wrap + " wrapNoPadding " + styles.wrap_dark : styles.wrap + " wrapNoPadding"}>
             <Formik initialValues={{ dialogsSearchInput: "" }} onSubmit={submit}>
                 {() => (
                     <Form>
@@ -25,6 +29,7 @@ const DialogsSearch = (props) => {
                             component={RenderInputFormik}
                             placeholder={"Search for dialogs..."}
                             onValueChange={setSearchTerm}
+                            autoComplete='off'
                             options={{
                                 border: "none",
                                 icon: "search",
@@ -45,7 +50,7 @@ let mapStateToProps = (state) => {
 };
 
 let dispatchObj = {
-    setDialogsSearchTerm
+    setDialogsSearchTerm,
 };
 
 export default connect(mapStateToProps, dispatchObj)(DialogsSearch);

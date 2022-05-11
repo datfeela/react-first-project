@@ -9,8 +9,6 @@ import SidebarContainer from './components/Sidebar/SidebarContainer';
 import Preloader from "./components/_common/Preloader/Preloader";
 import { selectAppIsInit, selectCurrentLanguage, selectCurrentTheme } from "./redux/appSelectors";
 
-//! import Settings from './components/Settings/Settings';
-
 const Login = lazy(() => import('./components/Login/Login'))
 const ProfileContainer = lazy(() => import('./components/Profile/ProfileContainer'))
 const Dialogs = lazy(() => import('./components/Dialogs/Dialogs'))
@@ -44,9 +42,6 @@ const App = ({ isInitialized, initialize, currentLanguage, currentTheme }) => {
                   <Route path='/users' element={<Users />} />
                   <Route path='/login' element={<Login />} />
                   {/* <Route path='*' element={<Error/> }/> */}
-                  {/* <Route path='/feed' element={<Feed />} /> */}
-                  {/* <Route path='/audio' element={<Audio />} /> */}
-                  {/* <Route path='/settings' element={<Settings />} /> */}
 
                 </Routes>
               </Suspense>

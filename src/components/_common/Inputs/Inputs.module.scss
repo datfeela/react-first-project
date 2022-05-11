@@ -1,10 +1,26 @@
 @import "variables.scss";
 
-.inputWrap{
+.inputWrap {
     position: relative;
 
-    &_withIcon{
+    &_withIcon {
         padding-left: 23px;
+    }
+
+    &_dark {
+        .input {
+            background-color: $semiDarkBGColor;
+            color: $lightGreyColor;
+            border: 1px solid $greyColor;
+
+            &::placeholder {
+                color: rgba($color: $lightGreyColor, $alpha: 0.8);
+            }
+        }
+
+        .icon {
+            fill: rgba($color: $lightGreyColor, $alpha: 0.8);
+        }
     }
 }
 
@@ -39,7 +55,17 @@
     font-size: 15px;
     box-sizing: border-box;
 
-    &::-webkit-scrollbar{
+    &_dark {
+        border: 1px solid $greyColor;
+        background-color: $semiDarkBGColor;
+        color: $lightGreyColor;
+
+        &::placeholder {
+            color: rgba($color: $lightGreyColor, $alpha: 0.8);
+        }
+    }
+
+    &::-webkit-scrollbar {
         width: 0px;
     }
 }
@@ -51,7 +77,7 @@
     color: rgba($color: $mainFontColor, $alpha: 0.5);
 }
 
-.warningWrap{
+.warningWrap {
     position: absolute;
     top: calc(50% - (#{$loginWarningiconSize} / 2));
     right: 10px;
@@ -68,13 +94,13 @@
     margin-right: 10px;
     border: 1px solid rgba($color: $greyColor, $alpha: 0.15);
 
-    &__label{
+    &__label {
         color: rgba($color: $greyColor, $alpha: 0.9);
     }
 }
 
 .icon {
-    fill: rgba($color: $greyColor, $alpha: 0.65) ;
+    fill: rgba($color: $greyColor, $alpha: 0.65);
     display: block;
     position: absolute;
     top: 2px;

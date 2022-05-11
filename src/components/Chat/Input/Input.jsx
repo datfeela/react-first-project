@@ -1,10 +1,11 @@
-import React, { useRef } from "react";
+import React, { useContext, useRef } from "react";
 import styles from "./Input.module.scss";
 // import { reduxForm } from "redux-form";
 // import { Field } from "redux-form";
 import { Field, Form, Formik } from "formik";
 import { isRequiredNoError } from "../../../utils/formValidation";
 import { RenderTextareaFormik } from "../../_common/Inputs/Inputs";
+import { AppContext } from "../../../App";
 
 const validateNewMessageField = (value) => {
     let error = isRequiredNoError(value);
@@ -12,12 +13,14 @@ const validateNewMessageField = (value) => {
 };
 
 const Input = ({ dialogId, onInputHeightChange, ...props }) => {
+    const appContext = useContext(AppContext);
+
     const wrapRef = useRef();
     // wrapRef.current && console.log(window.getComputedStyle(wrapRef.current).height);
 
     const submit = (values, actions) => {
         props.sendMessage(dialogId, values.newMessageText);
-        onInputHeightChange('67px')
+        onInputHeightChange("67px");
         actions.setSubmitting(false);
         actions.resetForm();
     };
@@ -27,7 +30,7 @@ const Input = ({ dialogId, onInputHeightChange, ...props }) => {
     };
 
     return (
-        <div ref={wrapRef} className={styles.wrap}>
+        <div ref={wrapRef} className={appContext.currentTheme === "dark" ? styles.wrap + " " + styles.wrap_dark : styles.wrap}>
             <Formik initialValues={{ newMessageText: "" }} onSubmit={submit}>
                 {({ isSubmitting }) => (
                     <Form className={styles.form}>
@@ -43,7 +46,7 @@ const Input = ({ dialogId, onInputHeightChange, ...props }) => {
                         />
 
                         {/* <ErrorMessage name="newPostText" component={ErrorComponent} /> */}
-                        <button className={styles.button} type="submit" disabled={isSubmitting}>
+                        <button className={styles.button + ' button'} type="submit" disabled={isSubmitting}>
                             Send
                         </button>
                     </Form>

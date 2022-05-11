@@ -1,7 +1,11 @@
 @import "variables.scss";
 
-.wrap{
+.wrap {
     padding: 10px 20px;
     border-radius: 0px;
     margin-bottom: 10px;
+
+    &_dark {
+        background-color: $semiDarkBGColor !important;
+    }
 }

@@ -1,7 +1,10 @@
 import styles from "./Selector.module.scss";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { AppContext } from "../../../../App";
 
 const Selector = ({ selectorType, ...props }) => {
+    const appContext = useContext(AppContext);
+
     let initialSelectorValue, dropdownItems, selectorClassName;
     const selectorRef = useRef();
     const [isSelectorActive, setIsSelectorActive] = useState(false);
@@ -72,9 +75,11 @@ const Selector = ({ selectorType, ...props }) => {
         );
     }
     return (
-        <div onClick={togglePopup} ref={selectorRef} className={selectorClassName}>
-            <span className={styles.title}>{initialSelectorValue}</span>
-            {dropdownItems}
+        <div className={appContext.currentTheme === "dark" ? styles.wrap + " " + styles.wrap_dark : styles.wrap}>
+            <div onClick={togglePopup} ref={selectorRef} className={selectorClassName}>
+                <span className={styles.title}>{initialSelectorValue}</span>
+                {dropdownItems}
+            </div>
         </div>
     );
 };

@@ -19,7 +19,7 @@ const Dialogs = ({ isInit, initializeDialogs }) => {
 
     if (!isInit)
         return (
-            <div className={styles.wrap + ' wrapNoPadding'}>
+            <div className={styles.preloaderWrap + ' wrapNoPadding'}>
                 <Preloader />
             </div>
         );

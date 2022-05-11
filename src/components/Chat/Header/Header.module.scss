@@ -7,10 +7,34 @@
     align-items: center;
     grid-template-columns: 1fr 4fr 1fr;
     grid-template-areas: "button userInfo avatar";
+
+    &_dark {
+        background-color: $darkContainerBGColor;
+        border: 1px solid $greyColor;
+
+        .goBackButton {
+            color: $lightGreyColor08;
+
+            &:hover {
+                background: linear-gradient(to left, $darkContainerBGColor, $lightGreyColor01);
+            }
+        }
+
+        .name {
+            color: #fff;
+        }
+
+        .icon {
+            margin: 1px 9px 0px 0px;
+            height: 16px;
+            fill: $lightGreyColor08;
+        }
+    }
 }
 
 .goBackButton {
     height: 100%;
+    border-radius: 5px 0px 0px 0px;
     display: flex;
     align-items: center;
     justify-content: start;
@@ -20,7 +44,7 @@
     color: $greyColor;
 
     &:hover {
-        background: linear-gradient(to left, $lightGreyColor01, $semiLightGreyColor015);
+        background: linear-gradient(to left, $lightGreyColor01, $semiLightGreyColor01);
     }
 }
 
@@ -32,7 +56,7 @@
     grid-area: userInfo;
 }
 
-.imgLink{
+.imgLink {
     display: block;
     width: 35px;
     margin: 0px 15px 0px auto;

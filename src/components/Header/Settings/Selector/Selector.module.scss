@@ -3,6 +3,34 @@
 $itemHeight: 30px;
 $itemWidth: 100px;
 
+.wrap {
+    &_dark {
+        .selector {
+            color: $azureColor;
+
+            &_active {
+                background-color: $greyColor035;
+                box-shadow: none;
+                border: 1px solid $greyColor;
+                border-bottom: none;
+            }
+        }
+
+        .dropdown {
+            left: -1px;
+            top: calc(#{$itemHeight} - 1px);
+            background-color: $darkBGColor;
+            box-shadow: none;
+            border: 1px solid $greyColor;
+            border-top: none;
+
+            &_item:hover {
+                background-color: $greyColor035;
+            }
+        }
+    }
+}
+
 .selector {
     position: relative;
     justify-self: flex-end;
@@ -13,6 +41,7 @@ $itemWidth: 100px;
     display: flex;
     align-items: center;
     justify-content: center;
+    border-radius: 2px 2px 0px 0px;
 
     &_active {
         background-color: $greyColor01;
@@ -22,14 +51,10 @@ $itemWidth: 100px;
         .dropdown {
             opacity: 1;
             visibility: visible;
+            border-radius: 0px 0px 2px 2px;
         }
     }
 }
-
-// .title {
-//     width: 100%;
-//     text-align: center;
-// }
 
 .dropdown {
     position: absolute;
@@ -49,7 +74,7 @@ $itemWidth: 100px;
         height: $itemHeight;
         padding: 0px 8px;
 
-        &:hover{
+        &:hover {
             background-color: $greyColor01;
         }
     }

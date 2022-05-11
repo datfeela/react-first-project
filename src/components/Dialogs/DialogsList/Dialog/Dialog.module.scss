@@ -29,6 +29,36 @@
             border-top: 1px solid $greyColor01;
         }
     }
+
+    &_dark {
+        border-bottom: 1px solid $greyColor;
+
+        &:hover {
+            background-color: $semiDarkBGColor;
+            border: 1px solid $greyColor;
+            border-top: none;
+        }
+
+        &:first-child:hover {
+            border-top: 1px solid $greyColor;
+        }
+
+        &.wrap_newMessage {
+            background-color: rgba($color: $azureColor, $alpha: 0.2);
+
+            &:hover {
+                background-color: $semiDarkBGColor;
+            }
+
+            &:first-child {
+                border-top: 1px solid $greyColor;
+            }
+        }
+
+        .name {
+            color: $lightGreyColor;
+        }
+    }
 }
 
 .avatar {

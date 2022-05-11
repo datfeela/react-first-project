@@ -2,11 +2,13 @@ import { NavLink } from "react-router-dom";
 import { SvgSelector } from "../_common/SvgSelector/SvgSelector";
 import Settings from "./Settings/Settings";
 import styles from "./Header.module.scss";
-import { useRef, useState } from "react";
+import { useContext, useRef, useState } from "react";
+import { AppContext } from "../../App";
 
 const Header = ({ isAuth }) => {
     const [isPopupActive, setIsPopupActive] = useState(false);
     const wrapRef = useRef();
+    const appContext = useContext(AppContext);
 
     const popupClassName = isPopupActive ? styles.popup + " " + styles.popup_active : styles.popup;
     const iconWrapClassName = isPopupActive ? styles.iconWrap + " " + styles.iconWrap_active : styles.iconWrap;
@@ -33,7 +35,7 @@ const Header = ({ isAuth }) => {
     };
 
     return (
-        <div className={styles.wrap}>
+        <div className={appContext.currentTheme === "dark" ? styles.wrap + " " + styles.wrap_dark : styles.wrap}>
             <header className={styles.content}>
                 <NavLink className={styles.link} to={isAuth ? "/profile/22988" : "/login"}>
                     <SvgSelector className={styles.logo} id="logo" />
@@ -45,7 +47,7 @@ const Header = ({ isAuth }) => {
                             <SvgSelector className={styles.settingsIcon} id="settings" />
                         </div>
                         <div className={popupClassName}>
-                            <Settings/>
+                            <Settings />
                         </div>
                     </div>
                 ) : (

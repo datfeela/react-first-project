@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import EditMode from "../../_common/EditMode/EditMode";
 import { SvgSelector } from "../../_common/SvgSelector/SvgSelector";
 import styles from "./Avatar.module.scss";
 import UploadAvatarForm from "./UploadAvatarForm/UploadAvatarForm";
 import { savePhoto } from "../../../redux/profilePageReducer";
 import { connect } from "react-redux";
+import { AppContext } from "../../../App";
 
 const Avatar = ({ photo, savePhoto, isOwner }) => {
     const [isEditModeActive, setIsEditModeActive] = useState(false);
+    const appContext = useContext(AppContext);
 
     const activateEditMode = () => {
         setIsEditModeActive(true);
@@ -24,9 +26,12 @@ const Avatar = ({ photo, savePhoto, isOwner }) => {
             <div className={wrapClassName}>
                 <img className={styles.avatar} src={photo ? photo : "https://via.placeholder.com/250x250"} alt="profileimg" />
                 <div className={styles.popup}>
-                    <div onClick={activateEditMode} className={styles.popup_action}>
-                        <SvgSelector className={styles.popup_icon} id="upload" />
-                        <span>Set new image</span>
+                    <div onClick={activateEditMode} className={styles.popup__action}>
+                        <SvgSelector className={styles.popup__icon} id="upload" />
+                        <span>
+                            {appContext.currentLanguage === "eng" && "Set new image"}
+                            {appContext.currentLanguage === "ru" && "Обновить фотографию"}
+                        </span>
                     </div>
                 </div>
             </div>
