@@ -2,6 +2,10 @@
 
 $friendBlockWidth: calc((#{$sideAreaWidth} - #{$blocksMargin} * 2 - 20px) / 3);
 .wrap_dark {
+    .header {
+        border-bottom: 1px solid $greyColor;
+    }
+
     .header_link {
         color: $lightGreyColor;
     }
@@ -9,7 +13,7 @@ $friendBlockWidth: calc((#{$sideAreaWidth} - #{$blocksMargin} * 2 - 20px) / 3);
 .header {
     margin-bottom: 20px;
     padding-bottom: 10px;
-    border-bottom: 1px solid rgba(40, 40, 40, 0.1);
+    border-bottom: 1px solid $greyColor01;
 
     &_link {
         color: $darkBlueColor;

@@ -40,14 +40,18 @@ const Input = ({ dialogId, onInputHeightChange, ...props }) => {
                             component={RenderTextareaFormik}
                             onHeightChange={onHeightChange}
                             validate={validateNewMessageField}
-                            placeholder={"Type a message..."}
+                            placeholder={
+                                appContext.currentLanguage === "eng"
+                                    ? "Type a message..."
+                                    : appContext.currentLanguage === "ru" && "Напишите сообщение..."
+                            }
                             defaultHeight={40}
                             maxHeight={"200px"}
                         />
 
                         {/* <ErrorMessage name="newPostText" component={ErrorComponent} /> */}
-                        <button className={styles.button + ' button'} type="submit" disabled={isSubmitting}>
-                            Send
+                        <button className={styles.button + " button"} type="submit" disabled={isSubmitting}>
+                            {appContext.currentLanguage === "eng" && "Send"} {appContext.currentLanguage === "ru" && "Отправить"}
                         </button>
                     </Form>
                 )}

@@ -27,9 +27,13 @@ const DialogsSearch = (props) => {
                             type="text"
                             name="dialogsSearchInput"
                             component={RenderInputFormik}
-                            placeholder={"Search for dialogs..."}
+                            placeholder={
+                                appContext.currentLanguage === "eng"
+                                    ? "Search for dialogs..."
+                                    : appContext.currentLanguage === "ru" && "Поиск диалогов"
+                            }
                             onValueChange={setSearchTerm}
-                            autoComplete='off'
+                            autoComplete="off"
                             options={{
                                 border: "none",
                                 icon: "search",

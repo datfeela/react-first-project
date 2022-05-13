@@ -1,20 +1,18 @@
 import User from "./User/User";
 import styles from "./UsersList.module.scss";
 import Preloader from "./../../_common/Preloader/Preloader";
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { infiniteScrollObserver } from "../../../utils/intersectionObserver";
+import { checkScrollbar } from "../../../utils/checkScrollbar";
+import { AppContext } from "../../../App";
 
-const UsersList = ({
-    isAllUsersLoaded,
-    isFetching,
-    users,
-    searchTerm,
-    subscribe,
-    resetUsers,
-    updateUsersLoadPage,
-    cleanUp,
-    getUsers
-}) => {
+const UsersList = ({ isAllUsersLoaded, isFetching, users, searchTerm, subscribe, resetUsers, updateUsersLoadPage, cleanUp, getUsers }) => {
+    const appContext = useContext(AppContext);
+
+    useEffect(() => {
+        checkScrollbar() ? appContext.setIsScrollbarActive(true) : appContext.setIsScrollbarActive(false);
+    });
+
     useEffect(() => {
         if (users.length === 0) {
             getUsers();

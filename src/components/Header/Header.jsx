@@ -5,7 +5,7 @@ import styles from "./Header.module.scss";
 import { useContext, useRef, useState } from "react";
 import { AppContext } from "../../App";
 
-const Header = ({ isAuth }) => {
+const Header = ({ isAuth, isScrollbarActive }) => {
     const [isPopupActive, setIsPopupActive] = useState(false);
     const wrapRef = useRef();
     const appContext = useContext(AppContext);
@@ -35,26 +35,27 @@ const Header = ({ isAuth }) => {
     };
 
     return (
-        <div className={appContext.currentTheme === "dark" ? styles.wrap + " " + styles.wrap_dark : styles.wrap}>
+        <div
+            className={
+                styles.wrap +
+                (appContext.currentTheme === "dark" ? " " + styles.wrap_dark : "") +
+                (isScrollbarActive ? " " + styles.wrap_withScrollbar : "")
+            }
+        >
             <header className={styles.content}>
                 <NavLink className={styles.link} to={isAuth ? "/profile/22988" : "/login"}>
                     <SvgSelector className={styles.logo} id="logo" />
                     <span className={styles.logoText}>FEELANET</span>
                 </NavLink>
-                {isAuth ? (
-                    <div ref={wrapRef} className={styles.wrapRight}>
-                        <div className={iconWrapClassName} onClick={togglePopup}>
-                            <SvgSelector className={styles.settingsIcon} id="settings" />
-                        </div>
-                        <div className={popupClassName}>
-                            <Settings />
-                        </div>
+
+                <div ref={wrapRef} className={styles.wrapRight}>
+                    <div className={iconWrapClassName} onClick={togglePopup}>
+                        <SvgSelector className={styles.settingsIcon} id="settings" />
                     </div>
-                ) : (
-                    <div className={styles.wrapRight}>
-                        <NavLink to={"/login"}>Log in</NavLink>
+                    <div className={popupClassName}>
+                        <Settings isAuth={isAuth} />
                     </div>
-                )}
+                </div>
             </header>
         </div>
     );

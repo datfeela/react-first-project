@@ -6,9 +6,17 @@ import Input from "./Input/Input";
 import Sidebar from "./Sidebar/Sidebar";
 import Preloader from "../_common/Preloader/Preloader";
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { AppContext } from "../../App";
+import { checkScrollbar } from "../../utils/checkScrollbar";
 
 const Chat = ({ isInit, initializeChat, cleanUpChat, setIsNewMessage, messages, sendMessage, ...props }) => {
+    const appContext = useContext(AppContext);
+
+    useEffect(() => {
+        checkScrollbar() ? appContext.setIsScrollbarActive(true) : appContext.setIsScrollbarActive(false);
+    });
+
     useEffect(() => {
         initializeChat(dialogId);
         document.title = `Dialogs | Feelanet`;

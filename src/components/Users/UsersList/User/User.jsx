@@ -6,7 +6,13 @@ import { AppContext } from "../../../../App";
 const User = ({ user, subscribe }) => {
     const appContext = useContext(AppContext);
 
-    let subscribeText = user.followed ? "Unsubscribe" : "Subscribe";
+    let subscribeText = user.followed
+        ? appContext.currentLanguage === "eng"
+            ? "Unsubscribe"
+            : appContext.currentLanguage === "ru" && "Отписаться"
+        : appContext.currentLanguage === "eng"
+        ? "Subscribe"
+        : appContext.currentLanguage === "ru" && "Подписаться";
     let imgSrc = user.photos.small != null ? user.photos.small : "https://via.placeholder.com/160x160?text=Pic";
 
     const subscribeButtonClickHandler = () => {
@@ -28,7 +34,7 @@ const User = ({ user, subscribe }) => {
                 <span className={styles.status}>{user.status}</span>
                 <div className={styles.actions}>
                     <NavLink to={`/dialog/${user.id}`} className={styles.actions_item}>
-                        Message
+                        {appContext.currentLanguage === "eng" && "Message"} {appContext.currentLanguage === "ru" && "Написать сообщение"}
                     </NavLink>
                     <span className={styles.divider}></span>
                     <button

@@ -3,18 +3,20 @@ import styles from "./Input.module.scss";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { maxLength, isRequiredNoError } from "../../../../utils/formValidation";
 import { RenderTextareaFormik } from "../../../_common/Inputs/Inputs";
-import { useState } from "react";
-
-//validation
-const maxLength500 = maxLength(500);
-
-const validateNewPostField = (value) => {
-    let error = isRequiredNoError(value);
-    !error && (error = maxLength500(value));
-    return error;
-};
+import { useContext, useState } from "react";
+import { AppContext } from "../../../../App";
 
 const NewPostForm = (props) => {
+    const appContext = useContext(AppContext);
+
+    //validation
+
+    const validateNewPostField = (value) => {
+        let error = isRequiredNoError(value);
+        !error && (error = maxLength(value, 500, appContext.currentLanguage));
+        return error;
+    };
+
     const submit = (values, actions) => {
         props.addPost(values.newPostText, props.currentUserId);
         actions.setSubmitting(false);
@@ -26,8 +28,8 @@ const NewPostForm = (props) => {
     const inputDefaultHeight = isFormActive ? 62 : 40;
 
     const handleFocus = () => {
-        setIsFormActive(true)
-    }
+        setIsFormActive(true);
+    };
 
     return (
         <Formik initialValues={{ newPostText: "" }} onSubmit={submit}>
@@ -38,7 +40,9 @@ const NewPostForm = (props) => {
                         name="newPostText"
                         component={RenderTextareaFormik}
                         validate={validateNewPostField}
-                        placeholder={"What's new?"}
+                        placeholder={
+                            appContext.currentLanguage === "eng" ? "What's new?" : appContext.currentLanguage === "ru" && "Напишите что-нибудь..."
+                        }
                         defaultHeight={inputDefaultHeight}
                         maxHeight={"240px"}
                         onFocus={handleFocus}
@@ -46,8 +50,8 @@ const NewPostForm = (props) => {
                     />
                     <ErrorMessage name="newPostText" component={ErrorComponent} />
                     {isFormActive && (
-                        <button className={styles.button + ' button'} type="submit" disabled={isSubmitting}>
-                            Publish
+                        <button className={styles.button + " button"} type="submit" disabled={isSubmitting}>
+                            {appContext.currentLanguage === "eng" && "Publish"} {appContext.currentLanguage === "ru" && "Опубликовать"}
                         </button>
                     )}
                 </Form>

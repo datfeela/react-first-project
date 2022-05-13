@@ -47,15 +47,19 @@ const Selector = ({ selectorType, ...props }) => {
     };
 
     if (selectorType === "theme") {
-        props.theme === "light" && (initialSelectorValue = "Light");
-        props.theme === "dark" && (initialSelectorValue = "Dark");
+        props.theme === "light" &&
+            ((appContext.currentLanguage === "eng" && (initialSelectorValue = "Light")) ||
+                (appContext.currentLanguage === "ru" && (initialSelectorValue = "Светлая")));
+        props.theme === "dark" &&
+            ((appContext.currentLanguage === "eng" && (initialSelectorValue = "Dark")) ||
+                (appContext.currentLanguage === "ru" && (initialSelectorValue = "Темная")));
         dropdownItems = (
             <div className={styles.dropdown}>
                 <div onClick={changeSelectorValue} className={styles.dropdown_item} id="light">
-                    Light
+                    {appContext.currentLanguage === "eng" && "Light"} {appContext.currentLanguage === "ru" && "Светлая"}
                 </div>
                 <div onClick={changeSelectorValue} className={styles.dropdown_item} id="dark">
-                    Dark
+                    {appContext.currentLanguage === "eng" && "Dark"} {appContext.currentLanguage === "ru" && "Темная"}
                 </div>
             </div>
         );

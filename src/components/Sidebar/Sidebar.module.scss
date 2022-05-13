@@ -5,6 +5,9 @@
 
     &_dark {
         .item {
+            &:hover {
+                background-color: $greyColor035;
+            }
         }
 
         .link {

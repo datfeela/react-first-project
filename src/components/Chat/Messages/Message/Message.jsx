@@ -14,7 +14,7 @@ const Message = (props) => {
     const imgUrl = props.authUserId === props.senderId ? props.userImage : props.recipientImage;
 
     const date = dateToObj(props.addedAt);
-    const arrivalTime = setDate(date);
+    const arrivalTime = setDate(date, appContext.currentLanguage);
 
     return (
         <div id={props.id} className={wrapClassName}>
@@ -36,15 +36,22 @@ const Message = (props) => {
     );
 };
 
-const setDate = (date) => {
+const setDate = (date, lang) => {
     const isArrivalThisYear = date.year == new Date().getFullYear();
     const isArrivalToday = isArrivalThisYear && date.monthNum == new Date().getMonth() + 1 && date.day == new Date().getDate();
 
-    return isArrivalToday
-        ? `${date.hour}:${date.minute}:${date.second}`
-        : isArrivalThisYear
-        ? `${date.month} ${date.day}, ${date.hour}:${date.minute}:${date.second}`
-        : `${date.month} ${date.day}, ${date.year} ${date.hour}:${date.minute}:${date.second}`;
+    if (lang === "eng")
+        return isArrivalToday
+            ? `${date.hour}:${date.minute}:${date.second}`
+            : isArrivalThisYear
+            ? `${date.month} ${date.day}, ${date.hour}:${date.minute}:${date.second}`
+            : `${date.month} ${date.day}, ${date.year} ${date.hour}:${date.minute}:${date.second}`;
+    if (lang === "ru")
+        return isArrivalToday
+            ? `${date.hour}:${date.minute}:${date.second}`
+            : isArrivalThisYear
+            ? `${date.day}.${date.monthNum}, ${date.hour}:${date.minute}:${date.second}`
+            : `${date.day}.${date.monthNum}.${date.year}, ${date.hour}:${date.minute}:${date.second}`;
 };
 
 const mapStateToProps = (state) => {

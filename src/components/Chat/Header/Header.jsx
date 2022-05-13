@@ -11,7 +11,9 @@ const Header = ({ recipientImage, recipientName, dialogId }) => {
         <div className={appContext.currentTheme === "dark" ? styles.wrap + " " + styles.wrap_dark : styles.wrap}>
             <NavLink to="/messages" className={styles.goBackButton}>
                 <SvgSelector className={styles.icon} id="arrowBack"></SvgSelector>
-                <span>Go back</span>
+                <span>
+                    {appContext.currentLanguage === "eng" && "Go back"} {appContext.currentLanguage === "ru" && "Назад"}
+                </span>
             </NavLink>
             <div className={styles.userInfo}>
                 <NavLink to={`/profile/${dialogId}`} className={styles.name}>

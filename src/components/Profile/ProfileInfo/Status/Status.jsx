@@ -53,14 +53,18 @@ const Status = (props) => {
 export default Status;
 
 const StatusForm = (props) => {
+    const appContext = useContext(AppContext);
+
     useEffect(() => {
         props.initialize({ statusEditMode: props.value ? props.value : "" });
     }, []);
 
     return (
         <form onSubmit={props.handleSubmit} className={styles.edit_mode_block}>
-            <Field component={RenderInput} name={"statusEditMode"} inputMaxLength={300} autoComplete={'off'} autoFocus={true} type="text" />
-            <button className={styles.save_button + ' button'}>Save</button>
+            <Field component={RenderInput} name={"statusEditMode"} inputMaxLength={300} autoComplete={"off"} autoFocus={true} type="text" />
+            <button className={styles.save_button + " button"}>
+                {appContext.currentLanguage === "eng" && "Save"} {appContext.currentLanguage === "ru" && "Сохранить"}
+            </button>
         </form>
     );
 };

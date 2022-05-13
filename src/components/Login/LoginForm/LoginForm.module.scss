@@ -1,9 +1,14 @@
 @import "variables.scss";
 
+.wrap_dark {
+    .checkboxWrap span {
+        color: $lightGreyColor08 !important;
+    }
+}
+
 .button {
     font-size: 15px;
     padding: 10px 15px;
-    margin-top: 7px;
     border-radius: 5px;
     background-color: $lightBlueColor;
     color: #fff;
@@ -13,6 +18,21 @@
     &:hover {
         background-color: rgba($color: $lightBlueColor, $alpha: 0.8);
     }
+}
+
+.inputWrap {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.checkboxWrap {
+    margin-bottom: 10px;
+}
+
+.errorWrapAbsolute {
+    position: absolute;
+    top: 8px;
+    right: 10px;
 }
 
 .generalError {

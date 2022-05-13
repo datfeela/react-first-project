@@ -1,5 +1,28 @@
 @import "variables.scss";
 
+body {
+    &::-webkit-scrollbar {
+        width: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background-color: $semiSemiLightGreyColor;
+        border-radius: 20px;
+    }
+
+    &.dark-theme {
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+        &::-webkit-scrollbar-track {
+            background: rgb(66, 66, 66);
+        }
+        &::-webkit-scrollbar-thumb {
+            background-color: $greyColor;
+            border-radius: 20px;
+        }
+    }
+}
+
 .App {
     background-color: $lightGreyColor;
     font-size: 15px;

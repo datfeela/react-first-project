@@ -8,7 +8,7 @@ const ProfileInfo = (props) => {
     const appContext = useContext(AppContext);
 
     return (
-        <div className={appContext.currentTheme === "dark" ? styles.wrap + " wrap " + styles.wrap_dark : styles.wrap + ' wrap'}>
+        <div className={appContext.currentTheme === "dark" ? styles.wrap + " wrap " + styles.wrap_dark : styles.wrap + " wrap"}>
             <div className={styles.top}>
                 <h1 className={styles.name}>{props.profileInfo.fullName}</h1>
                 <Status
@@ -21,7 +21,8 @@ const ProfileInfo = (props) => {
             </div>
             <div className={styles.headerWrap}>
                 <h2 className={styles.header + " " + styles.header_lfaj}>
-                    Looking for a job: {props.profileInfo.lookingForAJob ? <span> &#9989; </span> : <span> &#10060; </span>}
+                    {appContext.currentLanguage === "eng" && "Looking for a job:"} {appContext.currentLanguage === "ru" && "Ищу работу:"}
+                    {props.profileInfo.lookingForAJob ? <span> &#9989; </span> : <span> &#10060; </span>}
                 </h2>
             </div>
 
@@ -29,7 +30,9 @@ const ProfileInfo = (props) => {
             {props.profileInfo.aboutMe && (
                 <div>
                     <div className={styles.headerWrap}>
-                        <h2 className={styles.header}>About Me</h2>
+                        <h2 className={styles.header}>
+                            {appContext.currentLanguage === "eng" && "About Me"} {appContext.currentLanguage === "ru" && "О себе"}
+                        </h2>
                         <span className={styles.headerLine}></span>
                     </div>
                     <div className={styles.personal_info}>{props.profileInfo.aboutMe}</div>
@@ -38,7 +41,9 @@ const ProfileInfo = (props) => {
 
             {isAnyValuesInObj(props.profileInfo.contacts) && (
                 <div className={styles.headerWrap}>
-                    <h2 className={styles.header}>Contacts:</h2>
+                    <h2 className={styles.header}>
+                        {appContext.currentLanguage === "eng" && "Contacts"} {appContext.currentLanguage === "ru" && "Контакты"}
+                    </h2>
                     <span className={styles.headerLine}></span>
                 </div>
             )}

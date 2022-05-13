@@ -8,14 +8,14 @@ export const isRequiredNoError = (value) => {
     return value ? undefined : " ";
 };
 
-export const maxLength = (max) => (value, lang) => {
+export const maxLength = (value, max, lang) => {
     let error = null;
     value && value.length > max && (error = `Must be ${max} characters or less`)
     value && value.length > max && lang === 'ru' && (error = `Максимальная длина строки - ${max} символов`)
     return error
 }
 
-export const minLength = (min) => (value, lang) => {
+export const minLength = (value, min, lang) => {
     let error = null;
     value && value.length < min && (error = `Must be ${min} characters or less`)
     value && value.length < min && lang === 'ru' && (error = `Минимальная длина строки - ${min} символов`)

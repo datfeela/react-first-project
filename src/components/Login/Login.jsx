@@ -10,12 +10,12 @@ import LoginForm from "./LoginForm/LoginForm";
 const Login = (props) => {
     const appContext = useContext(AppContext);
     useEffect(() => {
-        document.title = `Login | Feelanet`;
+        document.title = appContext.currentLanguage === "eng" ? "Login | Feelanet" : appContext.currentLanguage === "ru" && "Авторизация | Feelanet";
     }, []);
 
-    const handleSubmit = (formData) => {
-        props.logIn(formData);
-    };
+    // const handleSubmit = (formData) => {
+    //     props.logIn(formData);
+    // };
 
     if (props.isAuth) {
         return <Navigate to={"../profile"} />;
@@ -24,8 +24,10 @@ const Login = (props) => {
     return (
         <div className={appContext.currentTheme === "dark" ? styles.wrap + " " + styles.wrap_dark : styles.wrap}>
             <div className={styles.container}>
-                <h1 className={styles.title}>Log In</h1>
-                <LoginForm onSubmit={handleSubmit} generalError={props.generalError} />
+                <h1 className={styles.title}>
+                    {appContext.currentLanguage === "eng" && "Log In"} {appContext.currentLanguage === "ru" && "Вход"}
+                </h1>
+                <LoginForm logIn={props.logIn} generalError={props.generalError} />
             </div>
         </div>
     );

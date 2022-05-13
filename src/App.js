@@ -1,4 +1,4 @@
-import React, { createContext, lazy, Suspense, useEffect } from "react";
+import React, { createContext, lazy, Suspense, useEffect, useState } from "react";
 import './App.scss';
 import { Route, Routes } from 'react-router-dom';
 import { connect } from "react-redux";
@@ -19,18 +19,22 @@ const Users = lazy(() => import('./components/Users/Users'))
 export const AppContext = createContext();
 
 const App = ({ isInitialized, initialize, currentLanguage, currentTheme }) => {
-
   useEffect(() => {
     initialize();
   })
 
+  let [isScrollbarActive, setIsScrollbarActive] = useState(false)
+
+  currentTheme === 'dark' && document.body.classList.add('dark-theme');
+  currentTheme === 'light' && document.body.classList.contains('dark-theme') && document.body.classList.remove('dark-theme');
+
   if (isInitialized) {
     return (
-      <AppContext.Provider value={{ currentLanguage, currentTheme }}>
+      <AppContext.Provider value={{ currentLanguage, currentTheme, setIsScrollbarActive }}>
         <div className={"App" + (currentTheme === 'dark' ? ' App_dark' : '')}>
-          <HeaderContainer />
+          <HeaderContainer isScrollbarActive={isScrollbarActive}/>
           <div className="App__wrap">
-            <main className="main">
+            <main className='main'>
               <Suspense fallback={<div></div>}>
                 {/* <div className="preloader-wrap"><Preloader /></div> */}
                 <Routes>

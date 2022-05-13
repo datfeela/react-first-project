@@ -10,9 +10,14 @@ import EditMode from "../_common/EditMode/EditMode";
 import EditProfileForm from "./EditProfileForm/EditProfileForm";
 import ProfileFriends from "./ProfileFriends/ProfileFriends";
 import { AppContext } from "../../App";
+import { checkScrollbar } from "../../utils/checkScrollbar";
 
 const Profile = ({ isInit, profileInfo, changeProfileInfo, authUserId, isAuth, profileStatus, updateStatus, posts, addPost, ...props }) => {
     const appContext = useContext(AppContext);
+
+    useEffect(() => {
+        checkScrollbar() ? appContext.setIsScrollbarActive(true) : appContext.setIsScrollbarActive(false);
+    });
 
     useEffect(() => {
         if (isInit) document.title = `${profileInfo.fullName} | Feelanet`;

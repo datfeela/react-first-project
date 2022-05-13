@@ -14,12 +14,14 @@ const UsersHeader = ({ usersFound }) => {
 
     switch (location.pathname) {
         case "/friends":
-            headerText = "Your friends ";
+            headerText = appContext.currentLanguage === "eng" ? "Your friends " : appContext.currentLanguage === "ru" && "Друзья ";
             countText = ` ${usersFound}`;
             break;
         case "/users":
-            headerText = "Search Results ";
-            countText = `(${usersFound} found)`;
+            headerText = appContext.currentLanguage === "eng" ? "Search results " : appContext.currentLanguage === "ru" && "Результаты поиска ";
+            countText = `(${usersFound} ${
+                appContext.currentLanguage === "eng" ? "found" : appContext.currentLanguage === "ru" && "найдено"
+            })`;
     }
 
     return (

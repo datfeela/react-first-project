@@ -27,9 +27,9 @@ const UsersSearch = (props) => {
                             type="text"
                             name="usersSearchInput"
                             component={RenderInputFormik}
-                            placeholder={"Search"}
+                            placeholder={appContext.currentLanguage === "eng" ? "Search" : appContext.currentLanguage === "ru" && "Поиск"}
                             onValueChange={setSearchTerm}
-                            autoComplete='off'
+                            autoComplete="off"
                             options={{
                                 border: "none",
                                 icon: "search",
@@ -45,7 +45,7 @@ const UsersSearch = (props) => {
 
 let mapStateToProps = (state) => {
     return {
-        searchTerm: selectSearchTerm(state)
+        searchTerm: selectSearchTerm(state),
     };
 };
 

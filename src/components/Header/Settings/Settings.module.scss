@@ -39,7 +39,7 @@
     user-select: none;
     padding: 0px 15px;
     display: grid;
-    grid-template-columns: auto auto 1fr;
+    grid-template-columns: auto 2fr 3fr;
     align-items: center;
 
     &_active {

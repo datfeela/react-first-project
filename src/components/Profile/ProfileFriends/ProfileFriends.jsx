@@ -12,7 +12,8 @@ const ProfileFriends = ({ currentUserId, friends, friendsCount, ...props }) => {
         <div className={appContext.currentTheme === "dark" ? styles.wrap + " " + styles.wrap_dark : styles.wrap}>
             <h2 className={styles.header}>
                 <NavLink className={styles.header_link} to={`/friends`}>
-                    Friends <span className={styles.friendsCount}>{friendsCount}</span>
+                    {appContext.currentLanguage === "eng" && "Friends "} {appContext.currentLanguage === "ru" && "Друзья "}
+                    <span className={styles.friendsCount}>{friendsCount}</span>
                 </NavLink>
             </h2>
             <div className={styles.friendsWrap}>{friendElems}</div>
