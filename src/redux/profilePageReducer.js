@@ -1,14 +1,19 @@
 import { profileAPI, usersAPI } from "../api/api";
+import { selectIsFollowed } from "./profilePageSelectors";
 
 const ADD_POST = 'profile/ADD-POST',
     SET_PROFILE_INFO = 'profile/GET_PROFILE_INFO',
     SET_PROFILE_PHOTOS = 'profile/SET_PROFILE_PHOTOS',
     SET_STATUS = 'profile/SET_STATUS',
     INITIALIZE_SUCCESS = 'profile/INITIALIZE_SUCCESS',
-    SET_FRIENDS = 'profile/SET_FRIENDS'
+    SET_FRIENDS = 'profile/SET_FRIENDS',
+    SET_IS_FOLLOWED = 'profile/SET_IS_FOLLOWED',
+    SET_FOLLOW_IS_FETCHING = 'profile/SET_FOLLOW_IS_FETCHING'
 
 let initialState = {
     isInitialized: false,
+    isFollowed: null,
+    followIsFetching: false,
     profileInfo: null,
     profileStatus: null,
     friends: [],
@@ -77,6 +82,16 @@ const profileReducer = (state = initialState, action) => {
                 friends: action.friends,
                 friendsCount: action.friendsCount
             }
+        case SET_IS_FOLLOWED:
+            return {
+                ...state,
+                isFollowed: action.isFollowed
+            }
+        case SET_FOLLOW_IS_FETCHING:
+            return {
+                ...state,
+                followIsFetching: action.isFetching
+            }
         default:
             return state;
     }
@@ -119,6 +134,16 @@ const getFriendsSuccess = (friends, friendsCount) => ({
     friendsCount
 })
 
+const setIsFollowed = (isFollowed) => ({
+    type: SET_IS_FOLLOWED,
+    isFollowed
+})
+
+const setFollowIsFetching = (isFetching) => ({
+    type: SET_FOLLOW_IS_FETCHING,
+    isFetching
+})
+
 //TC
 
 export const addPost = (text, targetUserId) => async (dispatch, getState) => {
@@ -134,11 +159,12 @@ export const addPost = (text, targetUserId) => async (dispatch, getState) => {
     dispatch(addPostSuccess(text, author, date, targetUserId));
 }
 
-export const initializeProfile = (userId) => async (dispatch) => {
+export const initializeProfile = (userId, isOwner) => async (dispatch) => {
     const profileInfoPromise = dispatch(getProfileInfo(userId));
     const statusPromise = dispatch(getStatus(userId));
-    const getFriendsPromise = dispatch(getFriends());
-    Promise.all([profileInfoPromise, statusPromise, getFriendsPromise])
+    const getFriendsPromise = isOwner && dispatch(getFriends());
+    const isFollowedPromise = !isOwner && dispatch(getIsFollowed(userId))
+    Promise.all([profileInfoPromise, statusPromise, getFriendsPromise, isFollowedPromise])
         .then(() => {
             dispatch(setInitializeSuccess())
         })
@@ -156,6 +182,12 @@ export const getFriends = () => async (dispatch) => {
     return response;
 }
 
+export const getIsFollowed = (userId) => async (dispatch) => {
+    let response = await usersAPI.getIsFollowed(userId)
+    dispatch(setIsFollowed(response));
+    return response
+}
+
 export const changeProfileInfo = (userId, fullName, aboutMe, lookingForAJob, lookingForAJobDescription, contacts) => async (dispatch) => {
     let response = await profileAPI.setProfileInfo(userId, fullName, aboutMe, lookingForAJob, lookingForAJobDescription, contacts)
     debugger;
@@ -170,14 +202,21 @@ export const getStatus = (userId) => async (dispatch) => {
 }
 
 export const updateStatus = (status) => async (dispatch) => {
-    //updating
     let response = await profileAPI.updateStatus(status)
     response.resultCode === 0 ? dispatch(setStatus(status)) : console.log(response);
-    //update finished
 }
 
 export const savePhoto = (photo) => async (dispatch) => {
     let response = await profileAPI.setPhoto(photo)
     response.resultCode === 0 ? dispatch(savePhotoSuccess(response.data.photos)) : console.log(response);
     return response;
+}
+
+export const subscribe = (userId) => async (dispatch, getState) => {
+    const isFollowed = selectIsFollowed(getState());
+    dispatch(setFollowIsFetching(true));
+
+    let followResponse = isFollowed ? await usersAPI.unfollow(userId) : await usersAPI.follow(userId)
+    followResponse.resultCode === 0 ? dispatch(setIsFollowed(!isFollowed)) : console.log(followResponse);
+    dispatch(setFollowIsFetching(false));
 }

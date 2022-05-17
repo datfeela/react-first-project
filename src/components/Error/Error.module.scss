@@ -1,0 +1,29 @@
+@import "variables.scss";
+
+.wrap {
+    padding: $blocksMargin;
+
+    &_dark {
+        .icon {
+            fill: $semiSemiLightGreyColor;
+        }
+
+        .header {
+            color: $semiSemiLightGreyColor;
+        }
+    }
+}
+.icon {
+    display: block;
+    height: 350px;
+    width: 350px;
+    margin: 0 auto;
+    fill: $greyColor;
+}
+.header {
+    margin-top: 25px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 600;
+    color: $greyColor;
+}

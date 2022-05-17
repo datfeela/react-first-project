@@ -1,0 +1,62 @@
+@import "variables.scss";
+
+.wrap {
+    margin-top: $blocksMargin;
+
+    &_dark {
+        .button {
+            color: $semiLightGreyColor;
+            &:hover {
+                background-color: $greyColor035;
+                color: $semiSemiLightGreyColor;
+                .icon {
+                    fill: $semiSemiLightGreyColor;
+                }
+            }
+
+            &_disabled:hover {
+                background-color: unset;
+                color: $semiLightGreyColor;
+                .icon {
+                    fill: $semiLightGreyColor;
+                }
+            }
+        }
+        .icon {
+            fill: $semiLightGreyColor;
+        }
+    }
+}
+
+.button {
+    width: 100%;
+    font-size: 14px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    color: $greyColor08;
+
+    &:hover {
+        background-color: $greyColor01;
+        color: $greyColor;
+        .icon {
+            fill: $greyColor;
+        }
+    }
+
+    &_disabled:hover {
+        cursor: default;
+        background-color: unset;
+        color: $greyColor08;
+        .icon {
+            color: $greyColor08;
+        }
+    }
+}
+
+.icon {
+    height: 20px;
+    width: 20px;
+    margin-right: 8px;
+    fill: $greyColor08;
+}

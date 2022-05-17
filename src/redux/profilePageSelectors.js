@@ -16,6 +16,14 @@ export const selectProfileInfo = (state) => {
     return state.profilePage.profileInfo
 }
 
+export const selectIsFollowed = (state) => {
+    return state.profilePage.isFollowed
+}
+
+export const selectFollowIsFetching = (state) => {
+    return state.profilePage.followIsFetching
+}
+
 export const selectFriends = (state) => {
     return state.profilePage.friends
 }

@@ -2,9 +2,10 @@ import styles from "./Friends.module.scss";
 import { withAuthRedirect } from "../../hoc/withAuthRedirect";
 import UsersListContainer from "../Users/UsersList/UsersListContainer";
 import UsersSearch from "../Users/UsersSearch/UsersSearch";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import UsersHeader from "../Users/UsersHeader/UsersHeader";
 import { checkScrollbar } from "../../utils/checkScrollbar";
+import { AppContext } from "../../App";
 
 const Friends = (props) => {
     const [childObserverRef, setObserverRef] = useState({
@@ -12,9 +13,10 @@ const Friends = (props) => {
         target: null,
     });
 
+    const appContext = useContext(AppContext);
 
     useEffect(() => {
-        document.title = `Friends | Feelanet`;
+        document.title = appContext.currentLanguage === "eng" ? "Friends | Feelanet" : appContext.currentLanguage === "ru" && "Друзья | Feelanet";
     }, []);
 
     return (

@@ -1,4 +1,3 @@
-import WarningWithPopup from "../WarningWithPopup/WarningWithPopup";
 import styles from "./Inputs.module.scss";
 import React, { useContext, useEffect } from "react";
 import { SvgSelector } from "../SvgSelector/SvgSelector";
@@ -6,6 +5,9 @@ import { AppContext } from "../../../App";
 
 export const RenderInputFormik = ({ form, field, options, onValueChange, children, ...props }) => {
     const appContext = useContext(AppContext);
+
+    //max length check
+    options && options.inputMaxLength && field.value.length > options.inputMaxLength && (field.value = field.value.substr(0, options.inputMaxLength));
 
     useEffect(() => {
         onValueChange && onValueChange(field.value);
@@ -45,37 +47,6 @@ export const RenderInputFormik = ({ form, field, options, onValueChange, childre
             />
             {options && options.icon && <SvgSelector className={styles.icon} id={options.icon} />}
             {props.label && <span className={styles.checkbox__label}>{props.label}</span>}
-        </div>
-    );
-};
-
-export const RenderInput = ({ input, type, meta, ...props }) => {
-    const appContext = useContext(AppContext);
-    const hasError = meta.touched && meta.error;
-    const hasWarning = meta.touched && meta.warning;
-
-    //max length check
-    props.inputMaxLength && input.value.length > props.inputMaxLength && (input.value = input.value.substr(0, props.inputMaxLength));
-
-    return (
-        <div className={appContext.currentTheme === "dark" ? styles.inputWrap + " " + styles.inputWrap_dark : styles.inputWrap}>
-            <input
-                {...input}
-                className={hasError || hasWarning ? styles.input + " " + styles.input_error : styles.input}
-                placeholder={props.placeholder}
-                type={type}
-                autoComplete={props.autoComplete && props.autoComplete}
-            />
-            {hasError && (
-                <div className={styles.warningWrap}>
-                    <WarningWithPopup error={meta.error} />
-                </div>
-            )}
-            {hasWarning && (
-                <div className={styles.warningWrap}>
-                    <WarningWithPopup error={meta.warning} />
-                </div>
-            )}
         </div>
     );
 };

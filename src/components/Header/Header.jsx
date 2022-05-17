@@ -43,7 +43,7 @@ const Header = ({ isAuth, isScrollbarActive }) => {
             }
         >
             <header className={styles.content}>
-                <NavLink className={styles.link} to={isAuth ? "/profile/22988" : "/login"}>
+                <NavLink className={styles.link} to={isAuth ? "/profile" : "/login"}>
                     <SvgSelector className={styles.logo} id="logo" />
                     <span className={styles.logoText}>FEELANET</span>
                 </NavLink>

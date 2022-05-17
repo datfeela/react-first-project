@@ -1,7 +1,6 @@
 @import "variables.scss";
 
 .wrap {
-    cursor: pointer;
     position: relative;
     overflow: hidden;
 
@@ -15,12 +14,13 @@
 }
 
 .avatar {
-    width: 250px;
-    height: 250px;
+    width: calc(#{$sideAreaWidth} - 2 * #{$blocksMargin});
+    aspect-ratio: 1 / 1;
     margin: -1px 0px 0px -1px;
 }
 
-.popup {
+.popup {    
+    cursor: pointer;
     position: absolute;
     transform: translateY(50px);
     opacity: 0;
@@ -39,7 +39,7 @@
         &:hover {
             color: #fff;
 
-            .popup__icon{
+            .popup__icon {
                 fill: #fff;
             }
         }

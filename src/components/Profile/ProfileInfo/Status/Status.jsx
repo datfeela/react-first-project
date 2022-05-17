@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
 import styles from "./Status.module.scss";
 import Preloader from "./../../../_common/Preloader/Preloader";
-import { Field } from "redux-form";
-import { reduxForm } from "redux-form";
-import { RenderInput } from "../../../_common/Inputs/Inputs";
+// import { Field } from "redux-form";
+// import { reduxForm } from "redux-form";
+import { Field, Form, Formik, ErrorMessage } from "formik";
+import { RenderInputFormik } from "../../../_common/Inputs/Inputs";
 import { AppContext } from "../../../../App";
 
 const Status = (props) => {
@@ -24,10 +25,10 @@ const Status = (props) => {
         document.removeEventListener("mousedown", handleClick);
     };
 
-    const saveStatus = (formData) => {
+    const saveStatus = (value) => {
         setIsEditMode(false);
         document.removeEventListener("mousedown", handleClick);
-        props.updateStatus(formData.statusEditMode);
+        props.updateStatus(value);
     };
 
     const handleClick = (e) => {
@@ -45,28 +46,45 @@ const Status = (props) => {
                 {props.status ? props.status : props.isOwner ? "type something here..." : ""}
             </span>
             {props.requestInProgress && <Preloader />}
-            {isEditMode && <ReduxStatusForm value={props.status} onSubmit={saveStatus} />}
+            {/* {isEditMode && <ReduxStatusForm value={props.status} onSubmit={saveStatus} />} */}
+            {isEditMode && <StatusForm saveStatus={saveStatus} value={props.status} />}
         </div>
     );
 };
 
 export default Status;
 
-const StatusForm = (props) => {
+const StatusForm = ({ saveStatus, value }) => {
     const appContext = useContext(AppContext);
 
-    useEffect(() => {
-        props.initialize({ statusEditMode: props.value ? props.value : "" });
-    }, []);
+    const submit = (values, actions) => {
+        saveStatus(values.statusEditMode);
+        actions.setSubmitting(false);
+    };
 
     return (
-        <form onSubmit={props.handleSubmit} className={styles.edit_mode_block}>
-            <Field component={RenderInput} name={"statusEditMode"} inputMaxLength={300} autoComplete={"off"} autoFocus={true} type="text" />
-            <button className={styles.save_button + " button"}>
-                {appContext.currentLanguage === "eng" && "Save"} {appContext.currentLanguage === "ru" && "Сохранить"}
-            </button>
-        </form>
+        <div className={styles.edit_mode_block}>
+            <Formik initialValues={{ statusEditMode: value }} onSubmit={submit}>
+                {({ isSubmitting }) => (
+                    <Form>
+                        <Field
+                            type="text"
+                            name="statusEditMode"
+                            component={RenderInputFormik}
+                            autoComplete={"off"}
+                            autoFocus={true}
+                            options={{
+                                padding: "5px 9px",
+                                showErrors: true,
+                                inputMaxLength: 300,
+                            }}
+                        />
+                        <button type="submit" disabled={isSubmitting} className={styles.save_button + " button"}>
+                            {appContext.currentLanguage === "eng" && "Save"} {appContext.currentLanguage === "ru" && "Сохранить"}
+                        </button>
+                    </Form>
+                )}
+            </Formik>
+        </div>
     );
 };
-
-const ReduxStatusForm = reduxForm({ form: "status" })(StatusForm);

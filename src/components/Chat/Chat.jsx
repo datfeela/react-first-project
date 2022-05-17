@@ -12,7 +12,8 @@ import { checkScrollbar } from "../../utils/checkScrollbar";
 
 const Chat = ({ isInit, initializeChat, cleanUpChat, setIsNewMessage, messages, sendMessage, ...props }) => {
     const appContext = useContext(AppContext);
-
+    document.title = appContext.currentLanguage === "eng" ? "Messages | Feelanet" : appContext.currentLanguage === "ru" && "Сообщения | Feelanet";
+    
     useEffect(() => {
         checkScrollbar() ? appContext.setIsScrollbarActive(true) : appContext.setIsScrollbarActive(false);
     });

@@ -8,6 +8,7 @@ import HeaderContainer from './components/Header/HeaderContainer';
 import SidebarContainer from './components/Sidebar/SidebarContainer';
 import Preloader from "./components/_common/Preloader/Preloader";
 import { selectAppIsInit, selectCurrentLanguage, selectCurrentTheme } from "./redux/appSelectors";
+import Error from "./components/Error/Error";
 
 const Login = lazy(() => import('./components/Login/Login'))
 const ProfileContainer = lazy(() => import('./components/Profile/ProfileContainer'))
@@ -32,12 +33,13 @@ const App = ({ isInitialized, initialize, currentLanguage, currentTheme }) => {
     return (
       <AppContext.Provider value={{ currentLanguage, currentTheme, setIsScrollbarActive }}>
         <div className={"App" + (currentTheme === 'dark' ? ' App_dark' : '')}>
-          <HeaderContainer isScrollbarActive={isScrollbarActive}/>
+          <HeaderContainer isScrollbarActive={isScrollbarActive} />
           <div className="App__wrap">
             <main className='main'>
               <Suspense fallback={<div></div>}>
                 {/* <div className="preloader-wrap"><Preloader /></div> */}
                 <Routes>
+                  <Route path='/' element={<ProfileContainer />} />
                   <Route path='/profile' element={<ProfileContainer />} />
                   <Route path='/profile/:userId' element={<ProfileContainer />} />
                   <Route path='/messages' element={<Dialogs />} />
@@ -45,8 +47,7 @@ const App = ({ isInitialized, initialize, currentLanguage, currentTheme }) => {
                   <Route path='/friends' element={<Friends />} />
                   <Route path='/users' element={<Users />} />
                   <Route path='/login' element={<Login />} />
-                  {/* <Route path='*' element={<Error/> }/> */}
-
+                  <Route path='*' element={<Error />} />
                 </Routes>
               </Suspense>
             </main>

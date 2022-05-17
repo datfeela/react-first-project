@@ -21,7 +21,7 @@ const Dialogs = ({ isInit, initializeDialogs }) => {
 
     useEffect(() => {
         initializeDialogs();
-        document.title = `Dialogs | Feelanet`;
+        document.title = appContext.currentLanguage === "eng" ? "Messages | Feelanet" : appContext.currentLanguage === "ru" && "Сообщения | Feelanet";
     }, []);
 
     if (!isInit)

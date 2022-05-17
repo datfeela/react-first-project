@@ -11,6 +11,7 @@ import EditProfileForm from "./EditProfileForm/EditProfileForm";
 import ProfileFriends from "./ProfileFriends/ProfileFriends";
 import { AppContext } from "../../App";
 import { checkScrollbar } from "../../utils/checkScrollbar";
+import ProfileActions from "./ProfileActions/ProfileActions";
 
 const Profile = ({ isInit, profileInfo, changeProfileInfo, authUserId, isAuth, profileStatus, updateStatus, posts, addPost, ...props }) => {
     const appContext = useContext(AppContext);
@@ -24,16 +25,16 @@ const Profile = ({ isInit, profileInfo, changeProfileInfo, authUserId, isAuth, p
     }, [profileInfo]);
 
     const params = useParams();
-    const initializeProfile = (id) => {
-        props.initializeProfile(id);
-    };
-
     const currentUserId = params.userId ? params.userId : authUserId;
     const isOwner = params.userId == authUserId || !params.userId ? true : false;
 
+    const initializeProfile = (targetID, isOwner) => {
+        props.initializeProfile(targetID, isOwner);
+    };
+
     useEffect(() => {
         if (!profileInfo || profileInfo.userId !== currentUserId) {
-            currentUserId && initializeProfile(currentUserId);
+            currentUserId && initializeProfile(currentUserId, isOwner);
         }
     }, [currentUserId]);
 
@@ -81,8 +82,9 @@ const Profile = ({ isInit, profileInfo, changeProfileInfo, authUserId, isAuth, p
                                     {appContext.currentLanguage === "ru" && "Редактировать профиль"}
                                 </button>
                             )}
-                            {!isOwner && <div>delete friend etc</div>}
+                            {!isOwner && <ProfileActions currentUserId={currentUserId} />}
                         </div>
+
                         {isOwner && (
                             <div className={styles.wrap_side + " wrap"}>
                                 <ProfileFriends currentUserId={currentUserId} />
