@@ -1,5 +1,5 @@
 # SPA [React Social Network](https://datfeela.github.io/react-social-network)
-____
+
 ## О проекте
 Социальная сеть, построенная в процессе прохождения [авторского курса по React/Redux Дмитрия Кузюбердина](https://www.youtube.com/playlist?list=PLcvhF2Wqh7DNVy1OCUpG3i5lyxyBWhGZ8)  
 В социальной сети в данный момент реализованы:  
@@ -8,12 +8,12 @@ ____
 - Поиск по пользователям социальной сети, возможность подписаться
 - Диалоги 
 - Смена темы и языка
-____
+
 ## В планах
 - Возможность логиниться и пользоваться социальной сетью с разных аккаунтов (в данный момент это невозможно из-за API-ключей [для взаимодействия с сервером](https://social-network.samuraijs.com/article/faq_po_api), которые привязываются к каждому аккаунту вручную)
 - Страница чата: возможность удалить/оправить в спам сообщения, восстановить сообщения, сайдбар для более удобной навигации по диалогам
 - Постепенный переход проекта на TypeScript
-____
+
 ## Стек
 - JS/JSX
 - [React](https://facebook.github.io/react/docs/hello-world.html)
@@ -23,3 +23,8 @@ ____
 - Роутинг: [React Router V6](https://reactrouter.com/)
 - [create-react-app](https://github.com/facebook/create-react-app)
 - [SASS](http://sass-lang.com/) (CSS / SCSS модули)
+
+## Тестовая учетная запись
+
+Логин: datfeela@mail.ru
+Пароль: samurai120981
